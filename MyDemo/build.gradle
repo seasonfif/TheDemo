@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         releaseSign {
-            keyAlias 'season'
-            keyPassword 'season'
-            storeFile file('F:/studio-space/seasonkey.jks')
-            storePassword 'season'
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
         }
     }
     compileSdkVersion 21
@@ -33,5 +33,5 @@ dependencies {
     //leakcannry
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 }
