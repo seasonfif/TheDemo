@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:background="#e5e5e5"
+    tools:context=".activity.TestViewActivity">
+
+    <com.demo.customview.view.LikeGoogleProgressView
+        android:id="@+id/google_progress"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <com.demo.customview.view.LikeQQHealthView
+        android:id="@+id/qq_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <com.demo.customview.view.CustomerArcView
+        android:id="@+id/arc"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

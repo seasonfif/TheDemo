@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="#33b5e5"
+    android:gravity="center_vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:text="返回"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="标题"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"/>
+    <TextView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="菜单"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"/>
+
+</RelativeLayout>
