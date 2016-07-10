@@ -2,7 +2,9 @@ package com.demo.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
+import com.demo.BuildConfig;
 import com.demo.R;
 import com.demo.leakcanary.TestLeakCanary;
 
@@ -15,6 +17,7 @@ public class MainActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        ((TextView)findViewById(R.id.vername)).setText(BuildConfig.VERSION_NAME);
         findViewById(R.id.views).setOnClickListener(this);
         findViewById(R.id.viewgroup).setOnClickListener(this);
         findViewById(R.id.leakcanary).setOnClickListener(this);
