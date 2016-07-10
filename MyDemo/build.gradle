@@ -14,7 +14,19 @@ android {
     }
     //签名设置
     signingConfigs {
-        releaseSign {
+        debug {
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+        }
+        preview {
+            storeFile file(RELEASE_STORE_FILE)
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+        release {
             keyAlias RELEASE_KEY_ALIAS
             keyPassword RELEASE_KEY_PASSWORD
             storeFile file(RELEASE_STORE_FILE)
@@ -23,11 +35,34 @@ android {
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders = [label:"Debug"]
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+        }
+
+        preview {
+            manifestPlaceholders = [label:"Preview"]
+            signingConfig signingConfigs.preview
+            debuggable true
+            minifyEnabled false
+        }
+
         release {
-            signingConfig signingConfigs.releaseSign
+            signingConfig signingConfigs.release
             minifyEnabled true//是否启动混淆
             shrinkResources true //是否移除无用资源文件，shrinkResources依赖于minifyEnabled，必须和minifyEnabled一起用
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    // rename the apk with the version name
+    // add output file sub folder by build type
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent + "/${variant.buildType.name}",
+                    "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())
         }
     }
 }
@@ -37,6 +72,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
     //leakcannry
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    previewCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+}
+
+def releaseTime() {
+    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
