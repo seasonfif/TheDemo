@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.demo.BuildConfig;
 import com.demo.R;
-import com.demo.leakcanary.TestLeakCanary;
+import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
 
 /**
  * Created by Administrator on 2016/7/9.
@@ -38,7 +38,7 @@ public class MainActivity extends BaseActivity{
                 goToOthers(TestViewGroupActivity.class);
                 break;
             case R.id.leakcanary:
-                goToOthers(TestLeakCanary.class);
+                goToOthers(LeakAsyncTaskAndHandlerActivity.class);
         }
     }
 }

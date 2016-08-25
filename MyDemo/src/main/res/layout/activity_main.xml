@@ -4,25 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/vername"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="VersionName："/>
-    <Button
-        android:id="@+id/views"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="自定义View"/>
-    <Button
-        android:id="@+id/viewgroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="自定义ViewGroup"/>
-    <Button
-        android:id="@+id/leakcanary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="监测内存泄露"/>
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:id="@+id/vername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VersionName："/>
+            <Button
+                android:id="@+id/views"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义View"/>
+            <Button
+                android:id="@+id/viewgroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="自定义ViewGroup"/>
+            <Button
+                android:id="@+id/leakcanary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="监测内存泄露"/>
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

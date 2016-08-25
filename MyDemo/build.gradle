@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
     //自动计算versionCode
     def versionFile = file("version.properties")
     def int verCode
@@ -18,8 +18,8 @@ android {
         }
         defaultConfig {
             applicationId "com.thedemo"
-            minSdkVersion 15
-            targetSdkVersion 19
+            minSdkVersion 19
+            targetSdkVersion 22
             versionCode verCode
             versionName "1.0"
             manifestPlaceholders = [label:"@string/app_name"]
