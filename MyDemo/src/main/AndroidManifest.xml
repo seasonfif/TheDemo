@@ -24,13 +24,19 @@
                 <data android:mimeType="text/plain"/>
             </intent-filter>
           </activity>
+      <activity android:name=".activity.ShareAcivity" >
+
+      </activity>
+      <activity android:name=".leakcanary.TestLeakCanary" />
+      <activity android:name=".LogicOperation.TestLogicActivity" />
         <activity android:name=".activity.TestMarqueeActivity" />
         <activity android:name=".activity.TestViewGroupActivity" />
-        <activity android:name=".activity.ShareAcivity" >
-
-        </activity>
-        <activity android:name=".leakcanary.TestLeakCanary" />
-        <activity android:name=".LogicOperation.TestLogicActivity" />
+        <activity android:name=".leakcanary.LeakAsyncTaskAndHandlerActivity" />
+        <activity android:name=".leakcanary.Imm"/>
+        <activity android:name=".leakcanary.LeakImmActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <!--android:windowSoftInputMode="adjustResize|stateAlwaysHidden"-->
     </application>
 
 </manifest>

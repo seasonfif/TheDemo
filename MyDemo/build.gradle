@@ -18,7 +18,7 @@ android {
         }
         defaultConfig {
             applicationId "com.thedemo"
-            minSdkVersion 15
+            minSdkVersion 19
             targetSdkVersion 22
             versionCode verCode
             versionName "1.0"
@@ -29,7 +29,7 @@ android {
     }
 
     //签名设置
-    /*signingConfigs {
+    signingConfigs {
         debug {
             keyAlias RELEASE_KEY_ALIAS
             keyPassword RELEASE_KEY_PASSWORD
@@ -48,24 +48,24 @@ android {
             storeFile file(RELEASE_STORE_FILE)
             storePassword RELEASE_STORE_PASSWORD
         }
-    }*/
+    }
 
     buildTypes {
         debug {
             manifestPlaceholders = [label:"Debug"]
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
             minifyEnabled false
         }
 
         preview {
             manifestPlaceholders = [label:"Preview"]
-//            signingConfig signingConfigs.preview
+            signingConfig signingConfigs.preview
             debuggable true
             minifyEnabled false
         }
 
         release {
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
             minifyEnabled true//是否启动混淆
             shrinkResources true //是否移除无用资源文件，shrinkResources依赖于minifyEnabled，必须和minifyEnabled一起用
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

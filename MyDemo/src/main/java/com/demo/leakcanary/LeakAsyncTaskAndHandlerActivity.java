@@ -16,11 +16,12 @@ import com.demo.activity.MainActivity;
 /**
  * Created by Administrator on 2016/7/10.
  */
-public class TestLeakCanary extends BaseActivity {
+public class LeakAsyncTaskAndHandlerActivity extends BaseActivity {
 
 
     private Button taskBtn;
     private Handler handler = new Handler(){
+    private static Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -41,6 +42,7 @@ public class TestLeakCanary extends BaseActivity {
         taskBtn = (Button) findViewById(R.id.btn_task);
         taskBtn.setOnClickListener(this);
         findViewById(R.id.btn_handler).setOnClickListener(this);
+        findViewById(R.id.btn_imm).setOnClickListener(this);
     }
 
     private void startAsyncTask() {
@@ -68,6 +70,8 @@ public class TestLeakCanary extends BaseActivity {
                 goToOthers(MainActivity.class);
                 finish();
                 break;
+            case R.id.btn_imm:
+                goToOthers(Imm.class);
         }
     }
 }

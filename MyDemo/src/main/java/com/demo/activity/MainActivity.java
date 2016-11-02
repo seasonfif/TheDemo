@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.demo.BuildConfig;
 import com.demo.LogicOperation.TestLogicActivity;
+import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
 import com.demo.R;
 import com.demo.leakcanary.TestLeakCanary;
 import java.text.SimpleDateFormat;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.leakcanary:
                 goToOthers(TestLeakCanary.class);
+                //goToOthers(LeakAsyncTaskAndHandlerActivity.class);
                 break;
             case R.id.logic:
                 goToOthers(TestLogicActivity.class);
