@@ -19,8 +19,8 @@ import com.demo.activity.MainActivity;
 public class LeakAsyncTaskAndHandlerActivity extends BaseActivity {
 
 
-    private Button taskBtn;
-    private Handler handler = new Handler(){
+    private static Button taskBtn;
+
     private static Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -72,6 +72,7 @@ public class LeakAsyncTaskAndHandlerActivity extends BaseActivity {
                 break;
             case R.id.btn_imm:
                 goToOthers(Imm.class);
+                break;
         }
     }
 }

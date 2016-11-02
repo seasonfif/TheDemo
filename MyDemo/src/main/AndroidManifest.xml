@@ -27,7 +27,6 @@
       <activity android:name=".activity.ShareAcivity" >
 
       </activity>
-      <activity android:name=".leakcanary.TestLeakCanary" />
       <activity android:name=".LogicOperation.TestLogicActivity" />
         <activity android:name=".activity.TestMarqueeActivity" />
         <activity android:name=".activity.TestViewGroupActivity" />
