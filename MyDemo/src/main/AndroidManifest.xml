@@ -16,9 +16,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.TestViewActivity" />
+        <activity android:name=".activity.TestViewActivity" android:label="分享">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*"/>
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+          </activity>
+        <activity android:name=".activity.TestMarqueeActivity" />
         <activity android:name=".activity.TestViewGroupActivity" />
+        <activity android:name=".activity.ShareAcivity" >
+
+        </activity>
         <activity android:name=".leakcanary.TestLeakCanary" />
+        <activity android:name=".LogicOperation.TestLogicActivity" />
     </application>
 
 </manifest>

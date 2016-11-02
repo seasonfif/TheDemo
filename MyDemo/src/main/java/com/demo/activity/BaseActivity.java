@@ -38,8 +38,6 @@ public abstract class BaseActivity extends Activity implements View.OnClickListe
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RefWatcher refWatcher = MyApplication.getRefWatcher(this);
-        refWatcher.watch(this);
     }
 
     protected void goToOthers(Class<?> clazz) {

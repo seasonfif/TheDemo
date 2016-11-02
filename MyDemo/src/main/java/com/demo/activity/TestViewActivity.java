@@ -1,13 +1,18 @@
 package com.demo.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import android.widget.TextView;
+import android.widget.Toast;
 import com.demo.R;
 import com.demo.customview.view.CustomerArcView;
 import com.demo.customview.view.LikeQQHealthView;
 
+import com.demo.customview.view.MarqueeView;
 import java.util.Random;
 
 public class TestViewActivity extends BaseActivity {
@@ -20,6 +25,27 @@ public class TestViewActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Toast.makeText(this, getIntent().getStringExtra(Intent.EXTRA_TEXT), Toast.LENGTH_SHORT).show();
+
+        /*final MarqueeView mv = (MarqueeView) findViewById(R.id.marqueeView100);
+        mv.setPauseBetweenAnimations(500);
+        mv.setSpeed(10);
+        getWindow().getDecorView().post(new Runnable() {
+            @Override
+            public void run() {
+                mv.startMarquee();
+            }
+        });
+        final TextView textView1 = (TextView) findViewById(R.id.textView1);
+        getWindow().getDecorView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                textView1.setText("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do.");
+                mv.startMarquee();
+            }
+        }, 1000);*/
+
 
         qqHealthView = (LikeQQHealthView) findViewById(R.id.qq_health);
         qqHealthView.setOnClickListener(new View.OnClickListener() {

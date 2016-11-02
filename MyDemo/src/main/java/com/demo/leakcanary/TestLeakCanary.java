@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 
+import android.widget.Button;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
 import com.demo.activity.MainActivity;
@@ -16,10 +18,14 @@ import com.demo.activity.MainActivity;
  */
 public class TestLeakCanary extends BaseActivity {
 
+
+    private Button taskBtn;
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            Log.e("handleMessage", "handleMessage");
+            taskBtn.setText("crash");
         }
     };
 
@@ -32,7 +38,8 @@ public class TestLeakCanary extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        findViewById(R.id.btn_task).setOnClickListener(this);
+        taskBtn = (Button) findViewById(R.id.btn_task);
+        taskBtn.setOnClickListener(this);
         findViewById(R.id.btn_handler).setOnClickListener(this);
     }
 

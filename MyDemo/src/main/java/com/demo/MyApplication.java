@@ -17,9 +17,4 @@ public class MyApplication extends Application {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
     }
-
-    public static RefWatcher getRefWatcher(Context context){
-        MyApplication application = (MyApplication) context.getApplicationContext();
-        return application.refWatcher;
-    }
 }
