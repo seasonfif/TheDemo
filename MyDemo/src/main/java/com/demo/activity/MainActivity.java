@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
+import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.leakcanary).setOnClickListener(this);
         findViewById(R.id.logic).setOnClickListener(this);
         findViewById(R.id.share).setOnClickListener(this);
+        findViewById(R.id.dynamic).setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +60,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.share:
                 goToOthers(ShareAcivity.class);
+                break;
+            case R.id.dynamic:
+                goToOthers(ClassLoaderTest.class);
                 break;
 
         }
