@@ -16,12 +16,13 @@ public class LoaderManager {
   private static DexClassLoader dexClassLoader;
 
   private LoaderManager (Context context){
-    File source = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dexloader.apk");
+    File source = new File(
+        Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dynamicplugin-debug.apk");
     File optimizedDexOutputPath = context.getDir("dex", Context.MODE_PRIVATE);
     dexClassLoader = new DexClassLoader(source.getAbsolutePath(), optimizedDexOutputPath.getAbsolutePath(), null, context.getClassLoader());
   }
 
-  private static LoaderManager getInstance(Context context){
+  public static LoaderManager getInstance(Context context){
     if (instance == null){
       synchronized (LoaderManager.class){
         if (instance == null){
@@ -32,7 +33,7 @@ public class LoaderManager {
     return instance;
   }
 
-  public static Class loadClass(String classFullName){
+  public Class loadClass(String classFullName){
     Class clazz = null;
     try {
       clazz = dexClassLoader.loadClass(classFullName);

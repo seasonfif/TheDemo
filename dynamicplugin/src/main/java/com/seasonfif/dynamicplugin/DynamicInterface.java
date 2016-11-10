@@ -1,4 +1,4 @@
-package com.demo.dynamicload;
+package com.seasonfif.dynamicplugin;
 
 /**
  * 创建时间：2016年11月08日20:41 <br>
@@ -6,5 +6,5 @@ package com.demo.dynamicload;
  * 描述：
  */
 public interface DynamicInterface {
-  public String getString();
+  String getString();
 }

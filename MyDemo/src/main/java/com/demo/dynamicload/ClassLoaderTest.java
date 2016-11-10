@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Toast;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
+import com.demo.dynamicload.manager.LoaderManager;
+import com.seasonfif.dynamicplugin.DynamicInterface;
 
 /**
  * 创建时间：2016年11月02日20:39 <br>
@@ -32,14 +34,22 @@ public class ClassLoaderTest extends BaseActivity{
     super.onClick(v);
     switch (v.getId()){
       case R.id.simple_mode:
-        testSimpleDynamicLoader();
+        testSimpleDynamicLoader("com.seasonfif.dynamicplugin.DynamicImpl");
         break;
     }
   }
 
-  private void testSimpleDynamicLoader() {
-
-    Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+  private void testSimpleDynamicLoader(String classFullName) {
+    Class cls = LoaderManager.getInstance(this.getApplicationContext()).loadClass(classFullName);
+    DynamicInterface clz = null;
+    String str;
+    try {
+      clz = (DynamicInterface)cls.newInstance();
+      str = clz.getString();
+    } catch (Exception e) {
+      str = e.getMessage();
+    }
+    Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
   }
 
   private void printClassloader(){
