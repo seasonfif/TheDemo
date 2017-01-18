@@ -19,7 +19,7 @@ public class LoaderManager {
     File source = new File(
         Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dynamicplugin-debug.apk");
     File optimizedDexOutputPath = context.getDir("dex", Context.MODE_PRIVATE);
-    dexClassLoader = new DexClassLoader(source.getAbsolutePath(), optimizedDexOutputPath.getAbsolutePath(), null, context.getClassLoader());
+    dexClassLoader = new DexClassLoader(source.getAbsolutePath(), optimizedDexOutputPath.getAbsolutePath(), null, context.getClassLoader().getParent());
   }
 
   public static LoaderManager getInstance(Context context){

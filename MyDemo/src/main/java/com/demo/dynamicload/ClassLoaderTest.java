@@ -1,6 +1,7 @@
 package com.demo.dynamicload;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -8,6 +9,8 @@ import com.demo.R;
 import com.demo.activity.BaseActivity;
 import com.demo.dynamicload.manager.LoaderManager;
 import com.seasonfif.dynamicplugin.DynamicInterface;
+import com.seasonfif.dynamicplugin.IMyAidlInterface;
+import java.lang.reflect.Method;
 
 /**
  * 创建时间：2016年11月02日20:39 <br>
@@ -34,8 +37,23 @@ public class ClassLoaderTest extends BaseActivity{
     super.onClick(v);
     switch (v.getId()){
       case R.id.simple_mode:
-        testSimpleDynamicLoader("com.seasonfif.dynamicplugin.DynamicImpl");
+        //testSimpleDynamicLoader("com.seasonfif.dynamicplugin.DynamicImpl");
+        testSimpleAidlDynamicLoader("com.seasonfif.dynamicplugin.Entry");
         break;
+    }
+  }
+
+  private void testSimpleAidlDynamicLoader(String classFullName) {
+    Class cls = LoaderManager.getInstance(this.getApplicationContext()).loadClass(classFullName);
+    IBinder binder;
+    IMyAidlInterface clz = null;
+    try {
+      Method m = cls.getDeclaredMethod("create", String.class);
+      binder = (IBinder) m.invoke(null, "hello");
+      clz = IMyAidlInterface.Stub.asInterface(binder);
+      clz.basicTypes(1,1,true,1,1,"IMyAidlInterface.Stub.asInterface");
+    } catch (Exception e) {
+      Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
     }
   }
 
