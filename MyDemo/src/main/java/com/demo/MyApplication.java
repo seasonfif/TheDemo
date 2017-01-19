@@ -3,6 +3,7 @@ package com.demo;
 import android.app.Application;
 import android.content.Context;
 
+import com.demo.dynamicload.manager.PluginManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 
@@ -16,5 +17,10 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         refWatcher = LeakCanary.install(this);
+    }
+
+    @Override protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        PluginManager.init(this);
     }
 }

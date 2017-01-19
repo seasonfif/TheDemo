@@ -1,5 +1,6 @@
 package com.demo.dynamicload;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -7,9 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
-import com.demo.dynamicload.manager.LoaderManager;
-import com.seasonfif.dynamicplugin.DynamicInterface;
-import com.seasonfif.dynamicplugin.IMyAidlInterface;
+import com.demo.dynamicload.manager.Constant;
+import com.demo.dynamicload.manager.Factory;
+import com.seasonfif.dynamicplugin.IPlugin;
 import java.lang.reflect.Method;
 
 /**
@@ -38,27 +39,26 @@ public class ClassLoaderTest extends BaseActivity{
     switch (v.getId()){
       case R.id.simple_mode:
         //testSimpleDynamicLoader("com.seasonfif.dynamicplugin.DynamicImpl");
-        testSimpleAidlDynamicLoader("com.seasonfif.dynamicplugin.Entry");
+        testSimpleAidlDynamicLoader(Constant.LOCAL_PLUGIN_1, "com.seasonfif.dynamicplugin.Entry");
         break;
     }
   }
 
-  private void testSimpleAidlDynamicLoader(String classFullName) {
-    Class cls = LoaderManager.getInstance(this.getApplicationContext()).loadClass(classFullName);
+  private void testSimpleAidlDynamicLoader(String pluginName, String classFullName) {
+    Class cls = Factory.loadClass(pluginName, classFullName);
     IBinder binder;
-    IMyAidlInterface clz = null;
+    IPlugin plugin = null;
     try {
-      Method m = cls.getDeclaredMethod("create", String.class);
-      binder = (IBinder) m.invoke(null, "hello");
-      clz = IMyAidlInterface.Stub.asInterface(binder);
-      clz.basicTypes(1,1,true,1,1,"IMyAidlInterface.Stub.asInterface");
+      Method m = cls.getDeclaredMethod("create", new Class[]{ Context.class, ClassLoader.class});
+      binder = (IBinder) m.invoke(null, getApplicationContext(), getClassLoader());
+      plugin = IPlugin.Stub.asInterface(binder);
     } catch (Exception e) {
       Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
     }
   }
 
   private void testSimpleDynamicLoader(String classFullName) {
-    Class cls = LoaderManager.getInstance(this.getApplicationContext()).loadClass(classFullName);
+    /*Class cls = Loader.getInstance(this.getApplicationContext()).loadClass(classFullName);
     DynamicInterface clz = null;
     String str;
     try {
@@ -67,7 +67,7 @@ public class ClassLoaderTest extends BaseActivity{
     } catch (Exception e) {
       str = e.getMessage();
     }
-    Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    Toast.makeText(this, str, Toast.LENGTH_SHORT).show();*/
   }
 
   private void printClassloader(){

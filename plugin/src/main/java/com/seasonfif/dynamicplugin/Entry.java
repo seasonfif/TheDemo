@@ -1,5 +1,6 @@
 package com.seasonfif.dynamicplugin;
 
+import android.content.Context;
 import android.os.IBinder;
 
 /**
@@ -10,9 +11,9 @@ import android.os.IBinder;
 
 public class Entry {
 
-  public static IBinder create(String type){
+  public static IBinder create(Context context, ClassLoader cls){
     IBinder binder;
-    binder = new AidlImpl();
+    binder = new Plugin(context, cls);
     return binder;
   }
 }

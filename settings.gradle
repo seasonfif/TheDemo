@@ -1,1 +1,1 @@
-include ':MyDemo', ':dynamicplugin'
+include ':MyDemo', ':plugin'
