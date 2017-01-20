@@ -7,6 +7,7 @@ import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
+import com.seasonfif.pluginhost.manager.PMF;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -62,6 +63,8 @@ public class MainActivity extends BaseActivity{
                 goToOthers(ShareAcivity.class);
                 break;
             case R.id.dynamic:
+                PMF.init(this);
+                PMF.attach();
                 goToOthers(ClassLoaderTest.class);
                 break;
 

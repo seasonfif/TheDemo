@@ -1,4 +1,4 @@
-package com.demo.dynamicload.utills;
+package com.seasonfif.pluginhost.utills;
 
 import android.database.Cursor;
 import java.io.BufferedReader;

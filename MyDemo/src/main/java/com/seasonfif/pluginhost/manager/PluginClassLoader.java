@@ -1,4 +1,4 @@
-package com.demo.dynamicload.manager;
+package com.seasonfif.pluginhost.manager;
 
 import dalvik.system.DexClassLoader;
 
@@ -41,6 +41,6 @@ public class PluginClassLoader extends DexClassLoader{
   }
 
   @Override public String toString() {
-    return getClass().getName() + "[mainClassLoader" + mMainClassLoader.toString() + "]";
+    return getClass().getName() + " [mainClassLoader " + mMainClassLoader.toString() + "]";
   }
 }

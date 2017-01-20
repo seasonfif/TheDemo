@@ -1,4 +1,4 @@
-package com.demo.dynamicload.manager;
+package com.seasonfif.pluginhost.manager;
 
 /**
  * 创建时间：2017年01月19日16:58 <br>

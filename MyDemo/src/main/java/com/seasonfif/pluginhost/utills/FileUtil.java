@@ -1,4 +1,4 @@
-package com.demo.dynamicload.utills;
+package com.seasonfif.pluginhost.utills;
 
 import android.content.Context;
 import android.text.TextUtils;

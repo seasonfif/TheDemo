@@ -1,4 +1,4 @@
-package com.demo.dynamicload.manager;
+package com.seasonfif.pluginhost.manager;
 
 /**
  * 创建时间：2017年01月19日15:46 <br>
@@ -11,12 +11,12 @@ public class Constant {
   /**
    * plugin-1
    */
-  public static final String LOCAL_PLUGIN_1 = "plugin-1";
+  public static final String LOCAL_PLUGIN_1 = "plugin";
 
   /**
    * plugin-1的內建路径
    */
-  public static final String LOCAL_PLUGIN_1_PATH = "plugins/plugin-1.apk";
+  public static final String LOCAL_PLUGIN_1_PATH = "plugins/plugin.apk";
 
   /**
    * 插件存放目录

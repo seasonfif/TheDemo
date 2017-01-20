@@ -1,17 +1,18 @@
 package com.demo.dynamicload;
 
-import android.content.Context;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
-import com.demo.dynamicload.manager.Constant;
-import com.demo.dynamicload.manager.Factory;
-import com.seasonfif.dynamicplugin.IPlugin;
-import java.lang.reflect.Method;
+import com.seasonfif.dynamicplugin.IEventBusService;
+import com.seasonfif.pluginhost.manager.Constant;
+import com.seasonfif.pluginhost.manager.Factory;
 
 /**
  * 创建时间：2016年11月02日20:39 <br>
@@ -39,21 +40,27 @@ public class ClassLoaderTest extends BaseActivity{
     switch (v.getId()){
       case R.id.simple_mode:
         //testSimpleDynamicLoader("com.seasonfif.dynamicplugin.DynamicImpl");
-        testSimpleAidlDynamicLoader(Constant.LOCAL_PLUGIN_1, "com.seasonfif.dynamicplugin.Entry");
+        testSimpleAidlDynamicLoader(Constant.LOCAL_PLUGIN_1, "com.seasonfif.dynamicplugin.activity.MainActivity");
         break;
     }
   }
 
   private void testSimpleAidlDynamicLoader(String pluginName, String classFullName) {
-    Class cls = Factory.loadClass(pluginName, classFullName);
-    IBinder binder;
-    IPlugin plugin = null;
+
+    //测试加载插件activity
+    Object cls = Factory.queryObject(pluginName, classFullName);
+    Activity activity = (Activity) cls;
+    Toast.makeText(this, activity.getClass().getClassLoader().toString(), Toast.LENGTH_SHORT).show();
+
+    //测试加载插件IBinder
+    IBinder binder = Factory.query(Constant.LOCAL_PLUGIN_1, "");
+    IEventBusService eventBusService = IEventBusService.Stub.asInterface(binder);
     try {
-      Method m = cls.getDeclaredMethod("create", new Class[]{ Context.class, ClassLoader.class});
-      binder = (IBinder) m.invoke(null, getApplicationContext(), getClassLoader());
-      plugin = IPlugin.Stub.asInterface(binder);
-    } catch (Exception e) {
-      Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+      new AlertDialog.Builder(this)
+          .setMessage(eventBusService.post(getClass().getSimpleName(), "jsonStr"))
+          .show();
+    } catch (RemoteException e) {
+      e.printStackTrace();
     }
   }
 
