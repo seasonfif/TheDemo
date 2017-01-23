@@ -11,8 +11,8 @@ import android.os.IBinder;
 
 public class Entry {
 
-  private static Context sPluginContext;
-  private static ClassLoader sClassLoader;
+  public static Context sPluginContext;
+  public static ClassLoader sClassLoader;
 
   public static final IBinder create(Context context, ClassLoader cls){
     sPluginContext = context;

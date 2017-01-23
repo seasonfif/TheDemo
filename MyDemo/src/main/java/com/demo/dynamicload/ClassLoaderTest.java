@@ -50,7 +50,7 @@ public class ClassLoaderTest extends BaseActivity{
     //测试加载插件activity
     Object cls = Factory.queryObject(pluginName, classFullName);
     Activity activity = (Activity) cls;
-    Toast.makeText(this, activity.getClass().getClassLoader().toString(), Toast.LENGTH_SHORT).show();
+    //Toast.makeText(this, activity.getClass().getClassLoader().toString(), Toast.LENGTH_SHORT).show();
 
     //测试加载插件IBinder
     IBinder binder = Factory.query(Constant.LOCAL_PLUGIN_1, "");

@@ -2,6 +2,7 @@ package com.seasonfif.pluginhost.manager;
 
 import android.content.Context;
 import android.os.IBinder;
+import com.demo.MyApplication;
 import com.seasonfif.dynamicplugin.IPlugin;
 import java.lang.reflect.Method;
 
@@ -29,6 +30,7 @@ public class Loader {
   }
 
   protected Loader(Context context, String pluginName, String pluginPath){
+    this.mPluginContext = context;
     this.mPluginName = pluginName;
     this.mPluginPath = pluginPath;
     String optimizedDexOutputPath = context.getDir(Constant.LOCAL_PLUGIN_ODEX_SUB_DIR, 0).getPath();
