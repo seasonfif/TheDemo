@@ -3,6 +3,7 @@ package com.seasonfif.framework;
 import android.os.RemoteException;
 import android.widget.Toast;
 import com.seasonfif.dynamicplugin.IEventBusService;
+import com.seasonfif.dynamicplugin.R;
 import com.seasonfif.plugin.Entry;
 
 /**
@@ -14,7 +15,7 @@ import com.seasonfif.plugin.Entry;
 public class PluginEventBusImpl extends IEventBusService.Stub{
 
   @Override public String post(String className, String jsonStr) throws RemoteException {
-    Toast.makeText(Entry.sPluginContext, "插件Toast显示主工程String参数", Toast.LENGTH_SHORT).show();
+    Toast.makeText(Entry.sPluginContext, Entry.sPluginContext.getString(R.string.info), Toast.LENGTH_SHORT).show();
     return className + "  " +jsonStr;
   }
 }

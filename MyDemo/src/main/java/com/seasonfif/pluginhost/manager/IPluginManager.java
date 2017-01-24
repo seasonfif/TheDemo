@@ -16,6 +16,21 @@ import android.os.IBinder;
 public interface IPluginManager {
 
   /**
+   * 通过Intent的extra参数指出目标插件名
+   * 插件Activity上下文通过startActivity启动其它插件Activity时用到
+   * 如果不指定，则默认用当前Activity的插件
+   * 如果设置了KEY_COMPATIBLE，则忽略此参数
+   */
+  public static final String KEY_PLUGIN = "plugin";
+
+  /**
+   * 通过Intent的extra参数指出目标Activity名
+   * 如果不指定，则默认用ComponentName参数的类名来启动
+   * 如果设置了KEY_COMPATIBLE，则忽略此参数
+   */
+  public static final String KEY_ACTIVITY = "activity";
+
+  /**
    * 通过Intent的extra参数指出需要在指定进程中启动
    * 只能启动standard的Activity，不能启动singleTask、singleInstance等
    * 不指定时，自动分配插件进程，即PROCESS_AUTO

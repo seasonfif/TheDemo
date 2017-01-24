@@ -1,9 +1,15 @@
 package com.seasonfif.pluginhost.manager;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.res.Resources;
 import android.os.IBinder;
+import android.text.TextUtils;
 import com.seasonfif.pluginhost.utills.FileUtil;
 import java.io.File;
+import java.lang.ref.WeakReference;
+import java.security.Key;
+import java.util.HashMap;
 
 /**
  * 创建时间：2017年01月19日15:56 <br>
@@ -24,10 +30,76 @@ public class Plugin {
 
   private Object LOCK = new Object();
 
+  /**
+   *  插件路径缓存
+   */
+  static final HashMap<String, String> PLUGIN_NAME_2_FILENAME = new HashMap<String, String>();
+
+  /**
+   *  插件Resources缓存
+   */
+  static final HashMap<String, WeakReference<Resources>> FILENAME_2_RESOURCES = new HashMap<String, WeakReference<Resources>>();
+
+  /**
+   *  插件PackageInfo缓存
+   */
+  static final HashMap<String, WeakReference<PackageInfo>> FILENAME_2_PACKAGE_INFO = new HashMap<String, WeakReference<PackageInfo>>();
+
+  /**
+   *  插件ComponentList缓存
+   */
+  static final HashMap<String, WeakReference<ComponentList>> FILENAME_2_COMPONENT_LIST = new HashMap<>();
+
   private PluginInfo mInfo;
   private Context mContext;
 
   private Loader mLoader;
+
+  static final PackageInfo queryCachedPackageInfo(String key){
+    PackageInfo packageInfo = null;
+    if (!TextUtils.isEmpty(key)){
+      WeakReference<PackageInfo> ref = FILENAME_2_PACKAGE_INFO.get(key);
+      if (ref != null){
+        packageInfo = ref.get();
+      }
+      if (ref == null){
+        FILENAME_2_PACKAGE_INFO.remove(key);
+      }
+    }
+    return packageInfo;
+  }
+
+  static final Resources queryCachedResources(String key){
+    Resources resources = null;
+    if (!TextUtils.isEmpty(key)){
+      synchronized (FILENAME_2_RESOURCES){
+        WeakReference<Resources> ref = FILENAME_2_RESOURCES.get(key);
+        if (ref != null){
+          resources = ref.get();
+        }
+        if (resources == null){
+          FILENAME_2_RESOURCES.remove(key);
+        }
+      }
+    }
+    return resources;
+  }
+
+  static final ComponentList queryCachedComponentList(String key){
+    ComponentList cl = null;
+    if (!TextUtils.isEmpty(key)){
+      synchronized (FILENAME_2_COMPONENT_LIST){
+        WeakReference<ComponentList> ref = FILENAME_2_COMPONENT_LIST.get(key);
+        if (ref != null){
+          cl = ref.get();
+        }
+        if (cl == null){
+          FILENAME_2_COMPONENT_LIST.remove(key);
+        }
+      }
+    }
+    return cl;
+  }
 
   static Plugin build(PluginInfo info){
     return new Plugin(info);
@@ -55,6 +127,11 @@ public class Plugin {
     String dstName = mInfo.mName + ".apk";
     FileUtil.quickExtractTo(mContext, mInfo.mAssertPath, dir.getAbsolutePath(), dstName, false, null, odexdir.getAbsolutePath());
     mLoader = new Loader(mContext, mInfo.mName, new File(dir, dstName).getAbsolutePath());
+
+    if (!mLoader.loadDex()){
+      return false;
+    }
+
     if (mLoader.loadEntryMethod()){
       if(!mLoader.invoke()){
         return false;

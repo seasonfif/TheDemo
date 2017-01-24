@@ -25,6 +25,11 @@ public class PmBase {
    */
   IPluginManager mLocal;
 
+  /**
+   *
+   */
+  IPluginActivityManager mInternal;
+
   private List<PluginInfo> mAll = new ArrayList();
 
   /**
@@ -36,6 +41,7 @@ public class PmBase {
     this.mContext = context;
 
     mLocal = new PmLocalImpl(context, this);
+    mInternal = new PmInternalImpl(this);
   }
 
   void init(){

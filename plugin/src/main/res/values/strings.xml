@@ -1,3 +1,4 @@
 <resources>
   <string name="app_name">DynamicPlugin</string>
+  <string name="info">显示插件中的StringRes</string>
 </resources>

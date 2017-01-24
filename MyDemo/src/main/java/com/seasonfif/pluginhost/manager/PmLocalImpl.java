@@ -52,13 +52,18 @@ public class PmLocalImpl implements IPluginManager {
 
   @Override public ComponentName loadPluginActivity(Intent intent, String plugin, String target,
       int process) {
+
+    String container = null;
+    PluginBinderInfo info = new PluginBinderInfo(PluginBinderInfo.ACTIVITY_REQUEST);
+
+
     return null;
   }
 
   @Override
   public boolean startActivity(Context context, Intent intent, String plugin, String activity,
       int process) {
-    return false;
+    return mPluginMgr.mInternal.startActivity(context, intent, plugin, activity, process, true);
   }
 
   @Override public boolean startActivityForResult(Activity context, Intent intent, int requestCode,
