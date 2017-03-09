@@ -2,20 +2,23 @@ package com.demo;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 import com.seasonfif.pluginhost.manager.PMF;
-import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by Administrator on 2016/7/10.
  */
 public class MyApplication extends Application {
 
-    private RefWatcher refWatcher;
+    private static final String TAG = "MyApplication";
+
     @Override
     public void onCreate() {
         super.onCreate();
-        refWatcher = LeakCanary.install(this);
+        //LeakCanary.install(this);
+
+        int pid = android.os.Process.myPid();
+        Log.e(TAG, "MyApplication is oncreate====="+"pid="+pid);
     }
 
     @Override protected void attachBaseContext(Context base) {

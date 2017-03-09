@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-
-import com.demo.MyApplication;
 import com.demo.R;
-import com.squareup.leakcanary.RefWatcher;
 
 /**
  * Created by Administrator on 2016/7/9.

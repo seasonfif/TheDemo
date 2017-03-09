@@ -1,12 +1,23 @@
 package com.demo.activity;
 
+import android.app.Service;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
+import com.demo.service.Core;
+import com.demo.service.CoreService;
+import com.demo.service.CoreUIService;
+import com.demo.service.NotifyService;
 import com.seasonfif.pluginhost.manager.PMF;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,6 +26,8 @@ import java.util.Calendar;
  * Created by Administrator on 2016/7/9.
  */
 public class MainActivity extends BaseActivity{
+
+    Core core;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +41,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.logic).setOnClickListener(this);
         findViewById(R.id.share).setOnClickListener(this);
         findViewById(R.id.dynamic).setOnClickListener(this);
+        findViewById(R.id.process).setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +72,8 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.logic:
                 goToOthers(TestLogicActivity.class);
+                Intent myServiceIntent=new Intent(this, NotifyService.class);
+                this.startService(myServiceIntent);
                 break;
             case R.id.share:
                 goToOthers(ShareAcivity.class);
@@ -66,6 +82,39 @@ public class MainActivity extends BaseActivity{
                 PMF.init(this);
                 PMF.attach();
                 goToOthers(ClassLoaderTest.class);
+                break;
+            case R.id.process:
+                if (core!= null) try {
+                    Log.e("count", "" + core.getCount());
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+                Intent intentUIService = new Intent(this, CoreUIService.class);
+                startService(intentUIService);
+                /*Intent intentNotifyService = new Intent(this, NotifyService.class);
+                startService(intentNotifyService);*/
+                /*Intent intentNotifyService = new Intent(this, NotifyService.class);
+                bindService(intentNotifyService, new ServiceConnection() {
+                    @Override public void onServiceConnected(ComponentName name, IBinder service) {
+
+                    }
+
+                    @Override public void onServiceDisconnected(ComponentName name) {
+
+                    }
+                }, BIND_AUTO_CREATE);*/
+                /*Intent intentCoreService = new Intent(this, CoreService.class);
+                startService(intentCoreService);*/
+                Intent intentCoreService = new Intent(this, CoreService.class);
+                bindService(intentCoreService, new ServiceConnection() {
+                    @Override public void onServiceConnected(ComponentName name, IBinder binder) {
+                        core = Core.Stub.asInterface(binder);
+                    }
+
+                    @Override public void onServiceDisconnected(ComponentName name) {
+
+                    }
+                }, Service.BIND_AUTO_CREATE);
                 break;
 
         }

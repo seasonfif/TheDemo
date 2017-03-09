@@ -19,7 +19,8 @@
                 android:id="@+id/vername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VersionName："/>
+                android:text="VersionName："
+                android:visibility="gone"/>
             <Button
                 android:id="@+id/views"
                 android:layout_width="match_parent"
@@ -50,6 +51,11 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Dynamic"/>
+            <Button
+              android:id="@+id/process"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="MultProcess"/>
         </LinearLayout>
 
     </ScrollView>
