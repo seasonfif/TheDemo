@@ -12,6 +12,13 @@
     android:background="#e5e5e5"
     tools:context=".activity.TestViewActivity">
 
+    <com.demo.customview.view.RecordStepView
+      android:id="@+id/record_step_view"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="#ffffff"
+      android:layout_marginBottom="@dimen/dimen_5"/>
+
     <com.demo.customview.view.LikeGoogleProgressView
         android:id="@+id/google_progress"
         android:layout_width="match_parent"

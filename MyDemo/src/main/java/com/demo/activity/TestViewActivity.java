@@ -13,6 +13,7 @@ import com.demo.customview.view.CustomerArcView;
 import com.demo.customview.view.LikeQQHealthView;
 
 import com.demo.customview.view.MarqueeView;
+import com.demo.customview.view.RecordStepView;
 import java.util.Random;
 
 public class TestViewActivity extends BaseActivity {
@@ -22,6 +23,9 @@ public class TestViewActivity extends BaseActivity {
 
     private CustomerArcView arcView;
     private boolean arcViewChanged = false;
+
+    private RecordStepView recordStepView;
+    private boolean firstStep = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,6 +112,18 @@ public class TestViewActivity extends BaseActivity {
                 }
             }
         }.start();
+
+        recordStepView = (RecordStepView) findViewById(R.id.record_step_view);
+        recordStepView.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                if (firstStep){
+                    recordStepView.setFirstStep(false);
+                } else{
+                    recordStepView.setFirstStep(true);
+                }
+                firstStep = !firstStep;
+            }
+        });
     }
 
 
