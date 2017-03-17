@@ -86,16 +86,18 @@ android {
     //批量处理渠道versionName
     productFlavors.all{
         flavor ->
-            print(properties.values())
+//            print(properties.values())
             flavor.versionName = verCode+"_"+buildType+"_"+name
     }
     // rename the apk with the version name
     // add output file sub folder by build type
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
-            output.outputFile = new File(
+            /*output.outputFile = new File(
                     output.outputFile.parent + "/${variant.buildType.name}",
-                    "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())
+                    "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())*/
+//            println output.outputFile.parent
+//            println rootProject.rootDir.parent + "\\newlink\\im\\src\\main\\assets\\plugins";
         }
     }
 }
@@ -112,4 +114,15 @@ dependencies {
 
 def releaseTime() {
     return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+}
+
+/*tasks.findByName("assemble*").doLast {
+    println("=====================build.doLast success.=========================")
+}*/
+
+tasks.all {
+    task ->
+        doLast {
+            println("=====================build.doLast success.=========================")
+        }
 }
