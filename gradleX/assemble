@@ -1,0 +1,47 @@
+D:\lianjia\TheDemo>gradlew assembleBaiduDebug
+===================== settings.gradle =========================
+Parallel execution with configuration on demand is an incubating feature.
+===================== build.gradle =========================
+null
+Observed package id 'build-tools;20.0.0' in inconsistent location 'D:\tools4work\adt-bundle-windows-x86_64-20140702\sdk\build-tools\android-4.4W' (Expected 'D:\tool
+s4work\adt-bundle-windows-x86_64-20140702\sdk\build-tools\20.0.0')
+Observed package id 'system-images;android-19;default;armeabi-v7a' in inconsistent location 'D:\tools4work\adt-bundle-windows-x86_64-20140702\sdk\system-images\andr
+oid-19\armeabi-v7a' (Expected 'D:\tools4work\adt-bundle-windows-x86_64-20140702\sdk\system-images\android-19\default\armeabi-v7a')
+Incremental java compilation is an incubating feature.
+MyDemoD:\lianjia\TheDemo\MyDemo\build
+:MyDemo:beforeAssemble UP-TO-DATE
+:MyDemo:preBuild UP-TO-DATE
+:MyDemo:preBaiduDebugBuild UP-TO-DATE
+:MyDemo:checkBaiduDebugManifest
+:MyDemo:prepareBaiduDebugDependencies
+:MyDemo:compileBaiduDebugAidl UP-TO-DATE
+:MyDemo:compileBaiduDebugRenderscript UP-TO-DATE
+:MyDemo:generateBaiduDebugBuildConfig UP-TO-DATE
+:MyDemo:generateBaiduDebugAssets UP-TO-DATE
+:MyDemo:mergeBaiduDebugAssets UP-TO-DATE
+:MyDemo:generateBaiduDebugResValues UP-TO-DATE
+:MyDemo:generateBaiduDebugResources UP-TO-DATE
+:MyDemo:mergeBaiduDebugResources UP-TO-DATE
+:MyDemo:processBaiduDebugManifest UP-TO-DATE
+:MyDemo:processBaiduDebugResources UP-TO-DATE
+:MyDemo:generateBaiduDebugSources UP-TO-DATE
+:MyDemo:compileBaiduDebugJavaWithJavac UP-TO-DATE
+:MyDemo:compileBaiduDebugNdk UP-TO-DATE
+:MyDemo:compileBaiduDebugSources UP-TO-DATE
+:MyDemo:prePackageMarkerForBaiduDebug
+:MyDemo:transformClassesWithDexForBaiduDebug UP-TO-DATE
+:MyDemo:mergeBaiduDebugJniLibFolders UP-TO-DATE
+:MyDemo:transformNative_libsWithMergeJniLibsForBaiduDebug UP-TO-DATE
+:MyDemo:processBaiduDebugJavaRes UP-TO-DATE
+:MyDemo:transformResourcesWithMergeJavaResForBaiduDebug UP-TO-DATE
+:MyDemo:validateDebugSigning
+:MyDemo:packageBaiduDebug UP-TO-DATE
+:MyDemo:zipalignBaiduDebug UP-TO-DATE
+:MyDemo:assembleBaiduDebug
+assembleBaiduDebug=====================assemble.doFirst success.=========================
+D:\lianjia\TheDemo\MyDemo\build\outputs\apk\demo.apk
+assembleBaiduDebug=====================assemble.doLast success.=========================
+
+BUILD SUCCESSFUL
+
+Total time: 2.752 secs

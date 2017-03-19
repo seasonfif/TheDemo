@@ -1,0 +1,85 @@
+Executing tasks: [:MyDemo:generateBaiduDebugSources, :MyDemo:mockableAndroidJar, :MyDemo:prepareBaiduDebugUnitTestDependencies, :MyDemo:generateBaiduDebugAndroidTestSources, :plugin:generateDebugSources, :plugin:generateDebugAndroidTestSources, :plugin:prepareDebugUnitTestDependencies, :plugin:mockableAndroidJar]
+
+===================== settings.gradle =========================
+Parallel execution with configuration on demand is an incubating feature.
+===================== build.gradle =========================
+null
+Incremental java compilation is an incubating feature.
+MyDemoD:\lianjia\TheDemo\MyDemo\build
+:MyDemo:preBuild UP-TO-DATE
+:MyDemo:preBaiduDebugBuild UP-TO-DATE
+:MyDemo:checkBaiduDebugManifest
+:MyDemo:prepareBaiduDebugDependencies
+:MyDemo:compileBaiduDebugAidl UP-TO-DATE
+:MyDemo:compileBaiduDebugRenderscript UP-TO-DATE
+:MyDemo:generateBaiduDebugBuildConfig UP-TO-DATE
+:MyDemo:generateBaiduDebugAssets UP-TO-DATE
+:MyDemo:mergeBaiduDebugAssets UP-TO-DATE
+:MyDemo:generateBaiduDebugResValues
+:plugin:preBuild UP-TO-DATE
+:MyDemo:generateBaiduDebugResValues UP-TO-DATE
+:plugin:preDebugBuild UP-TO-DATE
+:MyDemo:generateBaiduDebugResources UP-TO-DATE
+:plugin:checkDebugManifest
+:MyDemo:mergeBaiduDebugResources
+:plugin:prepareDebugDependencies
+:plugin:compileDebugAidl UP-TO-DATE
+:MyDemo:mergeBaiduDebugResources UP-TO-DATE
+:plugin:compileDebugRenderscript UP-TO-DATE
+:MyDemo:processBaiduDebugManifest
+:plugin:generateDebugBuildConfig UP-TO-DATE
+:plugin:generateDebugAssets UP-TO-DATE
+:plugin:mergeDebugAssets
+:MyDemo:processBaiduDebugManifest UP-TO-DATE
+:plugin:mergeDebugAssets UP-TO-DATE
+:plugin:generateDebugResValues UP-TO-DATE
+:MyDemo:processBaiduDebugResources UP-TO-DATE
+:MyDemo:generateBaiduDebugSources UP-TO-DATE
+:MyDemo:mockableAndroidJar UP-TO-DATE
+:MyDemo:preBaiduDebugUnitTestBuild UP-TO-DATE
+:MyDemo:prepareBaiduDebugUnitTestDependencies
+:MyDemo:preBaiduDebugAndroidTestBuild UP-TO-DATE
+:MyDemo:prepareBaiduDebugAndroidTestDependencies
+:MyDemo:compileBaiduDebugAndroidTestAidl UP-TO-DATE
+:MyDemo:processBaiduDebugAndroidTestManifest UP-TO-DATE
+:MyDemo:compileBaiduDebugAndroidTestRenderscript
+:plugin:generateDebugResources UP-TO-DATE
+:plugin:mergeDebugResources
+:MyDemo:compileBaiduDebugAndroidTestRenderscript UP-TO-DATE
+:plugin:mergeDebugResources UP-TO-DATE
+:MyDemo:generateBaiduDebugAndroidTestBuildConfig
+:plugin:processDebugManifest UP-TO-DATE
+:plugin:processDebugResources UP-TO-DATE
+:plugin:generateDebugSources UP-TO-DATE
+:plugin:preDebugAndroidTestBuild UP-TO-DATE
+:plugin:prepareDebugAndroidTestDependencies
+:plugin:compileDebugAndroidTestAidl
+:MyDemo:generateBaiduDebugAndroidTestBuildConfig UP-TO-DATE
+:MyDemo:generateBaiduDebugAndroidTestAssets UP-TO-DATE
+:MyDemo:mergeBaiduDebugAndroidTestAssets UP-TO-DATE
+:MyDemo:generateBaiduDebugAndroidTestResValues UP-TO-DATE
+:MyDemo:generateBaiduDebugAndroidTestResources UP-TO-DATE
+:MyDemo:mergeBaiduDebugAndroidTestResources UP-TO-DATE
+:MyDemo:processBaiduDebugAndroidTestResources
+:plugin:compileDebugAndroidTestAidl UP-TO-DATE
+:plugin:processDebugAndroidTestManifest UP-TO-DATE
+:plugin:compileDebugAndroidTestRenderscript UP-TO-DATE
+:plugin:generateDebugAndroidTestBuildConfig UP-TO-DATE
+:plugin:generateDebugAndroidTestAssets UP-TO-DATE
+:MyDemo:processBaiduDebugAndroidTestResources UP-TO-DATE
+:MyDemo:generateBaiduDebugAndroidTestSources
+:plugin:mergeDebugAndroidTestAssets UP-TO-DATE
+:plugin:generateDebugAndroidTestResValues UP-TO-DATE
+:plugin:generateDebugAndroidTestResources UP-TO-DATE
+:plugin:mergeDebugAndroidTestResources
+:MyDemo:generateBaiduDebugAndroidTestSources UP-TO-DATE
+:plugin:mergeDebugAndroidTestResources UP-TO-DATE
+:plugin:processDebugAndroidTestResources UP-TO-DATE
+:plugin:generateDebugAndroidTestSources UP-TO-DATE
+:plugin:preDebugUnitTestBuild UP-TO-DATE
+:plugin:prepareDebugUnitTestDependencies
+:plugin:mockableAndroidJar UP-TO-DATE
+
+BUILD SUCCESSFUL
+
+Total time: 2.493 secs

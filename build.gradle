@@ -18,6 +18,8 @@ allprojects {
     }
 }
 
+println "===================== build.gradle ========================="
+
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

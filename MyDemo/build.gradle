@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+
+def apkName = "demo.apk"
+def apkFilePath;
+
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -7,12 +11,12 @@ android {
     def versionFile = file("version.properties")
     def int verCode
     def buildType
-    if (versionFile.canRead()){
+    if (versionFile.canRead()) {
         Properties verPro = new Properties()
         verPro.load(new FileInputStream(versionFile))
         def runTasks = gradle.startParameter.taskNames
         verCode = verPro["VERSION_CODE"].toInteger()
-        if (':app:assembleRelease' in runTasks){
+        if (':app:assembleRelease' in runTasks) {
             verPro['VERSION_CODE'] = (verCode + 1).toString()
             verPro.store(versionFile.newWriter(), null)
         }
@@ -22,9 +26,9 @@ android {
             targetSdkVersion 22
             versionCode verCode
             versionName "1.0"
-            manifestPlaceholders = [label:"@string/app_name"]
+            manifestPlaceholders = [label: "@string/app_name"]
         }
-    }else{
+    } else {
         throw new GradleException("Could not read version.properties!")
     }
 
@@ -52,13 +56,13 @@ android {
 
     buildTypes {
         debug {
-            manifestPlaceholders = [label:"Debug"]
+            manifestPlaceholders = [label: "Debug"]
             signingConfig signingConfigs.debug
             minifyEnabled false
         }
 
         preview {
-            manifestPlaceholders = [label:"Preview"]
+            manifestPlaceholders = [label: "Preview"]
             signingConfig signingConfigs.preview
             debuggable true
             minifyEnabled false
@@ -84,10 +88,10 @@ android {
         }
     }
     //批量处理渠道versionName
-    productFlavors.all{
+    productFlavors.all {
         flavor ->
 //            print(properties.values())
-            flavor.versionName = verCode+"_"+buildType+"_"+name
+            flavor.versionName = verCode + "_" + buildType + "_" + name
     }
     // rename the apk with the version name
     // add output file sub folder by build type
@@ -96,10 +100,28 @@ android {
             /*output.outputFile = new File(
                     output.outputFile.parent + "/${variant.buildType.name}",
                     "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())*/
+            output.outputFile = new File(output.outputFile.parent, apkName);
+//            D:\lianjia\TheDemo\MyDemo\build\outputs\apk
 //            println output.outputFile.parent
-//            println rootProject.rootDir.parent + "\\newlink\\im\\src\\main\\assets\\plugins";
+
+//            D:\lianjia\TheDemo\build
+//            println rootProject.buildDir.absolutePath
+
+//            D:\lianjia\TheDemo\build.gradle
+//              println rootProject.buildFile.absolutePath
+
+//            D:\lianjia\TheDemo
+//            println rootProject.projectDir.absolutePath
+//            D:\lianjia\TheDemo\MyDemo
+//            println project.projectDir.absolutePath
+//            :MyDemo
+//            println project.path
+
+            apkFilePath = output.outputFile.parent + "\\" + apkName
+//            println apkFilePath
         }
     }
+    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
@@ -120,9 +142,95 @@ def releaseTime() {
     println("=====================build.doLast success.=========================")
 }*/
 
+task compilePlugin << {
+
+    println("=====================Compile plugin beginning.=========================")
+    copy{
+        from rootProject.projectDir.absolutePath + "\\plugin.apk"
+
+        into project.projectDir.absolutePath + "\\src\\main\\assets"
+
+        rename{
+
+            "plugin.jar"
+        }
+    }
+    println("=====================Compile plugin success.=========================")
+}
+
+task copyToApk << {
+
+    println("=====================Copy apk beginning.=========================")
+    copy{
+        from project.buildDir.absolutePath + "\\outputs\\apk\\$apkName"
+
+        into rootProject.projectDir.absolutePath
+
+        rename{
+
+            "demo.rar"
+        }
+    }
+    println("=====================Copy apk success.=========================")
+}
+//&& task.name.endsWith("JavaWithJavac")
 tasks.all {
     task ->
-        doLast {
-            println("=====================build.doLast success.=========================")
+
+        if(task.name.equals("preBuild")){
+            // 任务依赖：执行task之前需要执行dependsOn指定的任务,在doFirst之后执行
+            dependsOn(compilePlugin)
+            project.state
+        }
+
+        if (task.name.startsWith("assemble")) {
+            doFirst {
+                println(task.getName() + "=====================build.doFirst success.=========================")
+            }
+            doLast {
+                copyToApk.execute()
+                println(task.getName() + "=====================build.doLast success.=========================")
+            }
         }
 }
+
+//关闭测试相关的task
+tasks.whenTaskAdded { task ->
+    if (task.name.contains('AndroidTest')) {
+        task.enabled = false
+//        task.dependsOn()
+    }
+}
+
+//build.dependsOn(beforeAssemble)
+/*build.doLast {
+//    gradlew build完成时回调
+    println("=====================build.doLast success.=========================")
+}*/
+
+/*beforeEvaluate {
+
+    project  -> println project.description
+
+    tasks.matching {
+        it.name.startsWith('assemble') && (it.name.contains("Baidu"))
+    }.each {
+        task ->
+            println("=====================beforeEvaluate.=========================")
+            task.dependsOn(beforeAssemble)
+    }
+}*/
+
+/*afterEvaluate {
+
+    project  -> println project.name + project.buildDir.absolutePath
+
+    tasks.matching {
+//        it.name.startsWith('assemble') && (it.name.contains("Baidu"))
+        it.name.equals("assembleBaiduDebug")
+    }.each {
+        task ->
+            task.dependsOn(beforeAssemble)
+    }
+}*/
+

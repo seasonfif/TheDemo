@@ -1,1 +1,2 @@
 include ':MyDemo', ':plugin'
+println "===================== settings.gradle ========================="
