@@ -1,8 +1,10 @@
 apply plugin: 'com.android.application'
-
+//apply from: file(rootProject.rootDir.getParentFile().parent+"\\lianjia\\\\newlink\\\\im\\\\build.gradle").absolutePath
+apply from: 'test.gradle'
 
 def apkName = "demo.apk"
-def apkFilePath;
+def apkFilePath
+def isBuild
 
 android {
     compileSdkVersion 22
@@ -145,6 +147,12 @@ def releaseTime() {
 task compilePlugin << {
 
     println("=====================Compile plugin beginning.=========================")
+//    hello.execute()
+//    runHello();
+    exec{
+        executable 'sh'
+        args "-c","gradle -b /d/learn/TheDemo/MyDemo/test.gradle hello"
+    }
     copy{
         from rootProject.projectDir.absolutePath + "\\plugin.apk"
 
@@ -176,11 +184,14 @@ task copyToApk << {
 //&& task.name.endsWith("JavaWithJavac")
 tasks.all {
     task ->
-
         if(task.name.equals("preBuild")){
             // 任务依赖：执行task之前需要执行dependsOn指定的任务,在doFirst之后执行
-            dependsOn(compilePlugin)
-            project.state
+            doFirst {
+                println "preBuild: " + isBuild
+                if (isBuild){
+                    compilePlugin.execute()
+                }
+            }
         }
 
         if (task.name.startsWith("assemble")) {
@@ -200,6 +211,31 @@ tasks.whenTaskAdded { task ->
         task.enabled = false
 //        task.dependsOn()
     }
+}
+
+project.beforeEvaluate {
+    println("=====================project.beforeEvaluate success.=========================")
+}
+
+project.afterEvaluate {
+    def taskList = gradle.startParameter.taskNames
+    taskList.each { String name ->
+        if (name.contains("assemble")) {
+            isBuild = true
+            println "afterEvaluate: " + isBuild
+            return;
+        }
+    }
+    println("=====================project.afterEvaluate success.=========================")
+}
+
+gradle.beforeProject {
+    println("=====================gradle.beforeProject success.=========================")
+}
+
+gradle.afterProject {
+
+    println("=====================gradle.afterProject success.=========================")
 }
 
 //build.dependsOn(beforeAssemble)

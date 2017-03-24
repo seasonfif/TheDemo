@@ -1,0 +1,28 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+//apply plugin: 'Gradle'
+
+task hello << {
+    println "我是外部gradle脚本" + project.projectDir.absolutePath
+    //调用shell脚本
+    exec {
+//        executable 'sh'
+//        args "-c","sh compile.sh"
+//        workingDir "./"
+//        commandLine "sh", "compile.sh"
+//          workingDir "./"
+//          commandLine "gradle.bat", "-v"
+          executable 'sh'
+          args "-c","gradle -v"
+    }
+    try{
+        /*String cmd = 'gradle.bat -v'
+        def cmdResult = cmd.execute().text.trim()
+        println cmdResult*/
+    } catch(Exception e){
+        println e
+    }
+}
+
+def runHello(){
+    hello.execute();
+}
