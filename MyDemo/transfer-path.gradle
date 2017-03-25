@@ -1,0 +1,20 @@
+
+task hello {
+    String path
+    //path=D\:\\lianjia\\TheDemo\\MyDemo
+    def pathFile = new File(projectDir.parentFile.absolutePath, "local.properties")
+    Properties pathPro = new Properties()
+    pathPro.load(new FileInputStream(pathFile))
+    path = pathPro["path"]
+    def file = new File(path)
+    if (file.separator == "\\") {
+        path = path.replace("\\", "/")
+        path = path.replace(":", "")
+        path = "/" + path
+        println path
+    }
+    exec {
+        executable 'sh'
+        args "-c", "gradle -q -p $path clean"
+    }
+}
