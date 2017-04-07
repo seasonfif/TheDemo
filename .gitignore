@@ -49,3 +49,5 @@ captures/
 #/build
 #/captures
 projectFilesBackup/
+
+.vscode/
