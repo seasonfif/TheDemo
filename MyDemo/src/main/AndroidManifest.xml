@@ -1,58 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.demo" >
+  package="com.demo">
 
-    <application
-        android:name=".MyApplication"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/MyTheme">
-        <activity android:name=".activity.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+  <application
+    android:name=".MyApplication"
+    android:allowBackup="true"
+    android:icon="@mipmap/ic_launcher"
+    android:label="@string/app_name"
+    android:supportsRtl="true"
+    android:theme="@style/MyTheme">
+    <activity android:name=".activity.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".activity.TestViewActivity" android:label="分享">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="image/*"/>
-                <data android:mimeType="text/plain"/>
-            </intent-filter>
-          </activity>
-      <activity android:name=".activity.ShareAcivity" >
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity
+      android:name=".activity.TestViewActivity"
+      android:label="分享">
+      <intent-filter>
+        <action android:name="android.intent.action.SEND" />
 
-      </activity>
-      <activity android:name=".LogicOperation.TestLogicActivity" />
-        <activity android:name=".activity.TestMarqueeActivity" />
-        <activity android:name=".activity.TestViewGroupActivity" />
-        <activity android:name=".leakcanary.LeakAsyncTaskAndHandlerActivity" />
-        <activity android:name=".leakcanary.Imm"/>
-        <activity android:name=".leakcanary.LeakImmActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
-        <!--android:windowSoftInputMode="adjustResize|stateAlwaysHidden"-->
-      <activity android:name=".dynamicload.ClassLoaderTest"/>
+        <category android:name="android.intent.category.DEFAULT" />
 
-      <service
-        android:name=".service.NotifyService"
-        android:label="NotifyService"
-        android:process=":remote1">
-      </service>
+        <data android:mimeType="image/*" />
+        <data android:mimeType="text/plain" />
+      </intent-filter>
+    </activity>
+    <activity android:name=".activity.ShareAcivity"></activity>
+    <activity android:name=".LogicOperation.TestLogicActivity" />
+    <activity android:name=".activity.TestMarqueeActivity" />
+    <activity android:name=".activity.TestViewGroupActivity" />
+    <activity android:name=".leakcanary.LeakAsyncTaskAndHandlerActivity" />
+    <activity android:name=".leakcanary.Imm" />
+    <activity
+      android:name=".leakcanary.LeakImmActivity"
+      android:screenOrientation="portrait"
+      android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+    <!-- android:windowSoftInputMode="adjustResize|stateAlwaysHidden" -->
+    <activity android:name=".dynamicload.ClassLoaderTest" />
+    <activity android:name=".provider.TestProviderActivity"></activity>
 
-      <service
-        android:name=".service.CoreService"
-        android:label="CoreService"
-        android:process=":remote2">
-      </service>
-      <service
-        android:name=".service.CoreUIService"
-        android:label="CoreUIService">
-      </service>
-    </application>
+    <service
+      android:name=".service.NotifyService"
+      android:label="NotifyService"
+      android:process=":remote1"></service>
+    <service
+      android:name=".service.CoreService"
+      android:label="CoreService"
+      android:process=":remote2"></service>
+    <service
+      android:name=".service.CoreUIService"
+      android:label="CoreUIService"></service>
+
+    <provider
+      android:authorities="com.thedemo.demo.ServiceProvider"
+      android:name="com.demo.com.seasonfif.svcmanager.ServiceProvider"
+      android:exported="true"/>
+  </application>
 
 </manifest>

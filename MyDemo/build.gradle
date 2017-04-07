@@ -7,137 +7,136 @@ def apkFilePath
 def isBuild
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
-    //自动计算versionCode
-    def versionFile = file("version.properties")
-    def int verCode
-    def buildType
-    if (versionFile.canRead()) {
-        Properties verPro = new Properties()
-        verPro.load(new FileInputStream(versionFile))
-        def runTasks = gradle.startParameter.taskNames
-        verCode = verPro["VERSION_CODE"].toInteger()
-        if (':app:assembleRelease' in runTasks) {
-            verPro['VERSION_CODE'] = (verCode + 1).toString()
-            verPro.store(versionFile.newWriter(), null)
-        }
-        defaultConfig {
-            applicationId "com.thedemo"
-            minSdkVersion 19
-            targetSdkVersion 22
-            versionCode verCode
-            versionName "1.0"
-            manifestPlaceholders = [label: "@string/app_name"]
-        }
-    } else {
-        throw new GradleException("Could not read version.properties!")
+  compileSdkVersion 22
+  buildToolsVersion "22.0.1"
+  //自动计算versionCode
+  def versionFile = file("version.properties")
+  def int verCode
+  def buildType
+  if (versionFile.canRead()) {
+    Properties verPro = new Properties()
+    verPro.load(new FileInputStream(versionFile))
+    def runTasks = gradle.startParameter.taskNames
+    verCode = verPro["VERSION_CODE"].toInteger()
+    if (':app:assembleRelease' in runTasks) {
+      verPro['VERSION_CODE'] = (verCode + 1).toString()
+      verPro.store(versionFile.newWriter(), null)
+    }
+    defaultConfig {
+      applicationId "com.thedemo"
+      minSdkVersion 19
+      targetSdkVersion 22
+      versionCode verCode
+      versionName "1.0"
+      manifestPlaceholders = [label: "@string/app_name"]
+    }
+  } else {
+    throw new GradleException("Could not read version.properties!")
+  }
+
+  //签名设置
+  signingConfigs {
+    debug {
+      keyAlias RELEASE_KEY_ALIAS
+      keyPassword RELEASE_KEY_PASSWORD
+      storeFile file(RELEASE_STORE_FILE)
+      storePassword RELEASE_STORE_PASSWORD
+    }
+    preview {
+      storeFile file(RELEASE_STORE_FILE)
+      storePassword RELEASE_STORE_PASSWORD
+      keyAlias RELEASE_KEY_ALIAS
+      keyPassword RELEASE_KEY_PASSWORD
+    }
+    release {
+      keyAlias RELEASE_KEY_ALIAS
+      keyPassword RELEASE_KEY_PASSWORD
+      storeFile file(RELEASE_STORE_FILE)
+      storePassword RELEASE_STORE_PASSWORD
+    }
+  }
+
+  buildTypes {
+    debug {
+      manifestPlaceholders = [label: "Debug"]
+      signingConfig signingConfigs.debug
+      minifyEnabled false
     }
 
-    //签名设置
-    signingConfigs {
-        debug {
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-        }
-        preview {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-        }
-        release {
-            keyAlias RELEASE_KEY_ALIAS
-            keyPassword RELEASE_KEY_PASSWORD
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword RELEASE_STORE_PASSWORD
-        }
+    preview {
+      manifestPlaceholders = [label: "Preview"]
+      signingConfig signingConfigs.preview
+      debuggable true
+      minifyEnabled false
     }
 
-    buildTypes {
-        debug {
-            manifestPlaceholders = [label: "Debug"]
-            signingConfig signingConfigs.debug
-            minifyEnabled false
-        }
-
-        preview {
-            manifestPlaceholders = [label: "Preview"]
-            signingConfig signingConfigs.preview
-            debuggable true
-            minifyEnabled false
-        }
-
-        release {
-            signingConfig signingConfigs.release
-            minifyEnabled true//是否启动混淆
-            shrinkResources true //是否移除无用资源文件，shrinkResources依赖于minifyEnabled，必须和minifyEnabled一起用
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
+    release {
+      signingConfig signingConfigs.release
+      minifyEnabled true //是否启动混淆
+      shrinkResources true //是否移除无用资源文件，shrinkResources依赖于minifyEnabled，必须和minifyEnabled一起用
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
-    //渠道打包信息
-    productFlavors {
-        googleplay {
-            applicationId "com.thedemo.googleplay"
-//            versionName verCode+"_"+name
-        }
-        baidu {
-//            applicationId "com.thedemo.baidu"
-            applicationId "com.thedemo.demo"
-//            versionName verCode+"_"+name
-        }
+  }
+  //渠道打包信息
+  productFlavors {
+    googleplay {
+      applicationId "com.thedemo.googleplay"
+      //            versionName verCode+"_"+name
     }
-    //批量处理渠道versionName
-    productFlavors.all {
-        flavor ->
-//            print(properties.values())
-            flavor.versionName = verCode + "_" + buildType + "_" + name
+    baidu {
+      //            applicationId "com.thedemo.baidu"
+      applicationId "com.thedemo.demo"
+      //            versionName verCode+"_"+name
     }
-    // rename the apk with the version name
-    // add output file sub folder by build type
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            /*output.outputFile = new File(
+  }
+  //批量处理渠道versionName
+  productFlavors.all { flavor -> //            print(properties.values())
+    flavor.versionName = verCode + "_" + buildType + "_" + name
+  }
+  // rename the apk with the version name
+  // add output file sub folder by build type
+  applicationVariants.all { variant ->
+    variant.outputs.each { output ->
+      /*output.outputFile = new File(
                     output.outputFile.parent + "/${variant.buildType.name}",
                     "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())*/
-            output.outputFile = new File(output.outputFile.parent, apkName);
-//            D:\lianjia\TheDemo\MyDemo\build\outputs\apk
-//            println output.outputFile.parent
+      output.outputFile = new File(output.outputFile.parent, apkName);
+      //            D:\lianjia\TheDemo\MyDemo\build\outputs\apk
+      //            println output.outputFile.parent
 
-//            D:\lianjia\TheDemo\build
-//            println rootProject.buildDir.absolutePath
+      //            D:\lianjia\TheDemo\build
+      //            println rootProject.buildDir.absolutePath
 
-//            D:\lianjia\TheDemo\build.gradle
-//              println rootProject.buildFile.absolutePath
+      //            D:\lianjia\TheDemo\build.gradle
+      //              println rootProject.buildFile.absolutePath
 
-//            D:\lianjia\TheDemo
-//            println rootProject.projectDir.absolutePath
-//            D:\lianjia\TheDemo\MyDemo
-//            println project.projectDir.absolutePath
-//            :MyDemo
-//            println project.path
+      //            D:\lianjia\TheDemo
+      //            println rootProject.projectDir.absolutePath
+      //            D:\lianjia\TheDemo\MyDemo
+      //            println project.projectDir.absolutePath
+      //            :MyDemo
+      //            println project.path
 
-            apkFilePath = output.outputFile.parent + "\\" + apkName
-//            println apkFilePath
-        }
+      apkFilePath = output.outputFile.parent + "\\" + apkName
+      //            println apkFilePath
     }
-    sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
+  }
+  sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    //leakcannry
-    /*debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    previewCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'*/
-    //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+  compile fileTree(include: ['*.jar'], dir: 'libs')
+  //leakcannry
+  /*debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+      previewCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+      releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'*/
+  //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+  compile 'com.android.support:appcompat-v7:22.2.1'
+  compile project(':svcmanager')
 }
 
 def releaseTime() {
-    return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
+  return new Date().format("yyyyMMdd", TimeZone.getTimeZone("UTC"))
 }
 
 /*tasks.findByName("assemble*").doLast {
@@ -146,96 +145,97 @@ def releaseTime() {
 
 task compilePlugin << {
 
-    println("=====================Compile plugin beginning.=========================")
-//    hello.execute()
-//    runHello();
-    exec{
-        executable 'sh'
-        args "-c","gradle -b /d/learn/TheDemo/MyDemo/test.gradle hello"
+  println("=====================Compile plugin beginning.=========================")
+  //    hello.execute()
+  //    runHello();
+  exec {
+    executable 'sh'
+    args "-c", "gradle -b /d/learn/TheDemo/MyDemo/test.gradle hello"
+  }
+  copy {
+    from rootProject.projectDir.absolutePath + "\\plugin.apk"
+
+    into project.projectDir.absolutePath + "\\src\\main\\assets"
+
+    rename {
+
+      "plugin.jar"
     }
-    copy{
-        from rootProject.projectDir.absolutePath + "\\plugin.apk"
-
-        into project.projectDir.absolutePath + "\\src\\main\\assets"
-
-        rename{
-
-            "plugin.jar"
-        }
-    }
-    println("=====================Compile plugin success.=========================")
+  }
+  println("=====================Compile plugin success.=========================")
 }
 
 task copyToApk << {
 
-    println("=====================Copy apk beginning.=========================")
-    copy{
-        from project.buildDir.absolutePath + "\\outputs\\apk\\$apkName"
+  println("=====================Copy apk beginning.=========================")
+  copy {
+    from project.buildDir.absolutePath + "\\outputs\\apk\\$apkName"
 
-        into rootProject.projectDir.absolutePath
+    into rootProject.projectDir.absolutePath
 
-        rename{
+    rename {
 
-            "demo.rar"
-        }
+      "demo.rar"
     }
-    println("=====================Copy apk success.=========================")
+  }
+  println("=====================Copy apk success.=========================")
 }
 //&& task.name.endsWith("JavaWithJavac")
-tasks.all {
-    task ->
-        if(task.name.equals("preBuild")){
-            // 任务依赖：执行task之前需要执行dependsOn指定的任务,在doFirst之后执行
-            doFirst {
-                println "preBuild: " + isBuild
-                if (isBuild){
-                    compilePlugin.execute()
-                }
-            }
-        }
+tasks.all { task ->
+  if (task.name.equals("preBuild")) {
+    // 任务依赖：执行task之前需要执行dependsOn指定的任务,在doFirst之后执行
+    doFirst {
+      println "preBuild: " + isBuild
+      if (isBuild) {
+        compilePlugin.execute()
+      }
+    }
+  }
 
-        if (task.name.startsWith("assemble")) {
-            doFirst {
-                println(task.getName() + "=====================build.doFirst success.=========================")
-            }
-            doLast {
-                copyToApk.execute()
-                println(task.getName() + "=====================build.doLast success.=========================")
-            }
-        }
+  if (task.name.startsWith("assemble")) {
+    doFirst {
+      println(
+          task.getName() + "=====================build.doFirst success.=========================")
+    }
+    doLast {
+      copyToApk.execute()
+      println(
+          task.getName() + "=====================build.doLast success.=========================")
+    }
+  }
 }
 
 //关闭测试相关的task
 tasks.whenTaskAdded { task ->
-    if (task.name.contains('AndroidTest')) {
-        task.enabled = false
-//        task.dependsOn()
-    }
+  if (task.name.contains('AndroidTest')) {
+    task.enabled = false
+    //        task.dependsOn()
+  }
 }
 
 project.beforeEvaluate {
-    println("=====================project.beforeEvaluate success.=========================")
+  println("=====================project.beforeEvaluate success.=========================")
 }
 
 project.afterEvaluate {
-    def taskList = gradle.startParameter.taskNames
-    taskList.each { String name ->
-        if (name.contains("assemble")) {
-            isBuild = true
-            println "afterEvaluate: " + isBuild
-            return;
-        }
+  def taskList = gradle.startParameter.taskNames
+  taskList.each { String name ->
+    if (name.contains("assemble")) {
+      isBuild = true
+      println "afterEvaluate: " + isBuild
+      return;
     }
-    println("=====================project.afterEvaluate success.=========================")
+  }
+  println("=====================project.afterEvaluate success.=========================")
 }
 
 gradle.beforeProject {
-    println("=====================gradle.beforeProject success.=========================")
+  println("=====================gradle.beforeProject success.=========================")
 }
 
 gradle.afterProject {
 
-    println("=====================gradle.afterProject success.=========================")
+  println("=====================gradle.afterProject success.=========================")
 }
 
 //build.dependsOn(beforeAssemble)

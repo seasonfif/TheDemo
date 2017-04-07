@@ -16,7 +16,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         //LeakCanary.install(this);
-
+        PMF.init(this);
+        PMF.attach();
         int pid = android.os.Process.myPid();
         Log.e(TAG, "MyApplication is oncreate====="+"pid="+pid);
     }

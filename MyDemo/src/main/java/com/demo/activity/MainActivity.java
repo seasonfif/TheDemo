@@ -14,6 +14,7 @@ import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
+import com.demo.provider.TestProviderActivity;
 import com.demo.service.Core;
 import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.share).setOnClickListener(this);
         findViewById(R.id.dynamic).setOnClickListener(this);
         findViewById(R.id.process).setOnClickListener(this);
+        findViewById(R.id.provider).setOnClickListener(this);
     }
 
     @Override
@@ -79,8 +81,8 @@ public class MainActivity extends BaseActivity{
                 goToOthers(ShareAcivity.class);
                 break;
             case R.id.dynamic:
-                PMF.init(this);
-                PMF.attach();
+                //PMF.init(this);
+                //PMF.attach();
                 goToOthers(ClassLoaderTest.class);
                 break;
             case R.id.process:
@@ -115,6 +117,9 @@ public class MainActivity extends BaseActivity{
 
                     }
                 }, Service.BIND_AUTO_CREATE);
+                break;
+            case R.id.provider:
+                goToOthers(TestProviderActivity.class);
                 break;
 
         }
