@@ -19,6 +19,10 @@ import com.demo.service.Core;
 import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
 import com.demo.service.NotifyService;
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.seasonfif.pluginhost.manager.PMF;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,6 +33,8 @@ import java.util.Calendar;
 public class MainActivity extends BaseActivity{
 
     Core core;
+    AdView mAdView;
+    InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,36 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.dynamic).setOnClickListener(this);
         findViewById(R.id.process).setOnClickListener(this);
         findViewById(R.id.provider).setOnClickListener(this);
+
+        mAdView = (AdView) findViewById(R.id.adview);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        requestNewInterstitial();
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                goOther();
+            }
+        });
+    }
+
+    private void goOther() {
+        if (mInterstitialAd.isLoaded()){
+            mInterstitialAd.show();
+        }else{
+            goToOthers(TestViewActivity.class);
+        }
+    }
+
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+            .addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+            .build();
+        mInterstitialAd.loadAd(adRequest);
     }
 
     @Override
@@ -63,7 +99,7 @@ public class MainActivity extends BaseActivity{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.views:
-                goToOthers(TestViewActivity.class);
+                goOther();
                 //goToOthers(TestMarqueeActivity.class);
                 break;
             case R.id.viewgroup:
@@ -123,5 +159,32 @@ public class MainActivity extends BaseActivity{
                 break;
 
         }
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }

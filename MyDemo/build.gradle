@@ -131,8 +131,9 @@ dependencies {
       previewCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
       releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'*/
   //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-  compile 'com.android.support:appcompat-v7:22.2.1'
   compile project(':svcmanager')
+  compile 'com.android.support:appcompat-v7:22.2.1'
+  compile 'com.google.android.gms:play-services-ads:9.2.1'
 }
 
 def releaseTime() {
@@ -187,7 +188,7 @@ tasks.all { task ->
     doFirst {
       println "preBuild: " + isBuild
       if (isBuild) {
-        compilePlugin.execute()
+//        compilePlugin.execute()
       }
     }
   }
@@ -198,7 +199,7 @@ tasks.all { task ->
           task.getName() + "=====================build.doFirst success.=========================")
     }
     doLast {
-      copyToApk.execute()
+//      copyToApk.execute()
       println(
           task.getName() + "=====================build.doLast success.=========================")
     }
