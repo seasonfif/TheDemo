@@ -37,7 +37,7 @@ public final class ServiceManager {
       }
     }
 
-    IServiceHandle serviceHandle = getServiceHandle();
+    IServiceHandle serviceHandle = null;
     if (serviceHandle == null) {
       return null;
     }
@@ -55,9 +55,9 @@ public final class ServiceManager {
 
   }
 
-  public static IServiceHandle getServiceHandle() {
+  /*public static IServiceHandle getServiceHandle() {
 
 
-    return serviceHandle;
-  }
+    return new IServiceHandle.Stub();
+  }*/
 }

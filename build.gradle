@@ -23,3 +23,11 @@ println "===================== build.gradle ========================="
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+//关闭测试相关的task
+tasks.whenTaskAdded { task ->
+    if (task.name.contains('AndroidTest')) {
+        task.enabled = false
+        //        task.dependsOn()
+    }
+}
