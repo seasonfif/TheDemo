@@ -133,7 +133,7 @@ dependencies {
   //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
   compile project(':svcmanager')
   compile 'com.android.support:appcompat-v7:22.2.1'
-  compile 'com.google.android.gms:play-services-ads:9.2.1'
+  compile 'com.google.android.gms:play-services-ads:10.2.1'
 }
 
 def releaseTime() {
