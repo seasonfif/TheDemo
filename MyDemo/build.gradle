@@ -126,6 +126,8 @@ android {
 
 dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
+  compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
+  compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.0@aar'
   //leakcannry
   /*debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
       previewCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
