@@ -49,6 +49,7 @@
     <!-- android:windowSoftInputMode="adjustResize|stateAlwaysHidden" -->
     <activity android:name=".dynamicload.ClassLoaderTest" />
     <activity android:name=".provider.TestProviderActivity"></activity>
+    <activity android:name=".activity.SimpleNotificationActivity"></activity>
 
     <service
       android:name=".service.NotifyService"

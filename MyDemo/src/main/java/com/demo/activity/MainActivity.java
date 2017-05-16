@@ -23,7 +23,6 @@ import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.seasonfif.pluginhost.manager.PMF;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -50,6 +49,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.dynamic).setOnClickListener(this);
         findViewById(R.id.process).setOnClickListener(this);
         findViewById(R.id.provider).setOnClickListener(this);
+        findViewById(R.id.notification).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -95,6 +95,10 @@ public class MainActivity extends BaseActivity{
         return calendar.getTimeInMillis();
     }
 
+    /**
+     *
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -156,6 +160,8 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.provider:
                 goToOthers(TestProviderActivity.class);
+            case R.id.notification:
+                goToOthers(SimpleNotificationActivity.class);
                 break;
 
         }
