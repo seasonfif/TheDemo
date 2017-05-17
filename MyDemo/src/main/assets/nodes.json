@@ -1,0 +1,32 @@
+{
+	"type": 1,
+	"des":"tree",
+	"data":"",
+	"children":[
+		{
+			"type": 2,
+			"des":"",
+			"data":"",
+			"children":[
+				{
+					"type": 3,
+					"des":"",
+					"data":"",
+					"children":[]
+				}
+			]
+		},
+		{
+			"type": 2,
+			"des":"",
+			"data":"",
+			"children":[]
+		},
+		{
+			"type": 2,
+			"des":"",
+			"data":"",
+			"children":[]
+		}
+	]
+}

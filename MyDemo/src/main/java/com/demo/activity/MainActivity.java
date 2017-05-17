@@ -14,6 +14,7 @@ import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
+import com.demo.matrix.MatrixDemo;
 import com.demo.provider.TestProviderActivity;
 import com.demo.service.Core;
 import com.demo.service.CoreService;
@@ -50,6 +51,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.process).setOnClickListener(this);
         findViewById(R.id.provider).setOnClickListener(this);
         findViewById(R.id.notification).setOnClickListener(this);
+        findViewById(R.id.matrix).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -162,6 +164,9 @@ public class MainActivity extends BaseActivity{
                 goToOthers(TestProviderActivity.class);
             case R.id.notification:
                 goToOthers(SimpleNotificationActivity.class);
+                break;
+            case R.id.matrix:
+                goToOthers(MatrixDemo.class);
                 break;
 
         }
