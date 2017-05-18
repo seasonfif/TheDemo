@@ -1,30 +1,57 @@
 {
-	"type": 1,
+	"type": 0,
 	"des":"tree",
 	"data":"",
 	"children":[
 		{
-			"type": 2,
-			"des":"",
+			"type": 0,
+			"des":"21",
 			"data":"",
 			"children":[
 				{
-					"type": 3,
-					"des":"",
+					"type": 0,
+					"des":"31",
 					"data":"",
-					"children":[]
+					"children":[
+						{
+							"type": 0,
+							"des":"41",
+							"data":"",
+							"children":[
+								{
+									"type": 1,
+									"des":"51",
+									"data":"",
+									"children":[]
+								}
+							]
+						}
+					]
+				},
+				{
+					"type": 0,
+					"des":"32",
+					"data":"",
+					"children":[
+						{
+							"type": 1,
+							"des":"42",
+							"data":"",
+							"children":[]
+						}
+					]
 				}
 			]
 		},
 		{
-			"type": 2,
-			"des":"",
+			"type": 1,
+			"des":"22",
 			"data":"",
 			"children":[]
 		},
 		{
-			"type": 2,
-			"des":"",
+			"type": 1,
+			"des":"23",
 			"data":"",
 			"children":[]
 		}

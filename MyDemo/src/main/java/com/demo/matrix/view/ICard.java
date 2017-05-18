@@ -1,6 +1,6 @@
 package com.demo.matrix.view;
 
-import com.demo.matrix.model.INode;
+import com.demo.matrix.annotation.NestMode;
 
 /**
  * 创建时间：2017年05月17日13:58 <br>
@@ -14,7 +14,8 @@ public interface ICard {
    * 是否允许嵌套
    * @return
    */
-  boolean allowGroup();
+  @NestMode
+  int getNestMode();
 
   /**
    * 更新卡片

@@ -10,7 +10,6 @@ import com.demo.matrix.engine.Matrix;
 import com.demo.matrix.model.Node;
 import com.demo.util.DataUtil;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * 创建时间：2017年05月17日11:57 <br>
@@ -21,25 +20,26 @@ import java.util.List;
 public class MatrixDemo extends Activity{
 
   private static final String TAG = "MatrixDemo";
-  private List<Node> nodes;
+  private Node node;
   private TextView tv;
   private View view;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_matrix_layout);
-    tv = (TextView) findViewById(R.id.tv);
+    //setContentView(R.layout.activity_matrix_layout);
+    //tv = (TextView) findViewById(R.id.tv);
     try {
       String jsonStr = DataUtil.getStrFromAssets(getAssets().open("nodes.json"));
-      nodes = DataUtil.getListData(jsonStr, Node.class);
-      if (nodes == null){
+      node = DataUtil.getData(jsonStr, Node.class);
+      if (node == null){
         Log.e(TAG, "");
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    view = Matrix.with(this).produce(nodes.get(0));
+    view = Matrix.with(this).produce(node);
+    setContentView(view);
 
   }
 }

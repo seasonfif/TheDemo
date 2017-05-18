@@ -1,5 +1,7 @@
 package com.demo.matrix.view;
 
+import android.content.Context;
+
 /**
  * 创建时间：2017年05月17日13:49 <br>
  * 作者：zhangqiang <br>
@@ -8,5 +10,5 @@ package com.demo.matrix.view;
 
 public interface ICardFactory {
 
-  ICard createCard();
+  ICard createCard(Context context, int type);
 }

@@ -3,6 +3,7 @@ package com.demo.matrix.engine;
 import android.content.Context;
 import android.view.View;
 import com.demo.matrix.model.Node;
+import com.demo.matrix.view.ICardFactory;
 
 /**
  * 创建时间：2017年05月17日14:18 <br>
@@ -28,7 +29,18 @@ public class Matrix {
   }
 
   private Matrix(Context context) {
-    engine = new LayoutEngine(context);
+    ICardFactory factory = null;
+    try {
+      Class cls = Class.forName("com.demo.matrix.custome.CardFactory");
+      factory = (ICardFactory) cls.newInstance();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    } catch (InstantiationException e) {
+      e.printStackTrace();
+    } catch (IllegalAccessException e) {
+      e.printStackTrace();
+    }
+    engine = new LayoutEngine(context, factory);
   }
 
   public View produce(Node node){

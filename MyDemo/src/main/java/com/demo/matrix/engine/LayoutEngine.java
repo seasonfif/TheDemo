@@ -4,7 +4,10 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import com.demo.matrix.model.Node;
-import java.util.List;
+import com.demo.matrix.view.FactoryProxy;
+import com.demo.matrix.view.ICard;
+import com.demo.matrix.view.ICardFactory;
+import com.demo.matrix.annotation.NestMode;
 
 /**
  * 创建时间：2017年05月17日16:20 <br>
@@ -14,25 +17,52 @@ import java.util.List;
 
 public class LayoutEngine {
 
-  private Context context;
+  public static int COMPLY_FLAG = -1;
 
-  public LayoutEngine(Context context) {
+  private Context context;
+  private FactoryProxy factory;
+
+  public LayoutEngine(Context context, ICardFactory factory) {
     this.context = context;
+    this.factory = new FactoryProxy(factory);
   }
 
   public View layout(@NonNull Node node) {
+    ICard card;
+    card = factory.createCard(context, node.getType());
+    card.update(node.getData());
 
-
-    if (node.children.size() > 0){
-
-      for (Node child : node.children) {
-        flatNode(child);
-      }
+    if (!node.isLeaf()){
+      layout(node, card);
     }
-    return new View(context);
+    return (View)card;
   }
 
-  private Node flatNode(Node node){
-
+  private void layout(Node node, ICard card) {
+    if (card.getNestMode() == NestMode.NONE){
+      throw new IllegalStateException("该数据节点含有子节点，card却不允许嵌套");
+    }
+    if (card.getNestMode() == NestMode.COMPLY){
+      for (Node child : node.getChildren()) {
+        ICard childCard = factory.createCard(context, child.getType());
+        childCard.update(child.getData());
+        card.addCard(COMPLY_FLAG, childCard);
+        if (!child.isLeaf()){
+          layout(child, childCard);
+        }
+      }
+    }else if(card.getNestMode() == NestMode.ADJUST){
+      for (int i = 0; i < node.getChildren().size(); i++) {
+        Node child = node.getChildren().get(i);
+        ICard childCard = factory.createCard(context, node.getType());
+        childCard.update(child.getData());
+        card.addCard(i, childCard);
+        if (!child.isLeaf()){
+          layout(child, childCard);
+        }
+      }
+    }else{
+      throw new IllegalStateException("嵌套类型非法");
+    }
   }
 }

@@ -9,10 +9,11 @@ import java.util.List;
  */
 
 public class Node implements INode{
-  public int type;
-  public String des;
-  public String data;
-  public List<Node> children;
+
+  private int type;
+  private String des;
+  private String data;
+  private List<Node> children;
 
   @Override public int getType() {
     return type;
@@ -28,5 +29,16 @@ public class Node implements INode{
 
   @Override public List<Node> getChildren() {
     return children;
+  }
+
+  public boolean isLeaf(){
+    if (getChildren() == null){
+      return true;
+    }else{
+      if (getChildren().size() <= 0){
+        return true;
+      }
+      return false;
+    }
   }
 }
