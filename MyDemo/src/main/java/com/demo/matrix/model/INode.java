@@ -12,6 +12,8 @@ public interface INode {
 
   int getType();
 
+  int getWeight();
+
   String getDes();
 
   String getData();

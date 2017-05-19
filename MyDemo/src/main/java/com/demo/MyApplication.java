@@ -3,6 +3,8 @@ package com.demo;
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
+import com.demo.matrix.custome.CardFactory;
+import com.demo.matrix.engine.Matrix;
 import com.seasonfif.pluginhost.manager.PMF;
 
 /**
@@ -20,6 +22,7 @@ public class MyApplication extends Application {
         PMF.attach();
         int pid = android.os.Process.myPid();
         Log.e(TAG, "MyApplication is oncreate====="+"pid="+pid);
+        Matrix.init(new CardFactory());
     }
 
     @Override protected void attachBaseContext(Context base) {

@@ -12,11 +12,16 @@ public class Node implements INode{
 
   private int type;
   private String des;
+  private int weight;
   private String data;
   private List<Node> children;
 
   @Override public int getType() {
     return type;
+  }
+
+  @Override public int getWeight() {
+    return weight;
   }
 
   @Override public String getDes() {

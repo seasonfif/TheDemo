@@ -2,7 +2,9 @@ package com.demo.matrix.custome;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.demo.R;
 import com.demo.matrix.view.ICard;
 import com.demo.matrix.annotation.NestMode;
@@ -16,6 +18,8 @@ import com.demo.matrix.annotation.NestMode;
 public class ItemCard extends LinearLayout implements ICard {
 
   public static final int TYPE_ITEM_CARD = 0x0001;
+  TextView tv;
+  LinearLayout root;
 
   public ItemCard(Context context) {
     this(context, null);
@@ -32,17 +36,20 @@ public class ItemCard extends LinearLayout implements ICard {
 
   private void init() {
     inflate(getContext(), R.layout.item_card, this);
+    tv = (TextView) findViewById(R.id.tv);
+    root = (LinearLayout) findViewById(R.id.root);
   }
 
   @Override public int getNestMode() {
-    return NestMode.NONE;
+    return NestMode.MANUAL;
   }
 
   @Override public void update(String data) {
-
+    tv.setText(data);
   }
 
   @Override public void addCard(int index, ICard card) {
-
+    LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    root.addView((View)card, lp);
   }
 }

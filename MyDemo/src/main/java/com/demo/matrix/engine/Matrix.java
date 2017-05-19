@@ -15,35 +15,30 @@ public class Matrix {
 
   private static volatile Matrix singleton = null;
 
+  private static ICardFactory sFactory;
+
   private LayoutEngine engine;
 
-  public static Matrix with(Context context){
+  public static void init(ICardFactory factory){
+    sFactory = factory;
+  }
+
+  private Matrix(ICardFactory factory) {
+    engine = new LayoutEngine(factory);
+  }
+
+  public static Matrix getEngine(){
     if (singleton == null){
       synchronized (Matrix.class){
         if (singleton == null){
-          singleton = new Matrix(context);
+          singleton = new Matrix(sFactory);
         }
       }
     }
     return singleton;
   }
 
-  private Matrix(Context context) {
-    ICardFactory factory = null;
-    try {
-      Class cls = Class.forName("com.demo.matrix.custome.CardFactory");
-      factory = (ICardFactory) cls.newInstance();
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (InstantiationException e) {
-      e.printStackTrace();
-    } catch (IllegalAccessException e) {
-      e.printStackTrace();
-    }
-    engine = new LayoutEngine(context, factory);
-  }
-
-  public View produce(Node node){
-    return engine.layout(node);
+  public View produce(Context context, Node node){
+    return engine.layout(context, node);
   }
 }

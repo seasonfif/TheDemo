@@ -4,8 +4,8 @@ import android.support.annotation.IntDef;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static com.demo.matrix.annotation.NestMode.ADJUST;
-import static com.demo.matrix.annotation.NestMode.COMPLY;
+import static com.demo.matrix.annotation.NestMode.MANUAL;
+import static com.demo.matrix.annotation.NestMode.AUTO;
 import static com.demo.matrix.annotation.NestMode.NONE;
 
 /**
@@ -14,7 +14,7 @@ import static com.demo.matrix.annotation.NestMode.NONE;
  * 描述：
  */
 
-@IntDef({ ADJUST,COMPLY,NONE})
+@IntDef({ MANUAL, AUTO, NONE})
 @Retention(RetentionPolicy.SOURCE)
 public @interface NestMode{
 
@@ -24,14 +24,14 @@ public @interface NestMode{
    int NONE = 0;
 
    /**
-   * 根据viewgroup特性顺应嵌套
+   * 根据viewgroup特性自动嵌套
    * 比如LinearLayout的VERTICAL与HORIZONTAL
    */
-   int COMPLY = 1;
+   int AUTO = 1;
 
    /**
-   * 自己布局嵌套
+   * 手动布局嵌套
    */
-   int ADJUST = 2;
+   int MANUAL = 2;
 }
 

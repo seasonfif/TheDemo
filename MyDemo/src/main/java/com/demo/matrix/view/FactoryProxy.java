@@ -21,11 +21,12 @@ public class FactoryProxy implements ICardFactory{
 
   @Override public ICard createCard(Context context, int type) {
 
-    ICard card = cardCache.get(type);
+    /*ICard card = cardCache.get(type);
     if (card == null){
       card = factory.createCard(context, type);
       cardCache.set(type, card);
-    }
+    }*/
+    ICard card = factory.createCard(context, type);
 
     return card;
   }

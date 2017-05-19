@@ -9,7 +9,6 @@ import com.demo.matrix.view.ICardFactory;
  * 作者：zhangqiang <br>
  * 描述：
  */
-@com.demo.matrix.annotation.CardFactory
 public class CardFactory implements ICardFactory {
   @Override public ICard createCard(Context context, int type) {
     ICard card;
@@ -19,6 +18,9 @@ public class CardFactory implements ICardFactory {
         break;
       case ItemCard.TYPE_ITEM_CARD:
         card = new ItemCard(context);
+        break;
+      case TextCard.TYPE_TEXT_CARD:
+        card = new TextCard(context);
         break;
       default:
         card = new ContainerCard(context);

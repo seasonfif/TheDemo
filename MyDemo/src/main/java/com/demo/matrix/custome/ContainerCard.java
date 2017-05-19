@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import com.demo.R;
 import com.demo.matrix.view.ICard;
 import com.demo.matrix.annotation.NestMode;
@@ -18,6 +19,7 @@ import com.demo.matrix.annotation.NestMode;
 public class ContainerCard extends LinearLayout implements ICard {
 
   public static final int TYPE_CONTAINER_CARD = 0x0000;
+  TextView tv;
 
   public ContainerCard(Context context) {
     this(context, null);
@@ -35,14 +37,16 @@ public class ContainerCard extends LinearLayout implements ICard {
   private void init() {
     setOrientation(VERTICAL);
     setBackgroundColor(Color.YELLOW);
+    tv = new TextView(getContext());
+    addView(tv, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
   }
 
   @Override public int getNestMode() {
-    return NestMode.COMPLY;
+    return NestMode.AUTO;
   }
 
   @Override public void update(String data) {
-
+    tv.setText(data);
   }
 
   @Override public void addCard(int index, ICard card) {
