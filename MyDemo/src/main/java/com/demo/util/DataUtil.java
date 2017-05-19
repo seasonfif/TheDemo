@@ -5,8 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -62,16 +65,18 @@ public class DataUtil {
    * @return Json数据（String）
    */
   public static String getStrFromAssets(InputStream inputStream) {
-    String strData = null;
+    StringBuilder stringBuilder = new StringBuilder();
     try {
-      byte buf[] = new byte[1024];
-      inputStream.read(buf);
-      strData = new String(buf);
-      strData = strData.trim();
+      BufferedReader bf = new BufferedReader(new InputStreamReader(
+              inputStream));
+      String line;
+      while ((line = bf.readLine()) != null) {
+        stringBuilder.append(line);
+      }
 
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return strData;
+    return stringBuilder.toString();
   }
 }

@@ -2,14 +2,21 @@ package com.seasonfif.matrix.engine;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.seasonfif.matrix.annotation.CardModel;
 import com.seasonfif.matrix.annotation.NestMode;
 import com.seasonfif.matrix.helper.NodeComparator;
 import com.seasonfif.matrix.model.INode;
 import com.seasonfif.matrix.proxy.FactoryProxy;
 import com.seasonfif.matrix.card.ICard;
 import com.seasonfif.matrix.card.ICardFactory;
+
+import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
@@ -37,7 +44,7 @@ public class LayoutEngine {
     this.context = context;
     ICard root;
     root = factory.createCard(context, node.getType());
-    root.update(node.getDescription());
+    root.update(getCardModel(node, root));
 
     if (!isLeaf(node)){
       layout(node, root);
@@ -58,7 +65,7 @@ public class LayoutEngine {
       sortByWeight(children);
       for (INode child : children) {
         ICard childCard = factory.createCard(context, child.getType());
-        childCard.update(child.getData());
+        childCard.update(getCardModel(child, childCard));
         card.addCard(AUTO_FLAG, childCard);
         if (!isLeaf(child)){
           layout(child, childCard);
@@ -69,8 +76,7 @@ public class LayoutEngine {
       for (int i = 0; i < children.size(); i++) {
         INode child = children.get(i);
         ICard childCard = factory.createCard(context, child.getType());
-
-        childCard.update(child.getData());
+        childCard.update(getCardModel(child, childCard));
         card.addCard(i, childCard);
         if (!isLeaf(child)){
           layout(child, childCard);
@@ -94,5 +100,17 @@ public class LayoutEngine {
 
   private void sortByWeight(List<? extends INode> nodes){
     Collections.sort(nodes, new NodeComparator());
+  }
+
+  private Object getCardModel(INode node, ICard card){
+    CardModel cardModel = card.getClass().getAnnotation(CardModel.class);
+    Class cls = cardModel.value();
+    Object obj;
+    try {
+      obj = new Gson().fromJson((String)node.getData(), cls);
+    } catch (JsonSyntaxException e) {
+      return null;
+    }
+    return obj;
   }
 }

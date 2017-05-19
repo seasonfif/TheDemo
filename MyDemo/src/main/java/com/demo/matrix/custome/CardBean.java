@@ -6,4 +6,5 @@ package com.demo.matrix.custome;
  * 描述：
  */
 public class CardBean {
+    public String title;
 }

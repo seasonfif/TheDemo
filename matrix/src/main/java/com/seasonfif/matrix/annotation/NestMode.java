@@ -11,7 +11,7 @@ import static com.seasonfif.matrix.annotation.NestMode.NONE;
 /**
  * 创建时间：2017年05月18日11:57 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：Card嵌套类型
  */
 
 @IntDef({ MANUAL, AUTO, NONE})

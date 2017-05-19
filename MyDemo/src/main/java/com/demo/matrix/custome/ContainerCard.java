@@ -7,16 +7,17 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.demo.R;
-import com.seasonfif.matrix.card.ICard;
+import com.seasonfif.matrix.annotation.CardModel;
 import com.seasonfif.matrix.annotation.NestMode;
+import com.seasonfif.matrix.card.ICard;
 
 /**
  * 创建时间：2017年05月17日18:27 <br>
  * 作者：zhangqiang <br>
  * 描述：
  */
-
-public class ContainerCard extends LinearLayout implements ICard {
+@CardModel(CardBean.class)
+public class ContainerCard extends LinearLayout implements ICard<CardBean> {
 
   public static final int TYPE_CONTAINER_CARD = 0x0000;
   TextView tv;
@@ -45,8 +46,11 @@ public class ContainerCard extends LinearLayout implements ICard {
     return NestMode.AUTO;
   }
 
-  @Override public void update(String data) {
-    tv.setText(data);
+  @Override
+  public void update(CardBean data) {
+    if (data != null){
+      tv.setText(data.title);
+    }
   }
 
   @Override public void addCard(int index, ICard card) {

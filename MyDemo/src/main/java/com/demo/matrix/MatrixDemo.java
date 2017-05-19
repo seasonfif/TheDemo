@@ -37,16 +37,6 @@ public class MatrixDemo extends Activity{
     tv = (TextView) findViewById(R.id.tv);
     scroll = (ScrollView) findViewById(R.id.scroll);
 
-    /*try {
-      String jsonStr = DataUtil.getStrFromAssets(getAssets().open("nodes.json"));
-      node = DataUtil.getData(jsonStr, Node.class);
-      if (node == null){
-        Log.e(TAG, "");
-      }
-    } catch (IOException e) {
-      e.printStackTrace();
-    }*/
-
     Request request = new Request.Builder()
         .url("http://seasonfif.com/nodes.json")
         .build();
@@ -65,7 +55,15 @@ public class MatrixDemo extends Activity{
     //异步
     client.newCall(request).enqueue(new Callback() {
       @Override public void onFailure(Call call, IOException e) {
-
+        Log.e(TAG, Thread.currentThread().getName());
+        Log.e(TAG, e.getMessage());
+        node = DataUtil.getData(loadJsonAssets(), Node.class);
+        view = Matrix.getEngine().produce(MatrixDemo.this, node);
+        scroll.post(new Runnable() {
+          @Override public void run() {
+            scroll.addView(view);
+          }
+        });
       }
 
       @Override public void onResponse(Call call, Response response) throws IOException {
@@ -83,5 +81,18 @@ public class MatrixDemo extends Activity{
         }
       }
     });
+  }
+
+  private String loadJsonAssets(){
+    String jsonStr = null;
+    try {
+      jsonStr = DataUtil.getStrFromAssets(getAssets().open("nodes.json"));
+      if (node == null){
+        Log.e(TAG, "");
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  return jsonStr;
   }
 }

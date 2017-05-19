@@ -10,5 +10,8 @@ import android.content.Context;
 
 public interface ICardFactory {
 
+  /**
+   * 生成各种Card，根据type
+   */
   ICard createCard(Context context, int type);
 }
