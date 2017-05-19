@@ -1,15 +1,17 @@
-package com.demo.matrix.view;
+package com.seasonfif.matrix.proxy;
 
 import android.content.Context;
-import com.demo.matrix.CardCache;
+import com.seasonfif.matrix.helper.CardCache;
+import com.seasonfif.matrix.card.ICard;
+import com.seasonfif.matrix.card.ICardFactory;
 
 /**
  * 创建时间：2017年05月18日18:05 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：工厂代理
  */
 
-public class FactoryProxy implements ICardFactory{
+public class FactoryProxy implements ICardFactory {
 
   private CardCache cardCache;
   private ICardFactory factory;

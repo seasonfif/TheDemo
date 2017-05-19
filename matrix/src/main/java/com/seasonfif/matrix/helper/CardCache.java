@@ -1,13 +1,13 @@
-package com.demo.matrix;
+package com.seasonfif.matrix.helper;
 
 import android.util.SparseArray;
-import com.demo.matrix.view.ICard;
+import com.seasonfif.matrix.card.ICard;
 import java.lang.ref.WeakReference;
 
 /**
  * 创建时间：2017年05月18日17:22 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：Card缓存
  */
 
 public class CardCache {

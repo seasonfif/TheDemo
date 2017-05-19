@@ -1,5 +1,6 @@
-package com.demo.matrix.model;
+package com.demo.matrix;
 
+import com.seasonfif.matrix.model.INode;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * 描述：
  */
 
-public class Node implements INode{
+public class Node implements INode<String> {
 
   private int type;
   private String des;
@@ -24,7 +25,7 @@ public class Node implements INode{
     return weight;
   }
 
-  @Override public String getDes() {
+  @Override public String getDescription() {
     return des;
   }
 
@@ -32,18 +33,7 @@ public class Node implements INode{
     return data;
   }
 
-  @Override public List<Node> getChildren() {
+  @Override public List<? extends INode> getChildren() {
     return children;
-  }
-
-  public boolean isLeaf(){
-    if (getChildren() == null){
-      return true;
-    }else{
-      if (getChildren().size() <= 0){
-        return true;
-      }
-      return false;
-    }
   }
 }

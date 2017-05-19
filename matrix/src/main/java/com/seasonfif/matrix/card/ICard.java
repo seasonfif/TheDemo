@@ -1,6 +1,6 @@
-package com.demo.matrix.view;
+package com.seasonfif.matrix.card;
 
-import com.demo.matrix.annotation.NestMode;
+import com.seasonfif.matrix.annotation.NestMode;
 
 /**
  * 创建时间：2017年05月17日13:58 <br>
@@ -8,7 +8,7 @@ import com.demo.matrix.annotation.NestMode;
  * 描述：card接口
  */
 
-public interface ICard {
+public interface ICard<T> {
 
   /**
    * 是否允许嵌套
@@ -20,7 +20,7 @@ public interface ICard {
   /**
    * 更新卡片
    */
-  void update(String data);
+  void update(T data);
 
   /**
    * 嵌套card，根据index

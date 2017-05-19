@@ -1,14 +1,14 @@
-package com.demo.matrix.engine;
+package com.seasonfif.matrix.engine;
 
 import android.content.Context;
 import android.view.View;
-import com.demo.matrix.model.Node;
-import com.demo.matrix.view.ICardFactory;
+import com.seasonfif.matrix.model.INode;
+import com.seasonfif.matrix.card.ICardFactory;
 
 /**
  * 创建时间：2017年05月17日14:18 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：Matrix
  */
 
 public class Matrix {
@@ -38,7 +38,7 @@ public class Matrix {
     return singleton;
   }
 
-  public View produce(Context context, Node node){
+  public View produce(Context context, INode node){
     return engine.layout(context, node);
   }
 }

@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.demo.R;
-import com.demo.matrix.view.ICard;
-import com.demo.matrix.annotation.NestMode;
+import com.seasonfif.matrix.card.ICard;
+import com.seasonfif.matrix.annotation.NestMode;
 
 /**
  * 创建时间：2017年05月17日18:27 <br>

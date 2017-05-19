@@ -1,12 +1,12 @@
-package com.demo.matrix.engine;
+package com.seasonfif.matrix.helper;
 
-import com.demo.matrix.model.INode;
+import com.seasonfif.matrix.model.INode;
 import java.util.Comparator;
 
 /**
  * 创建时间：2017年05月19日13:00 <br>
  * 作者：zhangqiang <br>
- * 描述：树节点按照权重weight排序
+ * 描述：节点通过权重weight排序
  */
 
 public class NodeComparator implements Comparator<INode> {

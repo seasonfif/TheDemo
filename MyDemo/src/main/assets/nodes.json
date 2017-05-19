@@ -5,22 +5,26 @@
 	"children":[
 		{
 			"type": 0,
-			"des":"21",
+			"weight": 0,
+			"des":"node:2, index:1, weight:0",
 			"data":"",
 			"children":[
 				{
 					"type": 0,
-					"des":"31",
+					"weight": 0,
+					"des":"node:3, index:1, weight:0",
 					"data":"",
 					"children":[
 						{
 							"type": 0,
-							"des":"41",
+							"weight": 0,
+							"des":"node:4, index:1, weight:0",
 							"data":"",
 							"children":[
 								{
 									"type": 1,
-									"des":"51",
+									"weight": 0,
+									"des":"node:5, index:1, weight:0",
 									"data":"",
 									"children":[]
 								}
@@ -30,12 +34,14 @@
 				},
 				{
 					"type": 0,
-					"des":"32",
+					"weight": 0,
+					"des":"node:3, index:2, weight:0",
 					"data":"",
 					"children":[
 						{
 							"type": 1,
-							"des":"42",
+							"weight": 0,
+							"des":"node:4, index:2, weight:0",
 							"data":"",
 							"children":[]
 						}
@@ -45,33 +51,47 @@
 		},
 		{
 			"type": 1,
-			"des":"22",
+			"weight": 0,
+			"des":"node:2, index:2, weight:0",
 			"data":"",
 			"children":[]
 		},
 		{
 			"type": 1,
-			"des":"23",
+			"weight": 0,
+			"des":"node:2, index:3, weight:0",
 			"data":"",
 			"children":[]
 		},
 		{
 			"type": 1,
-			"des":"24",
+			"weight": 2,
+			"des":"node:2, index:4, weight:2",
 			"data":"",
 			"children":[]
 		},
 		{
 			"type": 1,
-			"des":"25",
+			"weight": 1,
+			"des":"node:2, index:5, weight:1",
 			"data":"",
 			"children":[]
 		},
 		{
 			"type": 1,
-			"des":"26",
+			"weight": 1,
+			"des":"node:2, index:6, weight:1",
 			"data":"",
-			"children":[]
+			"children":[
+				{
+					"type": 2,
+					"weight": 1,
+					"des":"node:3, index:3, weight:1",
+					"data":"",
+					"children":[]
+				}
+			]
 		}
+
 	]
 }

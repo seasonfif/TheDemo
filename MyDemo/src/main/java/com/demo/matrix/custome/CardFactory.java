@@ -1,8 +1,8 @@
 package com.demo.matrix.custome;
 
 import android.content.Context;
-import com.demo.matrix.view.ICard;
-import com.demo.matrix.view.ICardFactory;
+import com.seasonfif.matrix.card.ICard;
+import com.seasonfif.matrix.card.ICardFactory;
 
 /**
  * 创建时间：2017年05月18日11:22 <br>

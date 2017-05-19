@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.widget.TextView;
-import com.demo.matrix.annotation.NestMode;
-import com.demo.matrix.view.ICard;
+import com.seasonfif.matrix.annotation.NestMode;
+import com.seasonfif.matrix.card.ICard;
 
 /**
  * 创建时间：2017年05月19日15:32 <br>
