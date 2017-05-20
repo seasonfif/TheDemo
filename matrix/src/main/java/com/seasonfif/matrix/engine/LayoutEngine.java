@@ -2,21 +2,18 @@ package com.seasonfif.matrix.engine;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.seasonfif.matrix.annotation.CardModel;
 import com.seasonfif.matrix.annotation.NestMode;
+import com.seasonfif.matrix.card.ICard;
+import com.seasonfif.matrix.card.ICardFactory;
+import com.seasonfif.matrix.helper.GsonHelper;
 import com.seasonfif.matrix.helper.NodeComparator;
 import com.seasonfif.matrix.model.INode;
 import com.seasonfif.matrix.proxy.FactoryProxy;
-import com.seasonfif.matrix.card.ICard;
-import com.seasonfif.matrix.card.ICardFactory;
 
-import java.lang.reflect.ParameterizedType;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,23 +25,29 @@ import java.util.List;
 
 public class LayoutEngine {
 
-  /**
-   *
-   */
-  public static int AUTO_FLAG = -1;
-
   private Context context;
   private FactoryProxy factory;
 
+  /**
+   * LayoutEngine的构造方法
+   * @param factory 卡片的代理工厂
+   */
   public LayoutEngine(ICardFactory factory) {
     this.factory = new FactoryProxy(factory);
   }
 
+  /**
+   * 单独处理根节点
+   * 其他层次的节点以根节点为parent布局
+   * @param context
+   * @param node
+   * @return
+   */
   public View layout(@NonNull Context context, @NonNull INode node) {
     this.context = context;
     ICard root;
     root = factory.createCard(context, node.getType());
-    root.update(getCardModel(node, root));
+    root.update(getCardModel(node.getData(), root));
 
     if (!isLeaf(node)){
       layout(node, root);
@@ -52,6 +55,11 @@ public class LayoutEngine {
     return (View)root;
   }
 
+  /**
+   * 采用递归方式深度遍历除根节点外的所有节点
+   * @param node
+   * @param card
+   */
   private void layout(INode node, ICard card) {
     if (!(card instanceof ViewGroup)){
       throw new IllegalStateException("Card [type=" + node.getType() + "]是View，原生不支持嵌套");
@@ -60,33 +68,27 @@ public class LayoutEngine {
     if (card.getNestMode() == NestMode.NONE){
       throw new IllegalStateException("Card [type=" + node.getType() + "]不允许嵌套");
     }
+
+    List<? extends INode> children = node.getChildren();
     if (card.getNestMode() == NestMode.AUTO){
-      List<? extends INode> children = node.getChildren();
       sortByWeight(children);
-      for (INode child : children) {
-        ICard childCard = factory.createCard(context, child.getType());
-        childCard.update(getCardModel(child, childCard));
-        card.addCard(AUTO_FLAG, childCard);
-        if (!isLeaf(child)){
-          layout(child, childCard);
-        }
+    }
+    for (int i = 0; i < children.size(); i++) {
+      INode child = children.get(i);
+      ICard childCard = factory.createCard(context, child.getType());
+      childCard.update(getCardModel(child.getData(), childCard));
+      card.addCard(i, childCard);
+      if (!isLeaf(child)){
+        layout(child, childCard);
       }
-    }else if(card.getNestMode() == NestMode.MANUAL){
-      List<? extends INode> children = node.getChildren();
-      for (int i = 0; i < children.size(); i++) {
-        INode child = children.get(i);
-        ICard childCard = factory.createCard(context, child.getType());
-        childCard.update(getCardModel(child, childCard));
-        card.addCard(i, childCard);
-        if (!isLeaf(child)){
-          layout(child, childCard);
-        }
-      }
-    }else{
-      throw new IllegalStateException("嵌套类型非法");
     }
   }
 
+  /**
+   * 判断当前节点是否为叶子节点
+   * @param node
+   * @return
+   */
   private boolean isLeaf(INode node){
     if (node.getChildren() == null){
       return true;
@@ -98,19 +100,36 @@ public class LayoutEngine {
     }
   }
 
+  /**
+   * 兄弟节点按照权重排序
+   * @param nodes
+   */
   private void sortByWeight(List<? extends INode> nodes){
     Collections.sort(nodes, new NodeComparator());
   }
 
-  private Object getCardModel(INode node, ICard card){
-    CardModel cardModel = card.getClass().getAnnotation(CardModel.class);
-    Class cls = cardModel.value();
-    Object obj;
-    try {
-      obj = new Gson().fromJson((String)node.getData(), cls);
-    } catch (JsonSyntaxException e) {
-      return null;
+  /**
+   * 通过注解获得model的具体类型
+   * 然后通过Gson转换
+   * @param data
+   * @param card
+   * @return
+   */
+  private Object getCardModel(Object data, ICard card){
+    Object result;
+    if (data instanceof String){
+      String jsonStr = (String)data;
+      CardModel cardModel = card.getClass().getAnnotation(CardModel.class);
+      Class cls = cardModel.value();
+
+      if (GsonHelper.isJSONArray(jsonStr)){
+        result = GsonHelper.formatList(jsonStr, cls);
+      }else{
+        result = GsonHelper.format(jsonStr, cls);
+      }
+    }else{
+      result = data;
     }
-    return obj;
+    return result;
   }
 }

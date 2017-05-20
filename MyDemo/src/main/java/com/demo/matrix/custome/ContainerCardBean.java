@@ -5,6 +5,6 @@ package com.demo.matrix.custome;
  * 作者：zhangqiang <br>
  * 描述：
  */
-public class CardBean {
+public class ContainerCardBean {
     public String title;
 }

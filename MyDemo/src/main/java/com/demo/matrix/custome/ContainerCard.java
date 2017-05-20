@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.demo.R;
 import com.seasonfif.matrix.annotation.CardModel;
 import com.seasonfif.matrix.annotation.NestMode;
@@ -16,8 +17,8 @@ import com.seasonfif.matrix.card.ICard;
  * 作者：zhangqiang <br>
  * 描述：
  */
-@CardModel(CardBean.class)
-public class ContainerCard extends LinearLayout implements ICard<CardBean> {
+@CardModel(ContainerCardBean.class)
+public class ContainerCard extends LinearLayout implements ICard<ContainerCardBean> {
 
   public static final int TYPE_CONTAINER_CARD = 0x0000;
   TextView tv;
@@ -47,17 +48,22 @@ public class ContainerCard extends LinearLayout implements ICard<CardBean> {
   }
 
   @Override
-  public void update(CardBean data) {
+  public void update(ContainerCardBean data) {
     if (data != null){
       tv.setText(data.title);
     }
   }
 
   @Override public void addCard(int index, ICard card) {
-    LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
-    lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
-    lp.leftMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
-    lp.rightMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
+    LayoutParams lp;
+    if (index == 0){
+      lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 500);
+    }else{
+      lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+      lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
+      lp.leftMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
+      lp.rightMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
+    }
     this.addView((View) card, lp);
   }
 }

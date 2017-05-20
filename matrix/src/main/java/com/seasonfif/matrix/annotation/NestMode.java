@@ -1,11 +1,12 @@
 package com.seasonfif.matrix.annotation;
 
 import android.support.annotation.IntDef;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static com.seasonfif.matrix.annotation.NestMode.MANUAL;
 import static com.seasonfif.matrix.annotation.NestMode.AUTO;
+import static com.seasonfif.matrix.annotation.NestMode.MANUAL;
 import static com.seasonfif.matrix.annotation.NestMode.NONE;
 
 /**

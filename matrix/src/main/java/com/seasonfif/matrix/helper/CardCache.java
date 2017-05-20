@@ -1,7 +1,9 @@
 package com.seasonfif.matrix.helper;
 
 import android.util.SparseArray;
+
 import com.seasonfif.matrix.card.ICard;
+
 import java.lang.ref.WeakReference;
 
 /**

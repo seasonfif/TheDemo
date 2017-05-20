@@ -1,6 +1,7 @@
 package com.demo.matrix.custome;
 
 import android.content.Context;
+
 import com.seasonfif.matrix.card.ICard;
 import com.seasonfif.matrix.card.ICardFactory;
 
@@ -10,7 +11,9 @@ import com.seasonfif.matrix.card.ICardFactory;
  * 描述：
  */
 public class CardFactory implements ICardFactory {
-  @Override public ICard createCard(Context context, int type) {
+
+  @Override
+  public ICard createCard(Context context, int type) {
     ICard card;
     switch (type){
       case ContainerCard.TYPE_CONTAINER_CARD:
@@ -21,6 +24,9 @@ public class CardFactory implements ICardFactory {
         break;
       case TextCard.TYPE_TEXT_CARD:
         card = new TextCard(context);
+        break;
+      case ListViewCard.TYPE_LISTVIEW_CARD:
+        card = new ListViewCard(context);
         break;
       default:
         card = new ContainerCard(context);

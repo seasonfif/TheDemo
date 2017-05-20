@@ -2,8 +2,9 @@ package com.seasonfif.matrix.engine;
 
 import android.content.Context;
 import android.view.View;
-import com.seasonfif.matrix.model.INode;
+
 import com.seasonfif.matrix.card.ICardFactory;
+import com.seasonfif.matrix.model.INode;
 
 /**
  * 创建时间：2017年05月17日14:18 <br>

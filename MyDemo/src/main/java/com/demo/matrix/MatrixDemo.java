@@ -1,15 +1,19 @@
 package com.demo.matrix;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
 import com.demo.R;
 import com.demo.util.DataUtil;
 import com.seasonfif.matrix.engine.Matrix;
+
 import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -19,7 +23,7 @@ import okhttp3.Response;
 /**
  * 创建时间：2017年05月17日11:57 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：Matrix Demo
  */
 
 public class MatrixDemo extends Activity{
@@ -29,6 +33,7 @@ public class MatrixDemo extends Activity{
   private ScrollView scroll;
   private TextView tv;
   private View view;
+  private ProgressDialog dialog;
   OkHttpClient client = new OkHttpClient();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +42,25 @@ public class MatrixDemo extends Activity{
     tv = (TextView) findViewById(R.id.tv);
     scroll = (ScrollView) findViewById(R.id.scroll);
 
+    dialog = new ProgressDialog(this, android.app.AlertDialog.THEME_HOLO_LIGHT);
+    dialog.setCancelable(false);
+    dialog.setIndeterminate(true);
+
+    refresh();
+
+    tv.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        refresh();
+      }
+    });
+  }
+
+  private void refresh() {
+    dialog.show();
     Request request = new Request.Builder()
-        .url("http://seasonfif.com/nodes.json")
-        .build();
+            .url("http://seasonfif.com/nodes.json")
+            .build();
     //同步
     /*try {
       Response response = client.newCall(request).execute();
@@ -61,6 +82,8 @@ public class MatrixDemo extends Activity{
         view = Matrix.getEngine().produce(MatrixDemo.this, node);
         scroll.post(new Runnable() {
           @Override public void run() {
+            dialog.dismiss();
+            scroll.removeAllViews();
             scroll.addView(view);
           }
         });
@@ -75,6 +98,8 @@ public class MatrixDemo extends Activity{
           view = Matrix.getEngine().produce(MatrixDemo.this, node);
           scroll.post(new Runnable() {
             @Override public void run() {
+              dialog.dismiss();
+              scroll.removeAllViews();
               scroll.addView(view);
             }
           });

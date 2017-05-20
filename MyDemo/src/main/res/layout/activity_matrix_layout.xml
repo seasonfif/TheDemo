@@ -8,7 +8,9 @@
   <TextView
     android:id="@+id/tv"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="46dp"
+      android:gravity="center"
+      android:text="--- 点我刷新布局 ---"/>
 
   <ScrollView
     android:id="@+id/scroll"

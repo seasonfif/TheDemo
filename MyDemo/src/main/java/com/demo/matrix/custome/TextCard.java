@@ -14,8 +14,8 @@ import com.seasonfif.matrix.card.ICard;
  * 作者：zhangqiang <br>
  * 描述：
  */
-@CardModel(CardBean.class)
-public class TextCard extends TextView implements ICard{
+@CardModel(TextCardBean.class)
+public class TextCard extends TextView implements ICard<TextCardBean>{
 
   public static final int TYPE_TEXT_CARD = 0x0002;
 
@@ -41,8 +41,9 @@ public class TextCard extends TextView implements ICard{
   }
 
   @Override
-  public void update(Object data) {
+  public void update(TextCardBean data) {
     if (data != null){
+      setText(data.text);
     }
   }
 
