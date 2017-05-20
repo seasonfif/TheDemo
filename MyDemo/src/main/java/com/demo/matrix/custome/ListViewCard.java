@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ListView;
 
 import com.seasonfif.matrix.annotation.CardModel;
@@ -37,11 +39,31 @@ public class ListViewCard<T> extends ListView implements ICard<List<T>>{
     }
 
     private void init() {
-        setDivider(new ColorDrawable(Color.WHITE));
+        setDivider(new ColorDrawable(Color.parseColor("#bdbdbd")));
         setDividerHeight(9);
         adapter = new TextAdapter(getContext());
         setAdapter(adapter);
+
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
+            }
+        });
     }
+
+    /*@Override
+    *//**
+     * 重写该方法、达到使ListView适应ScrollView的效果
+     *
+     * 将listview全部展开显示在scrollview上了
+     *//*
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int expandSpec = MeasureSpec.makeMeasureSpec(Integer.MAX_VALUE >> 2,
+                MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, expandSpec);
+    }*/
 
     @Override
     public int getNestMode() {

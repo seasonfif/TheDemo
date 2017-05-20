@@ -33,7 +33,8 @@ public class TextCard extends TextView implements ICard<TextCardBean>{
   }
 
   private void init() {
-    setBackgroundColor(Color.BLUE);
+    setBackgroundColor(Color.parseColor("#9ccc65"));
+    setTextColor(Color.WHITE);
   }
 
   @Override public int getNestMode() {
