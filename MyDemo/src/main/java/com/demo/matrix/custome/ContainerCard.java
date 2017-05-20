@@ -38,8 +38,9 @@ public class ContainerCard extends LinearLayout implements ICard<ContainerCardBe
 
   private void init() {
     setOrientation(VERTICAL);
-    setBackgroundColor(Color.YELLOW);
+    setBackgroundColor(Color.GRAY);
     tv = new TextView(getContext());
+    tv.setTextColor(Color.WHITE);
     addView(tv, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
   }
 
@@ -56,8 +57,9 @@ public class ContainerCard extends LinearLayout implements ICard<ContainerCardBe
 
   @Override public void addCard(int index, ICard card) {
     LayoutParams lp;
-    if (index == 0){
-      lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 500);
+    if (card instanceof ListViewCard){
+      lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 800);
+      lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
     }else{
       lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
       lp.topMargin = getContext().getResources().getDimensionPixelSize(R.dimen.dimen_15);
