@@ -9,6 +9,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.demo.R;
+import com.demo.matrix.custome.RetrofitService;
 import com.demo.util.DataUtil;
 import com.seasonfif.matrix.engine.Matrix;
 
@@ -19,6 +20,8 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * 创建时间：2017年05月17日11:57 <br>
@@ -46,12 +49,14 @@ public class MatrixDemo extends Activity{
     dialog.setCancelable(false);
     dialog.setIndeterminate(true);
 
-    refresh();
+//    refresh();
+    retroRefresh();
 
     tv.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        refresh();
+//      refresh();
+        retroRefresh();
       }
     });
   }
@@ -118,6 +123,34 @@ public class MatrixDemo extends Activity{
     } catch (IOException e) {
       e.printStackTrace();
     }
-  return jsonStr;
+    return jsonStr;
+  }
+
+  private void retroRefresh(){
+    dialog.show();
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl("http://seasonfif.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+    RetrofitService service = retrofit.create(RetrofitService.class);
+    retrofit2.Call<Node> nodeCall = service.getNodes();
+    nodeCall.enqueue(new retrofit2.Callback<Node>() {
+      @Override
+      public void onResponse(retrofit2.Call<Node> call, retrofit2.Response<Node> response) {
+        view = Matrix.getEngine().produce(MatrixDemo.this, response.body());
+        dialog.dismiss();
+        scroll.removeAllViews();
+        scroll.addView(view);
+      }
+
+      @Override
+      public void onFailure(retrofit2.Call<Node> call, Throwable t) {
+        node = DataUtil.getData(loadJsonAssets(), Node.class);
+        view = Matrix.getEngine().produce(MatrixDemo.this, node);
+        dialog.dismiss();
+        scroll.removeAllViews();
+        scroll.addView(view);
+      }
+    });
   }
 }
