@@ -1,2 +1,2 @@
-include ':MyDemo', ':plugin', ':svcmanager', ':matrix'
+include ':MyDemo', ':plugin', ':svcmanager', ':matrix', ':jsmanager'
 println "===================== settings.gradle ========================="

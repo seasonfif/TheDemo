@@ -124,6 +124,12 @@ android {
   sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
+repositories {
+  flatDir {
+    dirs 'libs'
+  }
+}
+
 dependencies {
   compile fileTree(include: ['*.jar'], dir: 'libs')
   compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.4@aar'
@@ -135,6 +141,7 @@ dependencies {
   //testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
   compile project(':matrix')
   compile project(':svcmanager')
+  compile project(':jsmanager')
   compile 'com.android.support:appcompat-v7:22.2.1'
   compile 'com.google.android.gms:play-services-ads:9.0.1'
   compile 'com.google.code.gson:gson:2.2.4'
