@@ -51,6 +51,7 @@
     <activity android:name=".provider.TestProviderActivity"></activity>
     <activity android:name=".activity.SimpleNotificationActivity"></activity>
     <activity android:name=".matrix.MatrixDemo"></activity>
+    <activity android:name=".activity.TestEventBusActivity"></activity>
 
     <service
       android:name=".service.NotifyService"

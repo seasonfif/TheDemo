@@ -74,6 +74,12 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:text="Matrix"/>
+
+            <Button
+              android:id="@+id/poststicky"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="postSticky"/>
         </LinearLayout>
 
     </ScrollView>

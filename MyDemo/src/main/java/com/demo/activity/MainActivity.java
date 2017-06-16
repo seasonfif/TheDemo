@@ -10,6 +10,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import com.demo.FirstEvent;
 import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
@@ -26,6 +27,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2016/7/9.
@@ -52,6 +54,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.provider).setOnClickListener(this);
         findViewById(R.id.notification).setOnClickListener(this);
         findViewById(R.id.matrix).setOnClickListener(this);
+        findViewById(R.id.poststicky).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -67,6 +70,8 @@ public class MainActivity extends BaseActivity{
                 goOther();
             }
         });
+
+        EventBus.getDefault().postSticky(new FirstEvent("HAHA"));
     }
 
     private void goOther() {
@@ -167,6 +172,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.matrix:
                 goToOthers(MatrixDemo.class);
+                break;
+            case R.id.poststicky:
+                goToOthers(TestEventBusActivity.class);
                 break;
 
         }
