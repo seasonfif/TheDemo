@@ -21,6 +21,7 @@ import com.demo.service.Core;
 import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
 import com.demo.service.NotifyService;
+import com.demo.template.RhinoJSActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.notification).setOnClickListener(this);
         findViewById(R.id.matrix).setOnClickListener(this);
         findViewById(R.id.poststicky).setOnClickListener(this);
+        findViewById(R.id.rhino).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -175,6 +177,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.poststicky:
                 goToOthers(TestEventBusActivity.class);
+                break;
+            case R.id.rhino:
+                goToOthers(RhinoJSActivity.class);
                 break;
 
         }

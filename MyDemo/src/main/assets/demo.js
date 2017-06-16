@@ -1,7 +1,7 @@
 function transfer(json){
   var obj = JSON.parse(json);
   var newJson = {
-    string1: obj.city + obj.area,
+    string1: obj.city + obj.area + merge(2,3),
     string2: obj.resblock + obj.unit
   };
 
@@ -31,4 +31,10 @@ function transfer(json){
   newJson.list = list;
 
   return JSON.stringify(newJson);
+}
+
+/*merge内部方法*/
+function merge(a, b) {
+ c = a * b;
+ return c;
 }
