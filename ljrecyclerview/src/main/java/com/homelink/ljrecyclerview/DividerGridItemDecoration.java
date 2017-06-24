@@ -1,4 +1,4 @@
-package com.demo.recycler;
+package com.homelink.ljrecyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

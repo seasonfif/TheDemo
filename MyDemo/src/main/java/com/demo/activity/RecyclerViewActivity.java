@@ -1,17 +1,20 @@
 package com.demo.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.demo.R;
-import com.demo.recycler.DividerGridItemDecoration;
-import com.demo.recycler.DividerItemDecration;
+import com.homelink.ljrecyclerview.DividerGridItemDecoration;
+import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.LJRecyclerView;
+import com.homelink.ljrecyclerview.RecyclerType;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +25,8 @@ import java.util.List;
  */
 public class RecyclerViewActivity extends BaseActivity{
 
-  private RecyclerView recyclerView;
+//  private RecyclerView recyclerView;
+  private LJRecyclerView lJRecyclerView;
   private List<String> datas;
 
   @Override public void setView() {
@@ -31,17 +35,40 @@ public class RecyclerViewActivity extends BaseActivity{
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    recyclerView = (RecyclerView) findViewById(R.id.recycler);
+    /*recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
     initData();
-    //recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
     //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
     recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
     //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
-    recyclerView.setAdapter(new SAdapter());
     recyclerView.setItemAnimator(new DefaultItemAnimator());
-    //recyclerView.addItemDecoration(new DividerItemDecration(this, DividerItemDecration.VERTICAL_LIST));
+    //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
     recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+    recyclerView.setAdapter(new SAdapter());*/
+//    lJRecyclerView = new LJRecyclerView(this);
+    lJRecyclerView = (LJRecyclerView) findViewById(R.id.lJRecyclerView);
+    lJRecyclerView.setRecyclerType(RecyclerType.GRIDLAYOUT_VERTICAL);
+    lJRecyclerView.setReverseLayout(true);
+    lJRecyclerView.setSpanCount(4);
+    initData();
+    lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
+    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+//    lJRecyclerView.addItemDecoration(new DividerItemDecoration(this));
+    lJRecyclerView.setAdapter(new SAdapter());
+
+    lJRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            lJRecyclerView.getRecyclerView().getAdapter().notifyDataSetChanged();
+            lJRecyclerView.setRefreshing(false);
+          }
+        }, 3000);
+      }
+    });
   }
 
   private void initData() {

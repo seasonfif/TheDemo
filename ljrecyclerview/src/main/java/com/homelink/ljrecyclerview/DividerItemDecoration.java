@@ -1,4 +1,4 @@
-package com.demo.recycler;
+package com.homelink.ljrecyclerview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -17,9 +17,9 @@ import android.view.View;
  * 描述：
  */
 
-public class DividerItemDecration extends RecyclerView.ItemDecoration{
+public class DividerItemDecoration extends RecyclerView.ItemDecoration{
 
-  private static final String TAG = "DividerItemDecration";
+  private static final String TAG = "DividerItemDecoration";
   private static final int[] ATTRS = new int[]{
       android.R.attr.listDivider
   };
@@ -32,11 +32,10 @@ public class DividerItemDecration extends RecyclerView.ItemDecoration{
 
   private int mOrientation;
 
-  public DividerItemDecration(Context context, int orientation) {
+  public DividerItemDecoration(Context context) {
     final TypedArray a = context.obtainStyledAttributes(ATTRS);
     mDivider = a.getDrawable(0);
     a.recycle();
-    setOrientation(orientation);
   }
 
   public void setOrientation(int orientation) {
@@ -50,7 +49,8 @@ public class DividerItemDecration extends RecyclerView.ItemDecoration{
   public void onDraw(Canvas c, RecyclerView parent, State state) {
     //Log.e(TAG, "onDraw()");
 
-    if (mOrientation == VERTICAL_LIST) {
+    LinearLayoutManager layoutManager = (LinearLayoutManager) parent.getLayoutManager();
+    if (layoutManager.getOrientation() == VERTICAL_LIST) {
       drawVertical(c, parent);
     } else {
       drawHorizontal(c, parent);
