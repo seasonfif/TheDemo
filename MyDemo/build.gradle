@@ -142,6 +142,8 @@ dependencies {
   compile project(':matrix')
   compile project(':svcmanager')
   compile project(':jsmanager')
+  compile 'com.android.support:recyclerview-v7:22.2.1'
+  compile 'com.android.support:cardview-v7:22.2.1'
   compile 'com.android.support:appcompat-v7:22.2.1'
   compile 'com.google.android.gms:play-services-ads:9.0.1'
   compile 'com.google.code.gson:gson:2.2.4'

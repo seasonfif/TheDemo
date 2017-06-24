@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.matrix).setOnClickListener(this);
         findViewById(R.id.poststicky).setOnClickListener(this);
         findViewById(R.id.rhino).setOnClickListener(this);
+        findViewById(R.id.recyclerview).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -180,6 +181,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.rhino:
                 goToOthers(RhinoJSActivity.class);
+                break;
+            case R.id.recyclerview:
+                goToOthers(RecyclerViewActivity.class);
                 break;
 
         }
