@@ -8,6 +8,7 @@ package com.demo.template;
 
 public class UiModel {
 
+  //文本数据 目前暂定10个
   public String text1;
   public String text2;
   public String text3;
@@ -19,19 +20,21 @@ public class UiModel {
   public String text9;
   public String text10;
 
+  //图片数据 目前暂定5个
   public String image1;
   public String image2;
   public String image3;
   public String image4;
   public String image5;
 
+  //按钮数据 目前暂定5个
   public Buttoner button1;
   public Buttoner button2;
   public Buttoner button3;
   public Buttoner button4;
   public Buttoner button5;
 
-
+  //按钮结构
   static class Buttoner{
     public String text;
     public String image;

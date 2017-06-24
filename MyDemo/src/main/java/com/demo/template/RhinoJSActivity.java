@@ -1,7 +1,14 @@
 package com.demo.template;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
@@ -18,6 +25,7 @@ public class RhinoJSActivity extends BaseActivity {
 
   private TextView tv;
   private Object result;
+  private WebView wb;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -30,9 +38,16 @@ public class RhinoJSActivity extends BaseActivity {
     }
     long s = System.currentTimeMillis();
     result = execJs2("demo.js", "transfer", new Object[]{json});
+    /*try {
+      String js = DataUtil.getStrFromAssets(getAssets().open("expression.js"));
+      result = execJs(js);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }*/
     long e = System.currentTimeMillis();
     Log.e("RhinoJSActivity", (e-s) + " ms ");
     tv.setText(result + "");
+
   }
 
   @Override public void setView() {
@@ -48,6 +63,38 @@ public class RhinoJSActivity extends BaseActivity {
       e.printStackTrace();
     }
     return result;
+  }
+
+  private Object execJs(String js){
+    Object result = null;
+    wb = new WebView(this);
+    wb.setWebViewClient(new WebViewClient(){
+      @Override public void onPageFinished(WebView view, String url) {
+        super.onPageFinished(view, url);
+        Log.e("RhinoJSActivity", "onPageFinished()");
+        wb.loadUrl("javascript:function add() {console.log(02020);}");
+        wb.loadUrl("javascript:add()");
+      }
+    });
+    wb.getSettings().setJavaScriptEnabled(true);
+    wb.addJavascriptInterface(new JsInterface(), "expression");
+    wb.loadUrl("file:///android_asset/test.html");
+    //wb.loadUrl("javascript:function add() {console.log(02020);}");
+
+    /*new Handler().postDelayed(new Runnable() {
+      @Override public void run() {
+        Log.e("RhinoJSActivity", "javascript:add()");
+        wb.loadUrl("javascript:add()");
+      }
+    }, 2000);*/
+    return result;
+  }
+
+  class JsInterface{
+    @JavascriptInterface
+    void add(Object obj){
+      Log.e("RhinoJSActivity", obj + "");
+    }
   }
 
   @Override protected void onDestroy() {
