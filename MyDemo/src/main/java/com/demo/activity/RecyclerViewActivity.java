@@ -53,7 +53,7 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.setSpanCount(4);
     initData();
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
-    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(getResources().getDrawable(R.drawable.divider)));
 //    lJRecyclerView.addItemDecoration(new DividerItemDecoration(this));
     lJRecyclerView.setAdapter(new SAdapter());
 

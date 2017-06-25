@@ -29,6 +29,11 @@ public class DividerGridItemDecoration extends RecyclerView.ItemDecoration{
     a.recycle();
   }
 
+  public DividerGridItemDecoration(Drawable drawable)
+  {
+    mDivider = drawable;
+  }
+
   @Override
   public void onDraw(Canvas c, RecyclerView parent, State state)
   {

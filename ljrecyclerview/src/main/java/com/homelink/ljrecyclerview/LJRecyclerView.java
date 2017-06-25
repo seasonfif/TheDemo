@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView.ItemAnimator;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * 创建时间：2017年06月24日17:08 <br>
@@ -120,16 +121,14 @@ public class LJRecyclerView extends SwipeRefreshLayout{
 
     switch (mRecyclerType){
       case RecyclerType.LINEARLAYOUT_VERTICAL:
-//        mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, mReverseLayout);
+        mLayoutManager = new LinearLayoutManager(getContext());
         break;
       case RecyclerType.LINEARLAYOUT_HORIZONTAL:
         mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, mReverseLayout);
         setEnabled(false);
         break;
       case RecyclerType.GRIDLAYOUT_VERTICAL:
-//        mLayoutManager = new GridLayoutManager(getContext(), mSpanCount);
-        mLayoutManager = new GridLayoutManager(getContext(), mSpanCount, GridLayoutManager.VERTICAL, mReverseLayout);
+        mLayoutManager = new GridLayoutManager(getContext(), mSpanCount);
         break;
       case RecyclerType.GRIDLAYOUT_HORIZONTAL:
         mLayoutManager = new GridLayoutManager(getContext(), mSpanCount, GridLayoutManager.HORIZONTAL, mReverseLayout);
@@ -147,5 +146,33 @@ public class LJRecyclerView extends SwipeRefreshLayout{
         break;
     }
     mRecyclerView.setLayoutManager(mLayoutManager);
+  }
+
+  /**
+   * item短按事件监听
+   */
+  public interface OnItemClickListener {
+
+    void onItemClick(RecyclerView parent, View view, int position);
+  }
+
+  /**
+   * item长按事件监听
+   */
+  public interface OnItemLongClickListener {
+
+    void onItemLongClick(RecyclerView parent, View view, int position);
+  }
+
+  private OnItemClickListener mOnItemClickListener;
+
+  private OnItemLongClickListener mOnItemLongClickListener;
+
+  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    this.mOnItemClickListener = onItemClickListener;
+  }
+
+  public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
+    this.mOnItemLongClickListener = onItemLongClickListener;
   }
 }
