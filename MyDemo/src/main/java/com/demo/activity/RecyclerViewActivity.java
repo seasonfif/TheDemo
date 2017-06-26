@@ -92,7 +92,7 @@ public class RecyclerViewActivity extends BaseActivity{
     }
   }
 
-  private class SAdapter extends BaseRecyclerAdapter<String, MyHolder> {
+  private class SAdapter extends BaseRecyclerAdapter<String> {
 
     @Override public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = getLayoutInflater().inflate(R.layout.recycler_item, parent, false);
@@ -100,9 +100,10 @@ public class RecyclerViewActivity extends BaseActivity{
       return holder;
     }
 
-    @Override public void onLJBindViewHolder(MyHolder holder, int position) {
+    @Override public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
       String s = datas.get(position);
-      holder.tv.setText(s);
+      MyHolder myHolder = (MyHolder) holder;
+      myHolder.tv.setText(s);
     }
 
     @Override public int getItemCount() {

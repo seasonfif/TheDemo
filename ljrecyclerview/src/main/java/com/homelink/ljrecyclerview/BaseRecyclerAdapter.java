@@ -14,7 +14,7 @@ import java.util.List;
  *      处理了点击事件的绑定
  */
 
-public abstract class BaseRecyclerAdapter<D, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>{
+public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter{
 
   private List<D> mDatas = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public abstract class BaseRecyclerAdapter<D, VH extends RecyclerView.ViewHolder>
     notifyDataSetChanged();
   }
 
-  @Override public void onBindViewHolder(final VH holder, final int position) {
+  @Override public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
     if (mOnItemClickListener != null){
       holder.itemView.setOnClickListener(new View.OnClickListener() {
         @Override public void onClick(View v) {
@@ -52,7 +52,7 @@ public abstract class BaseRecyclerAdapter<D, VH extends RecyclerView.ViewHolder>
     onLJBindViewHolder(holder, position);
   }
 
-  public abstract void onLJBindViewHolder(VH holder, int position);
+  public abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position);
 
   @Override public int getItemCount() {
     return isEmpty() ? 0 : mDatas.size();
@@ -72,6 +72,12 @@ public abstract class BaseRecyclerAdapter<D, VH extends RecyclerView.ViewHolder>
   public void updateItem(int position, D d){
     mDatas.set(position, d);
     notifyItemChanged(position);
+  }
+
+  public D removeItem(int position){
+    D d = mDatas.remove(position);
+    notifyItemRemoved(position);
+    return d;
   }
 
   public void setOnItemClickListener(LJRecyclerView.OnItemClickListener onItemClickListener) {
