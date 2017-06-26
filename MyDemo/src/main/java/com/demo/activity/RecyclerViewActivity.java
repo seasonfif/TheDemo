@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import android.widget.Toast;
 import com.demo.R;
+import com.homelink.ljrecyclerview.BaseRecyclerAdapter;
 import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJRecyclerView;
@@ -48,14 +50,27 @@ public class RecyclerViewActivity extends BaseActivity{
     recyclerView.setAdapter(new SAdapter());*/
 //    lJRecyclerView = new LJRecyclerView(this);
     lJRecyclerView = (LJRecyclerView) findViewById(R.id.lJRecyclerView);
-    lJRecyclerView.setRecyclerType(RecyclerType.GRIDLAYOUT_VERTICAL);
+    lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
     lJRecyclerView.setReverseLayout(true);
     lJRecyclerView.setSpanCount(4);
     initData();
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
-    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(getResources().getDrawable(R.drawable.divider)));
+    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
 //    lJRecyclerView.addItemDecoration(new DividerItemDecoration(this));
-    lJRecyclerView.setAdapter(new SAdapter());
+    final SAdapter adapter = new SAdapter();
+    adapter.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
+      @Override public void onItemClick(View view, int position) {
+        Toast.makeText(RecyclerViewActivity.this, "itemClick" + datas.get(position), Toast.LENGTH_SHORT).show();
+        adapter.notifyItemRemoved(position);
+      }
+    });
+
+    adapter.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
+      @Override public void onItemLongClick(View view, int position) {
+        Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + datas.get(position), Toast.LENGTH_SHORT).show();
+      }
+    });
+    lJRecyclerView.setAdapter(adapter);
 
     lJRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override
@@ -63,7 +78,6 @@ public class RecyclerViewActivity extends BaseActivity{
         new Handler().postDelayed(new Runnable() {
           @Override
           public void run() {
-            lJRecyclerView.getRecyclerView().getAdapter().notifyDataSetChanged();
             lJRecyclerView.setRefreshing(false);
           }
         }, 3000);
@@ -78,15 +92,15 @@ public class RecyclerViewActivity extends BaseActivity{
     }
   }
 
-  private class SAdapter extends RecyclerView.Adapter<MyHolder> {
-    @Override public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  private class SAdapter extends BaseRecyclerAdapter<String, MyHolder> {
 
+    @Override public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
       View view = getLayoutInflater().inflate(R.layout.recycler_item, parent, false);
       MyHolder holder = new MyHolder(view);
       return holder;
     }
 
-    @Override public void onBindViewHolder(MyHolder holder, int position) {
+    @Override public void onLJBindViewHolder(MyHolder holder, int position) {
       String s = datas.get(position);
       holder.tv.setText(s);
     }

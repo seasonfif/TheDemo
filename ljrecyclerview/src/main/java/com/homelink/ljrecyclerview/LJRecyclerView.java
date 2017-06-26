@@ -92,7 +92,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 设置adapter
    * @param adapter
    */
-  public void setAdapter(Adapter adapter){
+  public void setAdapter(BaseRecyclerAdapter adapter){
     initLayoutManager();
     mRecyclerView.setAdapter(adapter);
   }
@@ -153,7 +153,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   public interface OnItemClickListener {
 
-    void onItemClick(RecyclerView parent, View view, int position);
+    void onItemClick(View view, int position);
   }
 
   /**
@@ -161,18 +161,6 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   public interface OnItemLongClickListener {
 
-    void onItemLongClick(RecyclerView parent, View view, int position);
-  }
-
-  private OnItemClickListener mOnItemClickListener;
-
-  private OnItemLongClickListener mOnItemLongClickListener;
-
-  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-    this.mOnItemClickListener = onItemClickListener;
-  }
-
-  public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
-    this.mOnItemLongClickListener = onItemLongClickListener;
+    void onItemLongClick(View view, int position);
   }
 }
