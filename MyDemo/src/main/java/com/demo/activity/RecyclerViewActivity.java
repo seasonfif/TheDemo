@@ -19,6 +19,7 @@ import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJRecyclerView;
 import com.homelink.ljrecyclerview.RecyclerType;
 
+import com.homelink.ljrecyclerview.WrapedAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,16 +62,18 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
 //    lJRecyclerView.addItemDecoration(new DividerItemDecoration(this));
     final SAdapter adapter = new SAdapter();
+    adapter.setDatas(datas);
     adapter.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
-        Toast.makeText(RecyclerViewActivity.this, "itemClick" + datas.get(position), Toast.LENGTH_SHORT).show();
-        adapter.notifyItemRemoved(position);
+        Toast.makeText(RecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+        ((WrapedAdapter)lJRecyclerView.getAdapter()).updateItem(position, "str" + (position+1));
       }
     });
 
     adapter.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
       @Override public void onItemLongClick(View view, int position) {
-        Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + datas.get(position), Toast.LENGTH_SHORT).show();
+        Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
+        ((WrapedAdapter)lJRecyclerView.getAdapter()).removeItem(position);
       }
     });
     initHeader();
@@ -82,9 +85,10 @@ public class RecyclerViewActivity extends BaseActivity{
         new Handler().postDelayed(new Runnable() {
           @Override
           public void run() {
-            count++;
+            /*count++;
             tv1.setText("refresh : "+ count);
-            f2.setText("refresh : "+ count);
+            f2.setText("refresh : "+ count);*/
+            ((WrapedAdapter)lJRecyclerView.getAdapter()).insertItem(3, "inserted");
             lJRecyclerView.setRefreshing(false);
           }
         }, 3000);
@@ -103,6 +107,11 @@ public class RecyclerViewActivity extends BaseActivity{
     tv1.setGravity(Gravity.CENTER);
     tv1.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
     lJRecyclerView.addHeaderView(tv1);
+    tv1.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        ((WrapedAdapter)lJRecyclerView.getAdapter()).insertItem(2, "inserted");
+      }
+    });
 
     /*TextView tv2 = new TextView(this);
     tv2.setBackgroundColor(Color.BLUE);
@@ -150,13 +159,9 @@ public class RecyclerViewActivity extends BaseActivity{
     }
 
     @Override public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-      String s = datas.get(position);
+      String s = getItem(position);
       MyHolder myHolder = (MyHolder) holder;
       myHolder.tv.setText(s);
-    }
-
-    @Override public int getItemCount() {
-      return datas.size();
     }
   }
 

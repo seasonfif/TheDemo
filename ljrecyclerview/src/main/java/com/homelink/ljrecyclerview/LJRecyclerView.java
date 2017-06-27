@@ -140,6 +140,14 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     return mRecyclerView;
   }
 
+  /**
+   * 获得adapter
+   * @return
+   */
+  public RecyclerView.Adapter getAdapter(){
+    return mRecyclerView.getAdapter();
+  }
+
   private void initLayoutManager() {
 
     switch (mRecyclerType){

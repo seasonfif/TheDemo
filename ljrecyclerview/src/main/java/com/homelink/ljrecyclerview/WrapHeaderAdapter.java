@@ -10,9 +10,9 @@ import java.util.ArrayList;
  * 作者：zhangqiang <br>
  * 描述：LJRecyclerView内部处理header与footer
  */
-public class WrapHeaderAdapter extends RecyclerView.Adapter {
+public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAdapter{
 
-  private RecyclerView.Adapter mAdapter;
+  private BaseRecyclerAdapter mAdapter;
 
   private ArrayList<View> mHeaderViews;
 
@@ -79,6 +79,32 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter {
       }
     }
     return getFooterViewTypeByIndex(adjPosition - adapterCount);
+  }
+
+  @Override public void updateItem(int position, Object obj) {
+    mAdapter.getDatas().set(position, obj);
+    notifyItemChanged(getHeadersCount() + position);
+  }
+
+  @Override public void insertItem(int position, Object obj) {
+    int count = mAdapter.getItemCount();
+    if (position > count){
+      position = count;
+    }
+    mAdapter.getDatas().add(position, obj);
+    //fixme crash: Called attach on a child which is not detached: ViewHolder{b87577 position=7
+    //notifyItemInserted(getHeadersCount() + position);
+    //notifyItemRangeChanged(getHeadersCount() + position, getItemCount());
+    notifyDataSetChanged();
+  }
+
+  public Object removeItem(int position){
+    Object obj = mAdapter.getDatas().remove(position);
+    //fixme crash: Called attach on a child which is not detached: ViewHolder{b87577 position=7
+    //notifyItemRemoved(getHeadersCount() + position);
+    //notifyItemRangeChanged(getHeadersCount() + position, getItemCount());
+    notifyDataSetChanged();
+    return obj;
   }
 
   /**

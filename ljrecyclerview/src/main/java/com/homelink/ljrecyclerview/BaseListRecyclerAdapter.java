@@ -19,7 +19,6 @@ public class BaseListRecyclerAdapter<D> extends BaseRecyclerAdapter{
   }
 
   public BaseListRecyclerAdapter(List<D> data){
-    super(data);
     mPaginationManager = new PaginationManager();
   }
 

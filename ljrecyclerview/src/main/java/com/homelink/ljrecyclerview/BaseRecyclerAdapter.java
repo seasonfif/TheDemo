@@ -13,19 +13,13 @@ import java.util.List;
  *      处理了点击事件的绑定
  */
 
-public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter{
+public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements WrapedAdapter{
 
   private List<D> mDatas = new ArrayList<>();
 
   private LJRecyclerView.OnItemClickListener mOnItemClickListener;
 
   private LJRecyclerView.OnItemLongClickListener mOnItemLongClickListener;
-
-  public BaseRecyclerAdapter() {}
-
-  public BaseRecyclerAdapter(List<D> data) {
-    this.mDatas = data;
-  }
 
   public void setDatas(@Nullable List<D> data){
     this.mDatas = data;
@@ -44,7 +38,7 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter{
       holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
         @Override public boolean onLongClick(View v) {
           mOnItemLongClickListener.onItemLongClick(holder.itemView, position);
-          return false;
+          return true;
         }
       });
     }
@@ -68,14 +62,29 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter{
     return null;
   }
 
-  public void updateItem(int position, D d){
-    mDatas.set(position, d);
+  public List<D> getDatas() {
+    return mDatas;
+  }
+
+  @Override public void updateItem(int position, Object obj) {
+    mDatas.set(position, (D)obj);
     notifyItemChanged(position);
+  }
+
+  @Override public void insertItem(int position, Object obj) {
+    int count = getItemCount();
+    if (position > count){
+      position = count;
+    }
+    mDatas.add(position, (D)obj);
+    notifyItemInserted(position);
+    notifyItemRangeChanged(position, getItemCount());
   }
 
   public D removeItem(int position){
     D d = mDatas.remove(position);
     notifyItemRemoved(position);
+    notifyItemRangeChanged(position, getItemCount());
     return d;
   }
 
