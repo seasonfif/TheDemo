@@ -17,8 +17,11 @@ public class PaginationManager {
     private int mCurPage = DEFAULT_CUR_PAGE;
     private boolean mHasMore;
 
-    public void setTotal(int total) {
+    public void setTotal(int total, int perSize) {
         this.mTotal = total;
+        if (perSize > 0){
+            this.mPerSize = perSize;
+        }
         mSizeType = true;
     }
 

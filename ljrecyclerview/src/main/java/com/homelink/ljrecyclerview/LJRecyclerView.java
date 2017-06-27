@@ -5,12 +5,12 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ItemAnimator;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
+import java.util.ArrayList;
 
 /**
  * 创建时间：2017年06月24日17:08 <br>
@@ -94,7 +94,30 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   public void setAdapter(BaseRecyclerAdapter adapter){
     initLayoutManager();
-    mRecyclerView.setAdapter(adapter);
+    if (mHeaderViews.isEmpty() && mFooterViews.isEmpty()){
+      mRecyclerView.setAdapter(adapter);
+    }else{
+      mRecyclerView.setAdapter(new WrapHeaderAdapter(mHeaderViews, mFooterViews, adapter));
+    }
+  }
+
+  private ArrayList<View> mHeaderViews = new ArrayList<>() ;
+  private ArrayList<View> mFooterViews = new ArrayList<>() ;
+
+  /**
+   * 添加header
+   * @param header
+   */
+  public void addHeaderView(View header){
+    mHeaderViews.add(header);
+  }
+
+  /**
+   * 添加footer
+   * @param footer
+   */
+  public void addFooterView(View footer){
+    mFooterViews.add(footer);
   }
 
   /**

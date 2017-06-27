@@ -1,10 +1,12 @@
 package com.demo.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -30,6 +32,7 @@ public class RecyclerViewActivity extends BaseActivity{
 //  private RecyclerView recyclerView;
   private LJRecyclerView lJRecyclerView;
   private List<String> datas;
+  private int count;
 
   @Override public void setView() {
     setContentView(R.layout.activity_recyclerview);
@@ -70,6 +73,7 @@ public class RecyclerViewActivity extends BaseActivity{
         Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + datas.get(position), Toast.LENGTH_SHORT).show();
       }
     });
+    initHeader();
     lJRecyclerView.setAdapter(adapter);
 
     lJRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -78,6 +82,9 @@ public class RecyclerViewActivity extends BaseActivity{
         new Handler().postDelayed(new Runnable() {
           @Override
           public void run() {
+            count++;
+            tv1.setText("refresh : "+ count);
+            f2.setText("refresh : "+ count);
             lJRecyclerView.setRefreshing(false);
           }
         }, 3000);
@@ -85,10 +92,52 @@ public class RecyclerViewActivity extends BaseActivity{
     });
   }
 
+  private TextView tv1;
+  private TextView f2;
+
+  private void initHeader() {
+    tv1 = new TextView(this);
+    tv1.setBackgroundColor(Color.BLUE);
+    tv1.setTextColor(Color.WHITE);
+    tv1.setText("header1");
+    tv1.setGravity(Gravity.CENTER);
+    tv1.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
+    lJRecyclerView.addHeaderView(tv1);
+
+    /*TextView tv2 = new TextView(this);
+    tv2.setBackgroundColor(Color.BLUE);
+    tv2.setTextColor(Color.WHITE);
+    tv2.setText("header2");
+    lJRecyclerView.addHeaderView(tv2);
+
+    TextView tv3 = new TextView(this);
+    tv3.setBackgroundColor(Color.BLUE);
+    tv3.setTextColor(Color.WHITE);
+    tv3.setText("header3");
+    lJRecyclerView.addHeaderView(tv3);
+
+    TextView f1 = new TextView(this);
+    f1.setBackgroundColor(Color.BLUE);
+    f1.setTextColor(Color.WHITE);
+    f1.setText("footer1");
+    lJRecyclerView.addFooterView(f1);*/
+
+    f2 = new TextView(this);
+    f2.setBackgroundColor(Color.BLUE);
+    f2.setTextColor(Color.WHITE);
+    f2.setText("footer2");
+    f2.setGravity(Gravity.CENTER);
+    f2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
+    lJRecyclerView.addFooterView(f2);
+  }
+
   private void initData() {
     datas = new ArrayList<>();
-    for (int i = 'A'; i < 'z'; i++){
+    /*for (int i = 'A'; i < 'z'; i++){
       datas.add("" + (char)i);
+    }*/
+    for (int i = 1; i < 10; i++){
+      datas.add("" + i);
     }
   }
 
