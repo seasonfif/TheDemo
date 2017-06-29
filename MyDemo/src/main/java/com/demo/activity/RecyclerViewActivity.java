@@ -113,7 +113,7 @@ public class RecyclerViewActivity extends BaseActivity{
       }
     });
 
-    /*TextView tv2 = new TextView(this);
+    TextView tv2 = new TextView(this);
     tv2.setBackgroundColor(Color.BLUE);
     tv2.setTextColor(Color.WHITE);
     tv2.setText("header2");
@@ -129,7 +129,7 @@ public class RecyclerViewActivity extends BaseActivity{
     f1.setBackgroundColor(Color.BLUE);
     f1.setTextColor(Color.WHITE);
     f1.setText("footer1");
-    lJRecyclerView.addFooterView(f1);*/
+    lJRecyclerView.addFooterView(f1);
 
     f2 = new TextView(this);
     f2.setBackgroundColor(Color.BLUE);

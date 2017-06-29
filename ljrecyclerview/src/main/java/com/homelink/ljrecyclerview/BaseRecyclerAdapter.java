@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements WrapedAdapter{
 
-  private List<D> mDatas = new ArrayList<>();
+  protected List<D> mDatas = new ArrayList<>();
 
   private LJRecyclerView.OnItemClickListener mOnItemClickListener;
 

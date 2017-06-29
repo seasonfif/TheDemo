@@ -1,6 +1,8 @@
 package com.homelink.ljrecyclerview;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
@@ -105,6 +107,59 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
     //notifyItemRangeChanged(getHeadersCount() + position, getItemCount());
     notifyDataSetChanged();
     return obj;
+  }
+
+  /**
+   * GridLayoutManager设置header与footer的布局
+   * @param recyclerView
+   */
+  @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    mAdapter.onAttachedToRecyclerView(recyclerView);
+    RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+    if (layoutManager instanceof GridLayoutManager){
+      final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
+      final GridLayoutManager.SpanSizeLookup spanSizeLookup = gridLayoutManager.getSpanSizeLookup();
+      gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+        @Override public int getSpanSize(int position) {
+          int viewType = getItemViewType(position);
+          if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER || getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER){
+            return gridLayoutManager.getSpanCount();
+          }
+          if (spanSizeLookup != null){
+            return spanSizeLookup.getSpanSize(position);
+          }
+          return 0;
+        }
+      });
+    }
+  }
+
+  /**
+   * StaggeredGridLayoutManager设置header与footer的布局
+   * @param holder
+   */
+  @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
+    mAdapter.onViewAttachedToWindow(holder);
+    int position = holder.getLayoutPosition();
+    if (isHeaderViewPos(position) || isFooterViewPos(position)) {
+      setFullSpan(holder);
+    }
+  }
+
+  private boolean isHeaderViewPos(int position) {
+    return position < getHeadersCount();
+  }
+
+  private boolean isFooterViewPos(int position) {
+    return position >= getHeadersCount() + mAdapter.getItemCount();
+  }
+
+  private void setFullSpan(RecyclerView.ViewHolder holder) {
+    ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+    if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
+      StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
+      p.setFullSpan(true);
+    }
   }
 
   /**
