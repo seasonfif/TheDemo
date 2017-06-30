@@ -53,6 +53,7 @@
     <activity android:name=".matrix.MatrixDemo"></activity>
     <activity android:name=".activity.TestEventBusActivity"></activity>
     <activity android:name=".template.RhinoJSActivity"></activity>
+    <activity android:name=".template.HouseTemplateActivity"></activity>
     <activity android:name=".activity.RecyclerViewActivity"></activity>
 
     <service

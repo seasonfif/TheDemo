@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:orientation="horizontal"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:padding="15dp"
+  android:background="#d5d5d5d5">
+
+  <ImageView
+    android:id="@+id/house_img"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:src="@drawable/abc_ab_share_pack_mtrl_alpha"/>
+
+  <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="10dp">
+
+    <TextView
+      android:id="@+id/house_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="18dp"
+      tools:text="楼盘名"/>
+
+    <TextView
+      android:id="@+id/house_time"
+      android:layout_alignBottom="@id/house_title"
+      android:layout_alignParentRight="true"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="18dp"
+      tools:text="12.29"/>
+
+    <TextView
+      android:id="@+id/house_info"
+      android:layout_below="@id/house_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:textSize="16dp"
+      android:textColor="@android:color/darker_gray"
+      tools:text="3-1-1-1 * 90 * 16/32"/>
+
+    <TextView
+      android:id="@+id/house_unit_price"
+      android:layout_below="@id/house_info"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="5dp"
+      android:textSize="16dp"
+      tools:text="单价"/>
+
+    <TextView
+      android:id="@+id/house_price"
+      android:layout_alignBottom="@id/house_unit_price"
+      android:layout_alignParentRight="true"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="16dp"
+      android:textColor="@android:color/holo_red_dark"
+      tools:text="600万"/>
+  </RelativeLayout>
+</LinearLayout>

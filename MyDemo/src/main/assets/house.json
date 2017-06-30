@@ -1,0 +1,425 @@
+{
+    "errno" : 0,
+    "data" : {
+        "house_too_few" : 0,
+        "return_count" : 20,
+        "total_count" : 36727,
+        "has_more_data" : 1,
+        "list" : [
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.172207,
+                  "orientation" : "南 北",
+                  "house_code" : "101100929542",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/55610fb5-03ea-4e0a-8a26-d19116c37100.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房"
+                            ],
+                  "area" : 89.78,
+                  "unit_price" : 49566,
+                  "title" : "金顶阳光 2室1厅 445万",
+                  "community_name" : "金顶阳光",
+                  "price" : 4450000,
+                  "baidu_la" : 39.934402,
+                  "se_ctime" : 1480996222,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.501885,
+                  "orientation" : "南 北",
+                  "house_code" : "101100639251",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/4b7d6612-1d15-4a1a-be13-371d7df8605e.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 5,
+                  "tags" : [
+                            "随时看房",
+                            "房主自荐",
+                            "近地铁"
+                            ],
+                  "area" : 332.63,
+                  "unit_price" : 43532,
+                  "title" : "东润枫景三期 5室2厅 1448万",
+                  "community_name" : "东润枫景三期",
+                  "price" : 14480000,
+                  "baidu_la" : 39.961933,
+                  "se_ctime" : 1474892606,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.331446,
+                  "orientation" : "南 北",
+                  "house_code" : "101100847035",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/8a8d762d-2926-419f-b650-45cba4eacf0e.JPG.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "满五年",
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 99.73,
+                  "unit_price" : 40610,
+                  "title" : "风雅园三区南北通透大两居 不临街不把边 精装修 ",
+                  "community_name" : "风雅园三区",
+                  "price" : 4050000,
+                  "baidu_la" : 40.085293,
+                  "se_ctime" : 1479117272,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.455654,
+                  "orientation" : "东",
+                  "house_code" : "101100875574",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/88308266-0e13-4b6c-8cba-bfb0c9f33728.JPG.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 71.43000000000001,
+                  "unit_price" : 81199,
+                  "title" : "广渠家园 2室2厅 580万",
+                  "community_name" : "广渠家园",
+                  "price" : 5800000,
+                  "baidu_la" : 39.898084,
+                  "se_ctime" : 1479895946,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.250173,
+                  "orientation" : "南",
+                  "house_code" : "101100875929",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/f8d674c6-5f0d-4141-9a56-d56a4798cb6e.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房"
+                            ],
+                  "area" : 85.29000000000001,
+                  "unit_price" : 43382,
+                  "title" : "沸城 2室2厅 370万",
+                  "community_name" : "沸城",
+                  "price" : 3700000,
+                  "baidu_la" : 39.839454,
+                  "se_ctime" : 1479901065,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.463876,
+                  "orientation" : "南 西",
+                  "house_code" : "101100867428",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/539c96d4-2dc8-489c-8092-3833a5e1798a.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 111.22,
+                  "unit_price" : 82719,
+                  "title" : "季景沁园 2室1厅 920万",
+                  "community_name" : "季景沁园",
+                  "price" : 9200000,
+                  "baidu_la" : 40.001253,
+                  "se_ctime" : 1479643542,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.694847,
+                  "orientation" : "东 西 北",
+                  "house_code" : "101100850496",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/0b2275bf-f3ae-4ca8-817a-eb0512a5343e.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "tags" : [
+                            "随时看房"
+                            ],
+                  "area" : 113.88,
+                  "unit_price" : 52248,
+                  "title" : "加华印象街 3室2厅 595万",
+                  "community_name" : "加华印象街",
+                  "price" : 5950000,
+                  "baidu_la" : 39.921775,
+                  "se_ctime" : 1479260449,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.377942,
+                  "orientation" : "东",
+                  "house_code" : "101100865535",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/47e1c4b6-f0ad-4621-a50e-41213af7e8fa.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 62.55,
+                  "unit_price" : 62351,
+                  "title" : "左右坊 2室2厅 390万",
+                  "community_name" : "左右坊",
+                  "price" : 3900000,
+                  "baidu_la" : 39.847498,
+                  "se_ctime" : 1479625570,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.479017,
+                  "orientation" : "南",
+                  "house_code" : "101100850251",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/5d67e6b7-8ffd-4b8f-a725-cd23ff8f0fe0.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 80.58,
+                  "unit_price" : 74212,
+                  "title" : "枣营南里全南向三居室 高层 观景房",
+                  "community_name" : "枣营南里",
+                  "price" : 5980000,
+                  "baidu_la" : 39.950244,
+                  "se_ctime" : 1479212964,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.171634,
+                  "orientation" : "南 北",
+                  "house_code" : "101100877428",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/02dab525-0f98-4a99-a12c-a3864f958eb1.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "房主自荐"
+                            ],
+                  "area" : 85.70999999999999,
+                  "unit_price" : 38502,
+                  "title" : "原香小镇二区 2室1厅 330万",
+                  "community_name" : "原香小镇二区",
+                  "price" : 3300000,
+                  "baidu_la" : 39.763178,
+                  "se_ctime" : 1479964293,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.364975,
+                  "orientation" : "南",
+                  "house_code" : "101100870682",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/6216adda-10a9-43da-98ce-3b63d1ceb596.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 89,
+                  "unit_price" : 43259,
+                  "title" : "标准地铁房，观景楼层，精装修，配套齐全",
+                  "community_name" : "旗胜家园",
+                  "price" : 3850000,
+                  "baidu_la" : 40.073376,
+                  "se_ctime" : 1479784384,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.412363,
+                  "orientation" : "南 北",
+                  "house_code" : "101100871399",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/b5f3befb-7377-45f5-bc41-b287701739ed.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房"
+                            ],
+                  "area" : 74.93000000000001,
+                  "unit_price" : 52716,
+                  "title" : "嘉诚花园一期 2室1厅 395万",
+                  "community_name" : "嘉诚花园一期",
+                  "price" : 3950000,
+                  "baidu_la" : 40.049902,
+                  "se_ctime" : 1479796938,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.508983,
+                  "orientation" : "东 南",
+                  "house_code" : "101100850139",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/ee0f6292-c0e9-457c-9ea5-65312b3532ba.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 187.74,
+                  "unit_price" : 67115,
+                  "title" : "北京华侨城三居室 毛坯房 诚意出售",
+                  "community_name" : "北京华侨城2号院",
+                  "price" : 12600000,
+                  "baidu_la" : 39.871912,
+                  "se_ctime" : 1479210629,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.3434,
+                  "orientation" : "南 北",
+                  "house_code" : "101100843481",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/c631ed98-74a7-4334-9dd1-36253e5de300.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "满五年",
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 91.51000000000001,
+                  "unit_price" : 46990,
+                  "title" : "南北通透2居 繁华地段 距回龙观地铁900米 ",
+                  "community_name" : "龙腾苑二区",
+                  "price" : 4300000,
+                  "baidu_la" : 40.083322,
+                  "se_ctime" : 1479027485,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.446047,
+                  "orientation" : "东 南 北",
+                  "house_code" : "101100868410",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/09a8ef04-7866-463a-94b9-eb9bc2cdcf47.JPG.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "feature_word" : "房主自荐",
+                  "tags" : [
+                            "随时看房",
+                            "房主自荐",
+                            "近地铁"
+                            ],
+                  "area" : 88.31,
+                  "unit_price" : 79267,
+                  "title" : "柳芳北里 3室1厅 700万",
+                  "community_name" : "柳芳北里",
+                  "price" : 7000000,
+                  "baidu_la" : 39.964131,
+                  "se_ctime" : 1479703767,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.377299,
+                  "orientation" : "东南",
+                  "house_code" : "101100848980",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/04948e3f-2488-41e7-aea1-074dafd2b2f2.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 58.4,
+                  "unit_price" : 98459,
+                  "title" : "牡丹园西里 2室1厅 575万",
+                  "community_name" : "牡丹园西里",
+                  "price" : 5750000,
+                  "baidu_la" : 39.984455,
+                  "se_ctime" : 1479191877,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.560233,
+                  "orientation" : "南 北",
+                  "house_code" : "101100863859",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/4f888911-3c2f-4e7b-bc59-db0f6428cb06.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 53.31,
+                  "unit_price" : 54399,
+                  "title" : "金星小区 2室1厅 290万",
+                  "community_name" : "金星小区",
+                  "price" : 2900000,
+                  "baidu_la" : 39.924347,
+                  "se_ctime" : 1479608830,
+                  "kv_house_type" : "sell",
+                  "is_focus" : true
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.295659,
+                  "orientation" : "南 北",
+                  "house_code" : "101100841489",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/9baecf90-2466-4b28-95cd-19f8ee70ee77.JPG.280x210.jpg",
+                  "blueprint_bedroom_num" : 2,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 90.40000000000001,
+                  "unit_price" : 106195,
+                  "title" : "万寿路西街9号院 低楼层 有车位 带花园 ",
+                  "community_name" : "万寿路西街9号",
+                  "price" : 9600000,
+                  "baidu_la" : 39.917143,
+                  "se_ctime" : 1479008720,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 2,
+                  "baidu_lo" : 116.416156,
+                  "orientation" : "南 北",
+                  "house_code" : "101100850420",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/c002605e-4319-4b8e-b19d-324edc1245c5.jpg.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "feature_word" : "房主自荐",
+                  "tags" : [
+                            "随时看房",
+                            "房主自荐",
+                            "近地铁"
+                            ],
+                  "area" : 167.08,
+                  "unit_price" : 31722,
+                  "title" : "小区内部板楼电梯大三居 中间楼层 无个税！",
+                  "community_name" : "天通西苑三区",
+                  "price" : 5300000,
+                  "baidu_la" : 40.082585,
+                  "se_ctime" : 1479258770,
+                  "kv_house_type" : "sell"
+                  },
+                  {
+                  "blueprint_hall_num" : 1,
+                  "baidu_lo" : 116.347797,
+                  "orientation" : "南 北",
+                  "house_code" : "101100857257",
+                  "cover_pic" : "http://img.ljcdn.com/110000-inspection/9b5134d7-b6f6-4b0b-a8d9-5944945b4ec6.JPG.280x210.jpg",
+                  "blueprint_bedroom_num" : 3,
+                  "tags" : [
+                            "随时看房",
+                            "近地铁"
+                            ],
+                  "area" : 139.63,
+                  "unit_price" : 103846,
+                  "title" : "南北通透 三居室 高楼层 视野很好",
+                  "community_name" : "太阳园",
+                  "price" : 14500000,
+                  "baidu_la" : 39.976432,
+                  "se_ctime" : 1479451756,
+                  "kv_house_type" : "sell"
+                  }
+                  ],
+        "subscribe" : 0
+    },
+    "request_id" : "6280816677150",
+    "error" : ""
+}

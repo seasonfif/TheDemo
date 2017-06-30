@@ -21,6 +21,7 @@ import com.demo.service.Core;
 import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
 import com.demo.service.NotifyService;
+import com.demo.template.HouseTemplateActivity;
 import com.demo.template.RhinoJSActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -180,7 +181,8 @@ public class MainActivity extends BaseActivity{
                 goToOthers(TestEventBusActivity.class);
                 break;
             case R.id.rhino:
-                goToOthers(RhinoJSActivity.class);
+                //goToOthers(RhinoJSActivity.class);
+                goToOthers(HouseTemplateActivity.class);
                 break;
             case R.id.recyclerview:
                 goToOthers(RecyclerViewActivity.class);
