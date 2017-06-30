@@ -49,6 +49,11 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   private boolean mReverseLayout = false;
 
+  /**
+   * 标识禁止下拉刷新
+   */
+  private boolean mDisablePullRefresh = false;
+
 
   public LJRecyclerView(Context context) {
     this(context, null);
@@ -92,7 +97,13 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 设置adapter
    * @param adapter
    */
-  public void setAdapter(BaseRecyclerAdapter adapter){
+  public void setAdapter(RecyclerPaginationAdapter adapter){
+    if (mDisablePullRefresh){
+      this.setEnabled(false);
+    }else{
+      //this.setOnRefreshListener();
+    }
+    mRecyclerView.addOnScrollListener(new ViewScrollListener());
     initLayoutManager();
     if (mHeaderViews.isEmpty() && mFooterViews.isEmpty()){
       mRecyclerView.setAdapter(adapter);
@@ -180,6 +191,15 @@ public class LJRecyclerView extends SwipeRefreshLayout{
   }
 
   /**
+   * 设置是否禁止下拉刷新
+   * 默认不禁止
+   * @param disablePullRefresh
+   */
+  public void setDisablePullRefresh(boolean disablePullRefresh) {
+    this.mDisablePullRefresh = disablePullRefresh;
+  }
+
+  /**
    * item短按事件监听
    */
   public interface OnItemClickListener {
@@ -193,5 +213,30 @@ public class LJRecyclerView extends SwipeRefreshLayout{
   public interface OnItemLongClickListener {
 
     void onItemLongClick(View view, int position);
+  }
+
+  private class ViewScrollListener extends RecyclerView.OnScrollListener {
+    private int lastVisibleItem;
+
+    /*@Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+      super.onScrollStateChanged(recyclerView, newState);
+      if (!mSwipeRefreshWidget.isRefreshing()) {
+        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 ==
+            mRecyclerAdapter.getItemCount() && mHasMore && mRecyclerAdapter.mTotal == 0) {
+          mLoadType = TYPE_LOAD_MORE;
+          if (!mDisablePullRefresh){
+            mSwipeRefreshWidget.setEnabled(false);
+          }
+          mRecyclerAdapter.setMoreStatus(BaseRecyclerAdapter.LOADING_MORE);
+          mPage++;
+          loadData();
+        }
+      }
+    }
+
+    @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      super.onScrolled(recyclerView, dx, dy);
+      lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+    }*/
   }
 }

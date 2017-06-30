@@ -41,26 +41,16 @@ public class RecyclerViewActivity extends BaseActivity{
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    /*recyclerView = (RecyclerView) findViewById(R.id.recycler);
 
-    initData();
-    recyclerView.setLayoutManager(new LinearLayoutManager(this));
-    //recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-    recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-    //recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
-    recyclerView.setItemAnimator(new DefaultItemAnimator());
-    //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-    recyclerView.addItemDecoration(new DividerGridItemDecoration(this));
-    recyclerView.setAdapter(new SAdapter());*/
-//    lJRecyclerView = new LJRecyclerView(this);
     lJRecyclerView = (LJRecyclerView) findViewById(R.id.lJRecyclerView);
     lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
-    lJRecyclerView.setReverseLayout(true);
+    //反转布局
+    //lJRecyclerView.setReverseLayout(true);
     lJRecyclerView.setSpanCount(4);
     initData();
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
-    lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
-//    lJRecyclerView.addItemDecoration(new DividerItemDecoration(this));
+    //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
+    lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
     final SAdapter adapter = new SAdapter();
     adapter.setDatas(datas);
     adapter.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {

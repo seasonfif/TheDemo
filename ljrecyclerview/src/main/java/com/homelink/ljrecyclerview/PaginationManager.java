@@ -26,7 +26,7 @@ public class PaginationManager {
     }
 
     public int getPages(){
-        return mTotal % mPerSize + 1;
+        return mTotal % mPerSize == 0 ? mTotal/mPerSize : mTotal/mPerSize + 1;
     }
 
     public void setHasMore(boolean hasMore) {
@@ -51,5 +51,9 @@ public class PaginationManager {
         if (mSizeType && successed){
             mCurPage = DEFAULT_CUR_PAGE;
         }
+    }
+
+    public int getPageIndex() {
+        return mCurPage;
     }
 }
