@@ -36,12 +36,12 @@ public class PaginationManager {
 
     public boolean shouldLoadMore(){
         if (mSizeType){
-            return mCurPage == getPages();
+            return mCurPage != getPages();
         }
         return mHasMore;
     }
 
-    public void loadFinished(boolean successed){
+    public void loadMoreFinished(boolean successed){
         if (mSizeType && successed){
             mCurPage++;
         }

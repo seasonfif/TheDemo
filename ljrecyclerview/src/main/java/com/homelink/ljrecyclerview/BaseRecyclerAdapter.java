@@ -3,6 +3,7 @@ package com.homelink.ljrecyclerview;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +43,7 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
         }
       });
     }
-    onLJBindViewHolder(holder, position);
   }
-
-  public abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position);
 
   @Override public int getItemCount() {
     return isEmpty() ? 0 : mDatas.size();

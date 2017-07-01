@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
+
 import java.util.ArrayList;
 
 /**
@@ -53,6 +54,8 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 标识禁止下拉刷新
    */
   private boolean mDisablePullRefresh = false;
+
+  private RecyclerPaginationAdapter mOriginalAdapter;
 
 
   public LJRecyclerView(Context context) {
@@ -98,13 +101,23 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * @param adapter
    */
   public void setAdapter(RecyclerPaginationAdapter adapter){
+    this.mOriginalAdapter = adapter;
     if (mDisablePullRefresh){
       this.setEnabled(false);
     }else{
-      //this.setOnRefreshListener();
+      this.setOnRefreshListener(new OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+          if (mOnLoadRefreshListener != null){
+            mOriginalAdapter.refresh();
+            mOnLoadRefreshListener.onLoadRefresh();
+          }
+        }
+      });
     }
     mRecyclerView.addOnScrollListener(new ViewScrollListener());
     initLayoutManager();
+    initListener();
     if (mHeaderViews.isEmpty() && mFooterViews.isEmpty()){
       mRecyclerView.setAdapter(adapter);
     }else{
@@ -199,6 +212,33 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     this.mDisablePullRefresh = disablePullRefresh;
   }
 
+
+  /**
+   * 监听“下拉刷新”
+   */
+  public interface OnLoadRefreshListener{
+    void onLoadRefresh();
+  }
+
+  private OnLoadRefreshListener mOnLoadRefreshListener;
+
+  public void setOnLoadRefreshListener(OnLoadRefreshListener onLoadRefreshListener) {
+    this.mOnLoadRefreshListener = onLoadRefreshListener;
+  }
+
+  /**
+   * 监听“加载更多”
+   */
+  public interface OnLoadMoreListener{
+    void onLoadMore();
+  }
+
+  private OnLoadMoreListener mOnLoadMoreListener;
+
+  public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+    this.mOnLoadMoreListener = onLoadMoreListener;
+  }
+
   /**
    * item短按事件监听
    */
@@ -215,28 +255,63 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     void onItemLongClick(View view, int position);
   }
 
-  private class ViewScrollListener extends RecyclerView.OnScrollListener {
-    private int lastVisibleItem;
+  private OnItemClickListener mOnItemClickListener;
 
-    /*@Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+  private OnItemLongClickListener mOnItemLongClickListener;
+
+  public void setOnItemClickListener(LJRecyclerView.OnItemClickListener onItemClickListener) {
+    this.mOnItemClickListener = onItemClickListener;
+  }
+
+  public void setOnItemLongClickListener(LJRecyclerView.OnItemLongClickListener onItemLongClickListener) {
+    this.mOnItemLongClickListener = onItemLongClickListener;
+  }
+
+  private void initListener() {
+    if (mOnItemClickListener != null){
+      mOriginalAdapter.setOnItemClickListener(mOnItemClickListener);
+    }
+
+    if (mOnItemLongClickListener != null){
+      mOriginalAdapter.setOnItemLongClickListener(mOnItemLongClickListener);
+    }
+  }
+
+  private class ViewScrollListener extends RecyclerView.OnScrollListener {
+    private int lastVisibleItemPosition;
+
+    @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
       super.onScrollStateChanged(recyclerView, newState);
-      if (!mSwipeRefreshWidget.isRefreshing()) {
-        if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItem + 1 ==
-            mRecyclerAdapter.getItemCount() && mHasMore && mRecyclerAdapter.mTotal == 0) {
-          mLoadType = TYPE_LOAD_MORE;
-          if (!mDisablePullRefresh){
-            mSwipeRefreshWidget.setEnabled(false);
-          }
-          mRecyclerAdapter.setMoreStatus(BaseRecyclerAdapter.LOADING_MORE);
-          mPage++;
-          loadData();
+      if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition + 1 == mOriginalAdapter.getItemCount() && mOriginalAdapter.shouldLoadMore()) {
+        mOriginalAdapter.loadMore();
+        if (mOnLoadMoreListener != null){
+          mOnLoadMoreListener.onLoadMore();
         }
       }
     }
 
     @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
       super.onScrolled(recyclerView, dx, dy);
-      lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
-    }*/
+      RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+      if (layoutManager instanceof GridLayoutManager) {
+        lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
+      } else if (layoutManager instanceof StaggeredGridLayoutManager) {
+        int[] into = new int[((StaggeredGridLayoutManager) layoutManager).getSpanCount()];
+        ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(into);
+        lastVisibleItemPosition = findMax(into);
+      } else {
+        lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
+      }
+    }
+
+    private int findMax(int[] lastPositions) {
+      int max = lastPositions[0];
+      for (int value : lastPositions) {
+        if (value > max) {
+          max = value;
+        }
+      }
+      return max;
+    }
   }
 }

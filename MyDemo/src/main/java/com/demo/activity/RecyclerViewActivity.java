@@ -1,6 +1,9 @@
 package com.demo.activity;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,6 +20,8 @@ import com.homelink.ljrecyclerview.BaseRecyclerAdapter;
 import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJRecyclerView;
+import com.homelink.ljrecyclerview.PaginationManager;
+import com.homelink.ljrecyclerview.RecyclerPaginationAdapter;
 import com.homelink.ljrecyclerview.RecyclerType;
 
 import com.homelink.ljrecyclerview.WrapedAdapter;
@@ -33,12 +38,18 @@ public class RecyclerViewActivity extends BaseActivity{
 //  private RecyclerView recyclerView;
   private LJRecyclerView lJRecyclerView;
   private List<String> datas;
+  private SAdapter adapter;
+  private final static int PER_PAGE = 10;
+  private final static int TOTAL = 56;
   private int count;
 
   @Override public void setView() {
     setContentView(R.layout.activity_recyclerview);
   }
 
+  /**
+   * @param savedInstanceState
+   */
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -47,43 +58,61 @@ public class RecyclerViewActivity extends BaseActivity{
     //反转布局
     //lJRecyclerView.setReverseLayout(true);
     lJRecyclerView.setSpanCount(4);
-    initData();
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
     //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
-    final SAdapter adapter = new SAdapter();
-    adapter.setDatas(datas);
-    adapter.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
+    adapter = new SAdapter(new PaginationManager());
+
+    datas = initData(1);
+    if (datas.size() > 0){
+      adapter.setDatas(initData(1));
+      //设置分页参数
+      adapter.setTotal(TOTAL, PER_PAGE);
+    }
+    lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
         ((WrapedAdapter)lJRecyclerView.getAdapter()).updateItem(position, "str" + (position+1));
       }
     });
 
-    adapter.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
+    lJRecyclerView.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
       @Override public void onItemLongClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
         ((WrapedAdapter)lJRecyclerView.getAdapter()).removeItem(position);
       }
     });
-    initHeader();
-    lJRecyclerView.setAdapter(adapter);
+//    initHeader();
 
-    lJRecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    lJRecyclerView.setOnLoadRefreshListener(new LJRecyclerView.OnLoadRefreshListener() {
       @Override
-      public void onRefresh() {
+      public void onLoadRefresh() {
+        lJRecyclerView.setEnabled(false);
         new Handler().postDelayed(new Runnable() {
           @Override
           public void run() {
-            /*count++;
-            tv1.setText("refresh : "+ count);
-            f2.setText("refresh : "+ count);*/
-            ((WrapedAdapter)lJRecyclerView.getAdapter()).insertItem(3, "inserted");
             lJRecyclerView.setRefreshing(false);
+            lJRecyclerView.setEnabled(true);
+            //设置分页参数
+            adapter.setTotal(TOTAL, PER_PAGE);
+            adapter.setDatas(initData(1));
           }
         }, 3000);
       }
     });
+
+    lJRecyclerView.setOnLoadMoreListener(new LJRecyclerView.OnLoadMoreListener() {
+      @Override
+      public void onLoadMore() {
+        lJRecyclerView.postDelayed(new Runnable() {
+          @Override
+          public void run() {
+            adapter.setDatas(initData(adapter.getPageIndex() * PER_PAGE + 1));
+          }
+        }, 3000);
+      }
+    });
+    lJRecyclerView.setAdapter(adapter);
   }
 
   private TextView tv1;
@@ -119,7 +148,7 @@ public class RecyclerViewActivity extends BaseActivity{
     f1.setBackgroundColor(Color.BLUE);
     f1.setTextColor(Color.WHITE);
     f1.setText("footer1");
-    lJRecyclerView.addFooterView(f1);
+//    lJRecyclerView.addFooterView(f1);
 
     f2 = new TextView(this);
     f2.setBackgroundColor(Color.BLUE);
@@ -127,28 +156,64 @@ public class RecyclerViewActivity extends BaseActivity{
     f2.setText("footer2");
     f2.setGravity(Gravity.CENTER);
     f2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
-    lJRecyclerView.addFooterView(f2);
+//    lJRecyclerView.addFooterView(f2);
   }
 
-  private void initData() {
-    datas = new ArrayList<>();
-    /*for (int i = 'A'; i < 'z'; i++){
-      datas.add("" + (char)i);
-    }*/
-    for (int i = 1; i < 10; i++){
-      datas.add("" + i);
+  private ArrayList initData(int start) {
+    ArrayList list = new ArrayList<>();
+    int end = start + PER_PAGE;
+    if (end > TOTAL){
+      end = TOTAL;
     }
+
+    if (isConnected(RecyclerViewActivity.this)){
+      for (int i = start; i < end; i++){
+        list.add("" + i);
+      }
+    }
+    return list;
   }
 
-  private class SAdapter extends BaseRecyclerAdapter<String> {
+  /**
+   * 网络是否已经连接
+   */
+  private boolean isConnected(Context context) {
+    if (context != null) {
+      ConnectivityManager cm = null;
+      try {
+        cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+      } catch (Exception e) {
+        // ignore
+      }
+      if (cm != null) {
+        NetworkInfo[] infos = cm.getAllNetworkInfo();
+        if (infos != null) {
+          for (NetworkInfo ni : infos) {
+            if (ni.isConnected()) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
 
-    @Override public MyHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+  private class SAdapter extends RecyclerPaginationAdapter<String> {
+
+    public SAdapter(PaginationManager manager){
+      super(manager);
+    }
+
+    @Override
+    public MyHolder onLJCreateViewHolder(ViewGroup parent, int viewType) {
       View view = getLayoutInflater().inflate(R.layout.recycler_item, parent, false);
       MyHolder holder = new MyHolder(view);
       return holder;
     }
 
-    @Override public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override
+    public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
       String s = getItem(position);
       MyHolder myHolder = (MyHolder) holder;
       myHolder.tv.setText(s);

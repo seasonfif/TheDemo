@@ -44,8 +44,8 @@ public class HouseTemplateActivity extends BaseActivity{
     //lJRecyclerView.addItemDecoration(new DividerItemDecoration(60, Color.RED));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
     datas = getData();
-    adapter = new HouseAdapter(datas);
-    lJRecyclerView.setAdapter(adapter);
+//    adapter = new HouseAdapter(datas);
+//    lJRecyclerView.setAdapter(adapter);
   }
 
   private List<UiModel> getData() {
@@ -85,7 +85,8 @@ public class HouseTemplateActivity extends BaseActivity{
       setDatas(datas);
     }
 
-    @Override public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+      super.onBindViewHolder(holder, position);
       UiModel model = getItem(position);
       HouseHolder houseHolder = (HouseHolder) holder;
       houseHolder.bindData(model);
