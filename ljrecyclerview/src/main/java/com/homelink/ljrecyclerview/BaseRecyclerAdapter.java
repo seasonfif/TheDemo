@@ -11,7 +11,7 @@ import java.util.List;
  * 创建时间：2017年06月26日14:57 <br>
  * 作者：zhangqiang <br>
  * 描述：LJRecyclerView的adapter基类
- *      处理了点击事件的绑定
+ *      处理了点击事件的绑定以及item更新
  */
 
 public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements WrapedAdapter{
@@ -62,6 +62,9 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
 
   public List<D> getDatas() {
     return mDatas;
+  }
+
+  public void refresh() {
   }
 
   @Override public void updateItem(int position, Object obj) {

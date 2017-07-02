@@ -22,30 +22,30 @@ public class RecyclerPaginationAdapter<D> extends BaseRecyclerAdapter<D>{
   /**
    * 下拉刷新
    */
-  private static final int PULLREFRESH = 1;
+  private static final int PULLREFRESH = 0x000f;
 
 
   /**
    * 上拉加载
    */
-  private static final int LOADMORE = 2;
+  private static final int LOADMORE = 0x00f0;
 
+  /**
+   * 标识当前刷新类型
+   * 初始为下拉刷新
+   */
   private int mLoadType = PULLREFRESH;
 
   private LoadMoreView mLoadMoreView;
 
-  private boolean mIsPagination;
-  private PaginationManager mPaginationManager;
+  private Paginable mPaginationManager;
 
   public RecyclerPaginationAdapter(){
     this(null);
   }
 
-  public RecyclerPaginationAdapter(PaginationManager manager){
+  public RecyclerPaginationAdapter(Paginable manager){
     this.mPaginationManager = manager;
-    if (mPaginationManager != null){
-      mIsPagination = true;
-    }
   }
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,7 +79,7 @@ public class RecyclerPaginationAdapter<D> extends BaseRecyclerAdapter<D>{
   protected void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position){};
 
   @Override public int getItemCount() {
-    if (mIsPagination && mPaginationManager.shouldLoadMore()){
+    if (isPaginable() && mPaginationManager.shouldLoadMore()){
       return mDatas.size() + 1;
     }
     return mDatas.size();
@@ -93,29 +93,20 @@ public class RecyclerPaginationAdapter<D> extends BaseRecyclerAdapter<D>{
     }
   }
 
+  protected boolean isPaginable(){
+    return mPaginationManager != null;
+  }
+
   private boolean isLoadMorePos(int position){
-    return mIsPagination && mPaginationManager.shouldLoadMore() && position + 1 == getItemCount();
+    return isPaginable() && mPaginationManager.shouldLoadMore() && position + 1 == getItemCount();
   }
 
   public boolean shouldLoadMore(){
-    return mIsPagination && mPaginationManager.shouldLoadMore();
-  }
-
-  public void setTotal(int total, int perSize) {
-    mPaginationManager.setTotal(total, perSize);
-  }
-
-  public void setHasMore(boolean hasMore) {
-    mPaginationManager.setHasMore(hasMore);
-  }
-
-  public int getPageIndex(){
-    return mPaginationManager.getPageIndex();
+    return isPaginable() && mPaginationManager.shouldLoadMore();
   }
 
   public void refresh() {
     mLoadType = PULLREFRESH;
-
   }
 
   public void loadMore() {
@@ -125,13 +116,13 @@ public class RecyclerPaginationAdapter<D> extends BaseRecyclerAdapter<D>{
 
   @Override
   public void setDatas(@Nullable List data) {
-    if (mIsPagination){
+    if (isPaginable()){
       if (mLoadType == PULLREFRESH){
         if (data == null || data.size() == 0){
-          mPaginationManager.refreshFinished(false);
+          mPaginationManager.onLoadFinished(false, false);
           //TODO 空白页面
         }else{
-          mPaginationManager.refreshFinished(true);
+          mPaginationManager.onLoadFinished(false, true);
           if (mDatas != null && mDatas.size() > 0){
             mDatas.clear();
           }
@@ -139,10 +130,10 @@ public class RecyclerPaginationAdapter<D> extends BaseRecyclerAdapter<D>{
         }
       }else if(mLoadType == LOADMORE){
         if (data == null || data.size() == 0){
-          mPaginationManager.loadMoreFinished(false);
+          mPaginationManager.onLoadFinished(true, false);
           mLoadMoreView.setType(LoadMoreView.TYPE_ERROR);
         }else{
-          mPaginationManager.loadMoreFinished(true);
+          mPaginationManager.onLoadFinished(true, true);
           mDatas.addAll(data);
           notifyDataSetChanged();
         }

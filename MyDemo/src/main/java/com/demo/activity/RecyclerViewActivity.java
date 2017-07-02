@@ -6,7 +6,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -16,11 +15,9 @@ import android.widget.TextView;
 
 import android.widget.Toast;
 import com.demo.R;
-import com.homelink.ljrecyclerview.BaseRecyclerAdapter;
-import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJRecyclerView;
-import com.homelink.ljrecyclerview.PaginationManager;
+import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
 import com.homelink.ljrecyclerview.RecyclerPaginationAdapter;
 import com.homelink.ljrecyclerview.RecyclerType;
 
@@ -39,6 +36,7 @@ public class RecyclerViewActivity extends BaseActivity{
   private LJRecyclerView lJRecyclerView;
   private List<String> datas;
   private SAdapter adapter;
+  private PaginationTotalStyleManager paginationTotalStyleManager;
   private final static int PER_PAGE = 10;
   private final static int TOTAL = 56;
   private int count;
@@ -61,13 +59,14 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
     //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
-    adapter = new SAdapter(new PaginationManager());
+//    paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
+    adapter = new SAdapter(paginationTotalStyleManager);
 
     datas = initData(1);
     if (datas.size() > 0){
-      adapter.setDatas(initData(1));
       //设置分页参数
-      adapter.setTotal(TOTAL, PER_PAGE);
+      paginationTotalStyleManager.setTotal(TOTAL);
+      adapter.setDatas(initData(1));
     }
     lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
@@ -94,7 +93,7 @@ public class RecyclerViewActivity extends BaseActivity{
             lJRecyclerView.setRefreshing(false);
             lJRecyclerView.setEnabled(true);
             //设置分页参数
-            adapter.setTotal(TOTAL, PER_PAGE);
+            paginationTotalStyleManager.setTotal(TOTAL);
             adapter.setDatas(initData(1));
           }
         }, 3000);
@@ -107,7 +106,7 @@ public class RecyclerViewActivity extends BaseActivity{
         lJRecyclerView.postDelayed(new Runnable() {
           @Override
           public void run() {
-            adapter.setDatas(initData(adapter.getPageIndex() * PER_PAGE + 1));
+            adapter.setDatas(initData(paginationTotalStyleManager.getCurrentPage() * PER_PAGE + 1));
           }
         }, 3000);
       }
@@ -201,7 +200,7 @@ public class RecyclerViewActivity extends BaseActivity{
 
   private class SAdapter extends RecyclerPaginationAdapter<String> {
 
-    public SAdapter(PaginationManager manager){
+    public SAdapter(PaginationTotalStyleManager manager){
       super(manager);
     }
 
