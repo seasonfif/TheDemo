@@ -59,7 +59,7 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.setItemAnimator(new DefaultItemAnimator());
     //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
-//    paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
+    paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
     adapter = new SAdapter(paginationTotalStyleManager);
 
     datas = initData(1);
