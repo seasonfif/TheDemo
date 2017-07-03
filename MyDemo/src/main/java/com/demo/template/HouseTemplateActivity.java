@@ -1,6 +1,5 @@
 package com.demo.template;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -9,13 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.demo.R;
 import com.demo.activity.BaseActivity;
 import com.demo.util.DataUtil;
-import com.homelink.ljrecyclerview.BaseRecyclerAdapter;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
 import com.homelink.ljrecyclerview.LJRecyclerView;
-import com.homelink.ljrecyclerview.RecyclerType;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -44,8 +44,8 @@ public class HouseTemplateActivity extends BaseActivity{
     //lJRecyclerView.addItemDecoration(new DividerItemDecoration(60, Color.RED));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
     datas = getData();
-//    adapter = new HouseAdapter(datas);
-//    lJRecyclerView.setAdapter(adapter);
+    adapter = new HouseAdapter(datas);
+    lJRecyclerView.setAdapter(adapter);
   }
 
   private List<UiModel> getData() {
@@ -79,20 +79,19 @@ public class HouseTemplateActivity extends BaseActivity{
     return result;
   }
 
-  class HouseAdapter extends BaseRecyclerAdapter<UiModel>{
+  class HouseAdapter extends HeaderWrappedAdapter<UiModel> {
 
     public HouseAdapter(List<UiModel> datas) {
       setDatas(datas);
     }
 
-    @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-      super.onBindViewHolder(holder, position);
+    @Override public void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position) {
       UiModel model = getItem(position);
       HouseHolder houseHolder = (HouseHolder) holder;
       houseHolder.bindData(model);
     }
 
-    @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    @Override public RecyclerView.ViewHolder onLJCreateViewHolder(ViewGroup parent, int viewType) {
       View view = getLayoutInflater().inflate(R.layout.item, parent, false);
       return new HouseHolder(view);
     }

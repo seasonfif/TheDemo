@@ -12,16 +12,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import android.widget.Toast;
+
 import com.demo.R;
+import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJRecyclerView;
 import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
-import com.homelink.ljrecyclerview.RecyclerPaginationAdapter;
+import com.homelink.ljrecyclerview.PaginationWrappedAdapter;
 import com.homelink.ljrecyclerview.RecyclerType;
 
-import com.homelink.ljrecyclerview.WrapedAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,17 +71,17 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
-        ((WrapedAdapter)lJRecyclerView.getAdapter()).updateItem(position, "str" + (position+1));
+//        lJRecyclerView.getAdapter().updateItem(position, "str" + (position+1));
       }
     });
 
     lJRecyclerView.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
       @Override public void onItemLongClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
-        ((WrapedAdapter)lJRecyclerView.getAdapter()).removeItem(position);
+//        lJRecyclerView.getAdapter().removeItem(position);
       }
     });
-//    initHeader();
+    initHeader();
 
     lJRecyclerView.setOnLoadRefreshListener(new LJRecyclerView.OnLoadRefreshListener() {
       @Override
@@ -127,7 +127,7 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.addHeaderView(tv1);
     tv1.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        ((WrapedAdapter)lJRecyclerView.getAdapter()).insertItem(2, "inserted");
+//        lJRecyclerView.getAdapter().insertItem(2, "inserted");
       }
     });
 
@@ -147,7 +147,7 @@ public class RecyclerViewActivity extends BaseActivity{
     f1.setBackgroundColor(Color.BLUE);
     f1.setTextColor(Color.WHITE);
     f1.setText("footer1");
-//    lJRecyclerView.addFooterView(f1);
+    lJRecyclerView.addFooterView(f1);
 
     f2 = new TextView(this);
     f2.setBackgroundColor(Color.BLUE);
@@ -155,7 +155,7 @@ public class RecyclerViewActivity extends BaseActivity{
     f2.setText("footer2");
     f2.setGravity(Gravity.CENTER);
     f2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
-//    lJRecyclerView.addFooterView(f2);
+    lJRecyclerView.addFooterView(f2);
   }
 
   private ArrayList initData(int start) {
@@ -198,7 +198,7 @@ public class RecyclerViewActivity extends BaseActivity{
     return false;
   }
 
-  private class SAdapter extends RecyclerPaginationAdapter<String> {
+  private class SAdapter extends PaginationWrappedAdapter<String> {
 
     public SAdapter(PaginationTotalStyleManager manager){
       super(manager);
