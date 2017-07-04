@@ -71,14 +71,14 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
-//        lJRecyclerView.getAdapter().updateItem(position, "str" + (position+1));
+        lJRecyclerView.getAdapter().updateItem(position, "str" + (position+1));
       }
     });
 
     lJRecyclerView.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
       @Override public void onItemLongClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemLongClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
-//        lJRecyclerView.getAdapter().removeItem(position);
+        lJRecyclerView.getAdapter().removeItem(position);
       }
     });
     initHeader();
@@ -127,7 +127,7 @@ public class RecyclerViewActivity extends BaseActivity{
     lJRecyclerView.addHeaderView(tv1);
     tv1.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-//        lJRecyclerView.getAdapter().insertItem(2, "inserted");
+        lJRecyclerView.getAdapter().insertItem(2, "inserted");
       }
     });
 

@@ -14,13 +14,13 @@ import java.util.List;
  *      处理了点击事件的绑定以及item更新
  */
 
-public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements WrapedAdapter{
+public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements ItemUpdateWrapper, HeaderWrapper, PaginationWrapper{
 
   protected List<D> mDatas = new ArrayList<>();
 
-  private LJRecyclerView.OnItemClickListener mOnItemClickListener;
+  protected LJRecyclerView.OnItemClickListener mOnItemClickListener;
 
-  private LJRecyclerView.OnItemLongClickListener mOnItemLongClickListener;
+  protected LJRecyclerView.OnItemLongClickListener mOnItemLongClickListener;
 
   public void setDatas(@Nullable List<D> data){
     this.mDatas = data;
@@ -64,12 +64,9 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
     return mDatas;
   }
 
-  public void refresh() {
-  }
-
   @Override public void updateItem(int position, Object obj) {
     mDatas.set(position, (D)obj);
-    notifyItemChanged(position);
+    notifyItemChanged(position + getHeadersCount());
   }
 
   @Override public void insertItem(int position, Object obj) {
@@ -78,14 +75,15 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
       position = count;
     }
     mDatas.add(position, (D)obj);
-    notifyItemInserted(position);
-    notifyItemRangeChanged(position, getItemCount());
+    notifyItemInserted(position + getHeadersCount());
+    notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
   }
 
+  @Override
   public D removeItem(int position){
     D d = mDatas.remove(position);
-    notifyItemRemoved(position);
-    notifyItemRangeChanged(position, getItemCount());
+    notifyItemRemoved(position + getHeadersCount());
+    notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
     return d;
   }
 

@@ -151,7 +151,7 @@ dependencies {
   compile 'com.squareup.retrofit2:retrofit:2.0.0'
   compile 'com.squareup.retrofit2:converter-gson:2.0.0'
   compile 'org.greenrobot:eventbus:3.0.0'
-  compile project(':ljrecyclerview2')
+  compile project(':ljrecyclerview')
 }
 
 def releaseTime() {

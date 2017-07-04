@@ -8,24 +8,17 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 /**
- * 创建时间：2017年06月27日12:20 <br>
+ * 创建时间：2017年07月03日20:51 <br>
  * 作者：zhangqiang <br>
- * 描述：LJRecyclerView内部处理header与footer
+ * 描述：继承自BaseRecyclerAdapter
+ *      扩展了Header与Footer
  */
-public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAdapter{
 
-  private BaseRecyclerAdapter mAdapter;
+public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
 
-  private ArrayList<View> mHeaderViews;
+  private ArrayList<View> mHeaderViews = new ArrayList<>();
 
-  private ArrayList<View> mFootViews;
-
-  public WrapHeaderAdapter(ArrayList<View> headerViews, ArrayList<View> footerViews,
-      BaseRecyclerAdapter adapter) {
-    this.mAdapter = adapter;
-    this.mHeaderViews = headerViews;
-    this.mFootViews = footerViews;
-  }
+  private ArrayList<View> mFooterViews = new ArrayList<>();
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER){
@@ -33,40 +26,30 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
       return new HeaderFooterHolder(mHeaderViews.get(headerIndex));
     }else if(getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER){
       int footerIndex = getIndexByViewType(viewType);
-      return new HeaderFooterHolder(mFootViews.get(footerIndex));
+      return new HeaderFooterHolder(mFooterViews.get(footerIndex));
     }
-    return mAdapter.onCreateViewHolder(parent, viewType);
+    return onLJCreateViewHolder(parent, viewType);
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     int numHeaders = getHeadersCount();
-    if (mAdapter != null && position >= numHeaders){
+    if (position >= numHeaders){
       int adjPosition = position - numHeaders;
-      int adapterCount = mAdapter.getItemCount();
+      int adapterCount = mDatas.size();
       if (adjPosition < adapterCount){
-        mAdapter.onBindViewHolder(holder, adjPosition);
+        super.onBindViewHolder(holder, adjPosition);
+        onLJBindViewHolder(holder, adjPosition);
         return;
       }
     }
   }
 
-  public int getHeadersCount(){
-    return mHeaderViews.size();
-  }
+  protected abstract RecyclerView.ViewHolder onLJCreateViewHolder(ViewGroup parent, int viewType);
 
-  public int getFootersCount(){
-    return mFootViews.size();
-  }
+  protected abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int adjPosition);
 
-  @Override public int getItemCount() {
-    if (mAdapter != null){
-      return getHeadersCount() + mAdapter.getItemCount() + getFootersCount();
-    }else{
-      return getHeadersCount() + getFootersCount();
-    }
-  }
-
-  @Override public int getItemViewType(int position) {
+  @Override
+  public int getItemViewType(int position) {
     int numHeaders = getHeadersCount();
     if (position < numHeaders){
       return getHeaderViewTypeByIndex(position);
@@ -74,39 +57,46 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
 
     int adjPosition = position - numHeaders;
     int adapterCount = 0;
-    if (mAdapter != null && position >= numHeaders){
-      adapterCount = mAdapter.getItemCount();
+    if (position >= numHeaders){
+      adapterCount = mDatas.size();
       if (adjPosition < adapterCount){
-        return mAdapter.getItemViewType(adjPosition);
+        return super.getItemViewType(adjPosition);
       }
     }
     return getFooterViewTypeByIndex(adjPosition - adapterCount);
   }
 
-  @Override public void updateItem(int position, Object obj) {
-    mAdapter.getDatas().set(position, obj);
-    notifyItemChanged(getHeadersCount() + position);
+  @Override
+  public int getItemCount() {
+    return mDatas.size() + getHeadersCount() + getFootersCount();
   }
 
-  @Override public void insertItem(int position, Object obj) {
-    int count = mAdapter.getItemCount();
-    if (position > count){
-      position = count;
-    }
-    mAdapter.getDatas().add(position, obj);
-    //fixme crash: Called attach on a child which is not detached: ViewHolder{b87577 position=7
-    //notifyItemInserted(getHeadersCount() + position);
-    //notifyItemRangeChanged(getHeadersCount() + position, getItemCount());
-    notifyDataSetChanged();
+  @Override
+  public int getHeadersCount(){
+    return mHeaderViews.size();
   }
 
-  public Object removeItem(int position){
-    Object obj = mAdapter.getDatas().remove(position);
-    //fixme crash: Called attach on a child which is not detached: ViewHolder{b87577 position=7
-    //notifyItemRemoved(getHeadersCount() + position);
-    //notifyItemRangeChanged(getHeadersCount() + position, getItemCount());
-    notifyDataSetChanged();
-    return obj;
+  @Override
+  public int getFootersCount(){
+    return mFooterViews.size();
+  }
+
+  /**
+   * 添加header
+   * @param headers
+   */
+  @Override
+  public void setHeaderViews(ArrayList<View> headers){
+    this.mHeaderViews = headers;
+  }
+
+  /**
+   * 添加footer
+   * @param footers
+   */
+  @Override
+  public void setFooterViews(ArrayList<View> footers){
+    this.mFooterViews = footers;
   }
 
   /**
@@ -114,7 +104,6 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
    * @param recyclerView
    */
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-    mAdapter.onAttachedToRecyclerView(recyclerView);
     RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
     if (layoutManager instanceof GridLayoutManager){
       final GridLayoutManager gridLayoutManager = (GridLayoutManager) layoutManager;
@@ -139,7 +128,6 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
    * @param holder
    */
   @Override public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-    mAdapter.onViewAttachedToWindow(holder);
     int position = holder.getLayoutPosition();
     if (isHeaderViewPos(position) || isFooterViewPos(position)) {
       setFullSpan(holder);
@@ -151,7 +139,7 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
   }
 
   private boolean isFooterViewPos(int position) {
-    return position >= getHeadersCount() + mAdapter.getItemCount();
+    return position >= getHeadersCount() + getItemCount();
   }
 
   private void setFullSpan(RecyclerView.ViewHolder holder) {
@@ -208,5 +196,16 @@ public class WrapHeaderAdapter extends RecyclerView.Adapter implements WrapedAda
     public HeaderFooterHolder(View view) {
       super(view);
     }
+  }
+
+  @Override public void refresh() {
+  }
+
+  @Override public void loadMore() {
+  }
+
+  @Override
+  public boolean shouldLoadMore() {
+    return false;
   }
 }

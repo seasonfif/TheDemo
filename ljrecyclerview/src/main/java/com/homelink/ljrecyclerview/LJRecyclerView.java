@@ -55,7 +55,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   private boolean mDisablePullRefresh = false;
 
-  private RecyclerPaginationAdapter mOriginalAdapter;
+  private BaseRecyclerAdapter mOriginalAdapter;
 
 
   public LJRecyclerView(Context context) {
@@ -100,7 +100,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 设置adapter
    * @param adapter
    */
-  public void setAdapter(RecyclerPaginationAdapter adapter){
+  public void setAdapter(BaseRecyclerAdapter adapter){
     this.mOriginalAdapter = adapter;
     if (mDisablePullRefresh){
       this.setEnabled(false);
@@ -118,15 +118,14 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     mRecyclerView.addOnScrollListener(new ViewScrollListener());
     initLayoutManager();
     initListener();
-    if (mHeaderViews.isEmpty() && mFooterViews.isEmpty()){
-      mRecyclerView.setAdapter(adapter);
-    }else{
-      mRecyclerView.setAdapter(new WrapHeaderAdapter(mHeaderViews, mFooterViews, adapter));
-    }
+    mOriginalAdapter.setHeaderViews(mHeaderViews);
+    mOriginalAdapter.setFooterViews(mFooterViews);
+    mRecyclerView.setAdapter(adapter);
   }
 
-  private ArrayList<View> mHeaderViews = new ArrayList<>() ;
-  private ArrayList<View> mFooterViews = new ArrayList<>() ;
+  private ArrayList<View> mHeaderViews = new ArrayList<>();
+
+  private ArrayList<View> mFooterViews = new ArrayList<>();
 
   /**
    * 添加header
@@ -168,8 +167,8 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 获得adapter
    * @return
    */
-  public RecyclerView.Adapter getAdapter(){
-    return mRecyclerView.getAdapter();
+  public BaseRecyclerAdapter getAdapter(){
+    return mOriginalAdapter;
   }
 
   private void initLayoutManager() {

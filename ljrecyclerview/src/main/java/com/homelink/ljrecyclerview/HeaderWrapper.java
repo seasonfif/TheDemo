@@ -23,4 +23,16 @@ public interface HeaderWrapper {
    * @param footers
    */
   void setFooterViews(ArrayList<View> footers);
+
+  /**
+   * 获取header数量
+   * @return
+   */
+  int getHeadersCount();
+
+  /**
+   * 获取footer数量
+   * @return
+   */
+  int getFootersCount();
 }
