@@ -52,7 +52,7 @@ public class RecyclerViewActivity extends BaseActivity{
     super.onCreate(savedInstanceState);
 
     lJRecyclerView = (LJRecyclerView) findViewById(R.id.lJRecyclerView);
-    lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
+    lJRecyclerView.setRecyclerType(RecyclerType.GRIDLAYOUT_VERTICAL);
     //反转布局
     //lJRecyclerView.setReverseLayout(true);
     lJRecyclerView.setSpanCount(4);
@@ -92,9 +92,12 @@ public class RecyclerViewActivity extends BaseActivity{
           public void run() {
             lJRecyclerView.setRefreshing(false);
             lJRecyclerView.setEnabled(true);
-            //设置分页参数
-            paginationTotalStyleManager.setTotal(TOTAL);
-            adapter.setDatas(initData(1));
+            ArrayList list = initData(1);
+            if (list.size() > 0){
+              //设置分页参数
+              paginationTotalStyleManager.setTotal(TOTAL);
+              adapter.setDatas(list);
+            }
           }
         }, 3000);
       }

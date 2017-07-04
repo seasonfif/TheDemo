@@ -9,6 +9,11 @@ package com.homelink.ljrecyclerview;
 public interface PaginationWrapper {
 
   /**
+   * “加载更多”的viewtype
+   */
+  int VIEW_TYPE_LOADMORE = 0x30000000;
+
+  /**
    * 下拉刷新
    */
   void refresh();

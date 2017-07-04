@@ -111,7 +111,8 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
       gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
         @Override public int getSpanSize(int position) {
           int viewType = getItemViewType(position);
-          if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER || getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER){
+          if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER || getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER
+              || viewType == VIEW_TYPE_LOADMORE){
             return gridLayoutManager.getSpanCount();
           }
           if (spanSizeLookup != null){
@@ -149,16 +150,6 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
       p.setFullSpan(true);
     }
   }
-
-  /**
-   * header
-   */
-  private static final int VIEW_TYPE_HEADER = 0x10000000;
-
-  /**
-   * footer
-   */
-  private static final int VIEW_TYPE_FOOTER = 0x20000000;
 
   /**
    * 取header、footer类型

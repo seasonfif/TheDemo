@@ -277,21 +277,15 @@ public class LJRecyclerView extends SwipeRefreshLayout{
   }
 
   private class ViewScrollListener extends RecyclerView.OnScrollListener {
+
     private int lastVisibleItemPosition;
+    private RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
 
     @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
       super.onScrollStateChanged(recyclerView, newState);
-      if (newState == RecyclerView.SCROLL_STATE_IDLE && lastVisibleItemPosition + 1 == mOriginalAdapter.getItemCount() && mOriginalAdapter.shouldLoadMore()) {
-        mOriginalAdapter.loadMore();
-        if (mOnLoadMoreListener != null){
-          mOnLoadMoreListener.onLoadMore();
-        }
-      }
-    }
 
-    @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-      super.onScrolled(recyclerView, dx, dy);
-      RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+      if (newState != RecyclerView.SCROLL_STATE_IDLE || !mOriginalAdapter.shouldLoadMore()) return;
+
       if (layoutManager instanceof GridLayoutManager) {
         lastVisibleItemPosition = ((GridLayoutManager) layoutManager).findLastVisibleItemPosition();
       } else if (layoutManager instanceof StaggeredGridLayoutManager) {
@@ -301,6 +295,17 @@ public class LJRecyclerView extends SwipeRefreshLayout{
       } else {
         lastVisibleItemPosition = ((LinearLayoutManager) layoutManager).findLastVisibleItemPosition();
       }
+
+      if (lastVisibleItemPosition + 1 == mOriginalAdapter.getItemCount()) {
+        mOriginalAdapter.loadMore();
+        if (mOnLoadMoreListener != null){
+          mOnLoadMoreListener.onLoadMore();
+        }
+      }
+    }
+
+    @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      super.onScrolled(recyclerView, dx, dy);
     }
 
     private int findMax(int[] lastPositions) {

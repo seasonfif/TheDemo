@@ -31,7 +31,7 @@ public class PaginationTotalStyleManager implements Paginable{
 
     @Override
     public boolean shouldLoadMore(){
-        return mCurPage != getPages();
+        return getPages() > 1 && mCurPage != getPages();
     }
 
     @Override

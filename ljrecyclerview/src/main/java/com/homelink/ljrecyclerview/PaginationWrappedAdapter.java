@@ -18,11 +18,6 @@ import java.util.List;
 public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D>{
 
   /**
-   * “加载更多”的viewtype
-   */
-  private static final int VIEW_TYPE_LOADMORE = 0x30000000;
-
-  /**
    * 下拉刷新
    */
   private static final int PULLREFRESH = 0x000f;
@@ -65,7 +60,7 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
     if (getItemViewType(position) == VIEW_TYPE_LOADMORE){
       //LoadMoreViewHolder viewHolder = (LoadMoreViewHolder) holder;
       if (mLoadMoreView != null){
-        mLoadMoreView.setEndText("load more");
+        mLoadMoreView.setEndText("加载更多");
         mLoadMoreView.setType(LoadMoreView.TYPE_REACH_END);
       }
     }else{

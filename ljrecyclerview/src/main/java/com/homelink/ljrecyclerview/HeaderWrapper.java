@@ -13,6 +13,16 @@ import java.util.ArrayList;
 public interface HeaderWrapper {
 
   /**
+   * header
+   */
+  int VIEW_TYPE_HEADER = 0x10000000;
+
+  /**
+   * footer
+   */
+  int VIEW_TYPE_FOOTER = 0x20000000;
+
+  /**
    * 添加header
    * @param headers
    */
