@@ -3,7 +3,6 @@ package com.homelink.ljrecyclerview;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,18 +79,26 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
     }
     mDatas.add(position, (D)obj);
     notifyItemInserted(position + getHeadersCount());
-    //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
-    //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-    notifyDataSetChanged();
+    if (getHeadersCount() > 0 || getFootersCount() > 0){
+      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
+      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+      notifyDataSetChanged();
+    }else{
+      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+    }
   }
 
   @Override
   public D removeItem(int position){
     D d = mDatas.remove(position);
     notifyItemRemoved(position + getHeadersCount());
-    //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
-    //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-    notifyDataSetChanged();
+    if (getHeadersCount() > 0 || getFootersCount() > 0){
+      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
+      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+      notifyDataSetChanged();
+    }else{
+      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+    }
     return d;
   }
 

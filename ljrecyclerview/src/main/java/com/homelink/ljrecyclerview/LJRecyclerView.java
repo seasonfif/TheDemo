@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
 import android.view.View;
-
 import java.util.ArrayList;
 
 /**
@@ -115,9 +114,9 @@ public class LJRecyclerView extends SwipeRefreshLayout{
         }
       });
     }
-    mRecyclerView.addOnScrollListener(new ViewScrollListener());
     initLayoutManager();
     initListener();
+    mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
     mOriginalAdapter.setHeaderViews(mHeaderViews);
     mOriginalAdapter.setFooterViews(mFooterViews);
     mRecyclerView.setAdapter(adapter);
@@ -276,7 +275,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     }
   }
 
-  private class ViewScrollListener extends RecyclerView.OnScrollListener {
+  private class RecyclerScrollListener extends RecyclerView.OnScrollListener {
 
     private int lastVisibleItemPosition;
     private RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();

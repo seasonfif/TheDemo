@@ -52,7 +52,7 @@ public class RecyclerViewActivity extends BaseActivity{
     super.onCreate(savedInstanceState);
 
     lJRecyclerView = (LJRecyclerView) findViewById(R.id.lJRecyclerView);
-    lJRecyclerView.setRecyclerType(RecyclerType.GRIDLAYOUT_VERTICAL);
+    lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
     //反转布局
     //lJRecyclerView.setReverseLayout(true);
     lJRecyclerView.setSpanCount(4);
@@ -127,7 +127,7 @@ public class RecyclerViewActivity extends BaseActivity{
     tv1.setText("header1");
     tv1.setGravity(Gravity.CENTER);
     tv1.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
-    lJRecyclerView.addHeaderView(tv1);
+    //lJRecyclerView.addHeaderView(tv1);
     tv1.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         lJRecyclerView.getAdapter().insertItem(2, "inserted");
@@ -138,13 +138,13 @@ public class RecyclerViewActivity extends BaseActivity{
     tv2.setBackgroundColor(Color.BLUE);
     tv2.setTextColor(Color.WHITE);
     tv2.setText("header2");
-    lJRecyclerView.addHeaderView(tv2);
+    //lJRecyclerView.addHeaderView(tv2);
 
     TextView tv3 = new TextView(this);
     tv3.setBackgroundColor(Color.BLUE);
     tv3.setTextColor(Color.WHITE);
     tv3.setText("header3");
-    lJRecyclerView.addHeaderView(tv3);
+    //lJRecyclerView.addHeaderView(tv3);
 
     TextView f1 = new TextView(this);
     f1.setBackgroundColor(Color.BLUE);
