@@ -45,4 +45,6 @@ public interface HeaderWrapper {
    * @return
    */
   int getFootersCount();
+
+  void setEmptyView(View empty);
 }

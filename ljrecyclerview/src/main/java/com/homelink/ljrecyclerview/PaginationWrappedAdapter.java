@@ -108,12 +108,15 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
         if (data == null || data.size() == 0){
           mPaginationManager.onLoadFinished(false, false);
           //TODO 空白页面
+          enableEmpty();
         }else{
           mPaginationManager.onLoadFinished(false, true);
           if (mDatas != null && mDatas.size() > 0){
             mDatas.clear();
           }
-          super.setDatas(data);
+          disableEmpty();
+          mDatas = data;
+          notifyDataSetChanged();
         }
       }else if(mLoadType == LOADMORE){
         if (data == null || data.size() == 0){
@@ -126,11 +129,7 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
         }
       }
     }else{
-      if (data == null || data.size() == 0){
-        //TODO 空白页面
-      }else{
-        super.setDatas(data);
-      }
+      super.setDatas(data);
     }
   }
 

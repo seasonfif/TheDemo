@@ -1,11 +1,16 @@
 package com.homelink.ljrecyclerview;
 
+import android.graphics.Color;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 创建时间：2017年07月03日20:51 <br>
@@ -16,9 +21,19 @@ import java.util.ArrayList;
 
 public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
 
-  private ArrayList<View> mHeaderViews = new ArrayList<>();
+  protected ArrayList<View> mHeaderViews = new ArrayList<>();
 
-  private ArrayList<View> mFooterViews = new ArrayList<>();
+  protected ArrayList<View> mFooterViews = new ArrayList<>();
+
+  private ArrayList<View> headerCache = new ArrayList<>();
+
+  private ArrayList<View> footerCache = new ArrayList<>();
+
+  protected View empty;
+
+  private int emptyFlag;
+  public static int WITH_HEADER = 0x000f;
+  public static int WITH_FOOTER = 0x00f0;
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER){
@@ -47,6 +62,19 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   protected abstract RecyclerView.ViewHolder onLJCreateViewHolder(ViewGroup parent, int viewType);
 
   protected abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int adjPosition);
+
+  @Override public void setDatas(@Nullable List<D> data) {
+    if (data == null || data.size() == 0){
+      //TODO 空白页面
+      enableEmpty();
+    }else{
+      if (mDatas != null && mDatas.size() > 0){
+        mDatas.clear();
+      }
+      disableEmpty();
+      super.setDatas(data);
+    }
+  }
 
   @Override
   public int getItemViewType(int position) {
@@ -97,6 +125,61 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   @Override
   public void setFooterViews(ArrayList<View> footers){
     this.mFooterViews = footers;
+  }
+
+  /**
+   * 添加空白页面
+   * @param empty
+   */
+  @Override public void setEmptyView(View empty) {
+    this.empty = empty;
+  }
+
+  /**
+   * 设置空白页区域
+   * @param flag
+   */
+  public void setEmptyArea(int flag) {
+    this.emptyFlag |= flag;
+  }
+
+  /**
+   * 显示空白页面
+   */
+  protected void enableEmpty() {
+    //UI没有数据时显示时才显示空白页面
+    if (mDatas.size() >= 0 && empty != null && !mHeaderViews.contains(empty)){
+      //清除已有数据
+      mDatas.clear();
+      if ((emptyFlag & WITH_HEADER) > 0){
+        headerCache.addAll(mHeaderViews);
+        mHeaderViews.clear();
+      }
+
+      if ((emptyFlag & WITH_FOOTER) > 0){
+        footerCache.addAll(mFooterViews);
+        mFooterViews.clear();
+      }
+      mHeaderViews.add(empty);
+      notifyDataSetChanged();
+    }
+  }
+
+  /**
+   * 隐藏空白页面
+   */
+  protected void disableEmpty(){
+    if (headerCache.size() > 0){
+      mHeaderViews.addAll(headerCache);
+      headerCache.clear();
+    }
+    if (footerCache.size() > 0){
+      mFooterViews.addAll(footerCache);
+      footerCache.clear();
+    }
+    if (empty != null){
+      mHeaderViews.remove(empty);
+    }
   }
 
   /**

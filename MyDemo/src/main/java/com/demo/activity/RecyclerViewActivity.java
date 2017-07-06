@@ -7,8 +7,10 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.demo.R;
 import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
 import com.homelink.ljrecyclerview.LJRecyclerView;
 import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
 import com.homelink.ljrecyclerview.PaginationWrappedAdapter;
@@ -60,14 +63,8 @@ public class RecyclerViewActivity extends BaseActivity{
     //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
     paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
-    adapter = new SAdapter(paginationTotalStyleManager);
+    adapter = new SAdapter();
 
-    datas = initData(1);
-    if (datas.size() > 0){
-      //设置分页参数
-      paginationTotalStyleManager.setTotal(TOTAL);
-      adapter.setDatas(initData(1));
-    }
     lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
         Toast.makeText(RecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
@@ -96,8 +93,8 @@ public class RecyclerViewActivity extends BaseActivity{
             if (list.size() > 0){
               //设置分页参数
               paginationTotalStyleManager.setTotal(TOTAL);
-              adapter.setDatas(list);
             }
+            adapter.setDatas(list);
           }
         }, 3000);
       }
@@ -115,6 +112,14 @@ public class RecyclerViewActivity extends BaseActivity{
       }
     });
     lJRecyclerView.setAdapter(adapter);
+
+    datas = initData(1);
+    if (datas.size() > 0){
+      //设置分页参数
+      paginationTotalStyleManager.setTotal(TOTAL);
+    }
+    adapter.setEmptyArea(HeaderWrappedAdapter.WITH_HEADER | HeaderWrappedAdapter.WITH_FOOTER);
+    adapter.setDatas(datas);
   }
 
   private TextView tv1;
@@ -122,12 +127,12 @@ public class RecyclerViewActivity extends BaseActivity{
 
   private void initHeader() {
     tv1 = new TextView(this);
-    tv1.setBackgroundColor(Color.BLUE);
+    tv1.setBackgroundColor(Color.RED);
     tv1.setTextColor(Color.WHITE);
     tv1.setText("header1");
     tv1.setGravity(Gravity.CENTER);
     tv1.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
-    //lJRecyclerView.addHeaderView(tv1);
+    lJRecyclerView.addHeaderView(tv1);
     tv1.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         lJRecyclerView.getAdapter().insertItem(2, "inserted");
@@ -135,16 +140,18 @@ public class RecyclerViewActivity extends BaseActivity{
     });
 
     TextView tv2 = new TextView(this);
-    tv2.setBackgroundColor(Color.BLUE);
+    tv2.setBackgroundColor(Color.GREEN);
     tv2.setTextColor(Color.WHITE);
     tv2.setText("header2");
-    //lJRecyclerView.addHeaderView(tv2);
+    tv2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_70)));
+    lJRecyclerView.addHeaderView(tv2);
 
     TextView tv3 = new TextView(this);
     tv3.setBackgroundColor(Color.BLUE);
     tv3.setTextColor(Color.WHITE);
     tv3.setText("header3");
-    //lJRecyclerView.addHeaderView(tv3);
+    tv3.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_90)));
+    lJRecyclerView.addHeaderView(tv3);
 
     TextView f1 = new TextView(this);
     f1.setBackgroundColor(Color.BLUE);
@@ -159,6 +166,25 @@ public class RecyclerViewActivity extends BaseActivity{
     f2.setGravity(Gravity.CENTER);
     f2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
     lJRecyclerView.addFooterView(f2);
+
+    initEmptyView();
+  }
+
+  private void initEmptyView() {
+    TextView empty = new TextView(this);
+    empty.setBackgroundColor(Color.GRAY);
+    empty.setTextColor(Color.WHITE);
+    empty.setText("Empty");
+    empty.setGravity(Gravity.CENTER);
+    //empty.setPadding(100,100,100,100);
+    LinearLayoutCompat.LayoutParams lp =
+        new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_250));
+    lp.topMargin = 100;
+    lp.bottomMargin = 100;
+    lp.leftMargin = 100;
+    lp.rightMargin = 100;
+    empty.setLayoutParams(lp);
+    lJRecyclerView.setEmptyView(empty);
   }
 
   private ArrayList initData(int start) {
@@ -202,6 +228,10 @@ public class RecyclerViewActivity extends BaseActivity{
   }
 
   private class SAdapter extends PaginationWrappedAdapter<String> {
+
+    public SAdapter(){
+      super();
+    }
 
     public SAdapter(PaginationTotalStyleManager manager){
       super(manager);
