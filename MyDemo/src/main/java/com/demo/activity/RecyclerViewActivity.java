@@ -10,14 +10,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.R;
-import com.homelink.ljrecyclerview.DividerGridItemDecoration;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
 import com.homelink.ljrecyclerview.LJRecyclerView;
@@ -118,7 +116,7 @@ public class RecyclerViewActivity extends BaseActivity{
       //设置分页参数
       paginationTotalStyleManager.setTotal(TOTAL);
     }
-    adapter.setEmptyArea(HeaderWrappedAdapter.WITH_HEADER | HeaderWrappedAdapter.WITH_FOOTER);
+    adapter.setEmptyStyle(HeaderWrappedAdapter.WITH_HEADER | HeaderWrappedAdapter.WITH_FOOTER);
     adapter.setDatas(datas);
   }
 

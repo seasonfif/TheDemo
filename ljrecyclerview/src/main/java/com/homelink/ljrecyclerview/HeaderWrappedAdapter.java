@@ -38,7 +38,12 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER){
       int headerIndex = getIndexByViewType(viewType);
-      return new HeaderFooterHolder(mHeaderViews.get(headerIndex));
+      View view = mHeaderViews.get(headerIndex);
+      if (view == empty){
+        return new EmptyViewHolder(view);
+      }else{
+        return new HeaderFooterHolder(view);
+      }
     }else if(getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER){
       int footerIndex = getIndexByViewType(viewType);
       return new HeaderFooterHolder(mFooterViews.get(footerIndex));
@@ -139,7 +144,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
    * 设置空白页区域
    * @param flag
    */
-  public void setEmptyArea(int flag) {
+  public void setEmptyStyle(int flag) {
     this.emptyFlag |= flag;
   }
 
@@ -163,6 +168,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
       mHeaderViews.add(empty);
       notifyDataSetChanged();
     }
+    notifyDataSetChanged();
   }
 
   /**
@@ -272,6 +278,12 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
     }
   }
 
+  private class EmptyViewHolder extends RecyclerView.ViewHolder {
+    public EmptyViewHolder(View view) {
+      super(view);
+    }
+  }
+
   @Override public void refresh() {
   }
 
@@ -282,4 +294,5 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   public boolean shouldLoadMore() {
     return false;
   }
+
 }
