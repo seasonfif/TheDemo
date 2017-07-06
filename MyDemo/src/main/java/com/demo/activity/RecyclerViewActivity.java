@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.demo.R;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
-import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
+import com.homelink.ljrecyclerview.Empty;
 import com.homelink.ljrecyclerview.LJRecyclerView;
 import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
 import com.homelink.ljrecyclerview.PaginationWrappedAdapter;
@@ -61,7 +61,7 @@ public class RecyclerViewActivity extends BaseActivity{
     //lJRecyclerView.addItemDecoration(new DividerGridItemDecoration(this));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
     paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
-    adapter = new SAdapter();
+    adapter = new SAdapter(paginationTotalStyleManager);
 
     lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
       @Override public void onItemClick(View view, int position) {
@@ -91,6 +91,8 @@ public class RecyclerViewActivity extends BaseActivity{
             if (list.size() > 0){
               //设置分页参数
               paginationTotalStyleManager.setTotal(TOTAL);
+            }else{
+              paginationTotalStyleManager.setTotal(0);
             }
             adapter.setDatas(list);
           }
@@ -116,7 +118,7 @@ public class RecyclerViewActivity extends BaseActivity{
       //设置分页参数
       paginationTotalStyleManager.setTotal(TOTAL);
     }
-    adapter.setEmptyStyle(HeaderWrappedAdapter.WITH_HEADER | HeaderWrappedAdapter.WITH_FOOTER);
+    adapter.setEmpty(Empty.FOOTER_COVER);
     adapter.setDatas(datas);
   }
 

@@ -119,7 +119,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
     mOriginalAdapter.setHeaderViews(mHeaderViews);
     mOriginalAdapter.setFooterViews(mFooterViews);
-    mOriginalAdapter.setEmptyView(mEmpty);
+    mOriginalAdapter.setEmpty(mEmpty);
     mRecyclerView.setAdapter(adapter);
   }
 

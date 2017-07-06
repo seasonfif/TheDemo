@@ -1,14 +1,12 @@
 package com.homelink.ljrecyclerview;
 
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +23,8 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
 
   protected ArrayList<View> mFooterViews = new ArrayList<>();
 
+  protected ArrayList<View> mEmptyViews = new ArrayList<>();
+
   private ArrayList<View> headerCache = new ArrayList<>();
 
   private ArrayList<View> footerCache = new ArrayList<>();
@@ -32,27 +32,22 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   protected View empty;
 
   private int emptyFlag;
-  public static int WITH_HEADER = 0x000f;
-  public static int WITH_FOOTER = 0x00f0;
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER){
       int headerIndex = getIndexByViewType(viewType);
-      View view = mHeaderViews.get(headerIndex);
-      if (view == empty){
-        return new EmptyViewHolder(view);
-      }else{
-        return new HeaderFooterHolder(view);
-      }
+      return new HeaderFooterHolder(mHeaderViews.get(headerIndex));
     }else if(getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER){
       int footerIndex = getIndexByViewType(viewType);
       return new HeaderFooterHolder(mFooterViews.get(footerIndex));
+    }else if(viewType == VIEW_TYPE_EMPTY){
+      return new EmptyViewHolder(empty);
     }
     return onLJCreateViewHolder(parent, viewType);
   }
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    int numHeaders = getHeadersCount();
+    int numHeaders = getHeadersCount() + getEmptyCount();
     if (position >= numHeaders){
       int adjPosition = position - numHeaders;
       int adapterCount = mDatas.size();
@@ -70,7 +65,6 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
 
   @Override public void setDatas(@Nullable List<D> data) {
     if (data == null || data.size() == 0){
-      //TODO 空白页面
       enableEmpty();
     }else{
       if (mDatas != null && mDatas.size() > 0){
@@ -88,9 +82,13 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
       return getHeaderViewTypeByIndex(position);
     }
 
-    int adjPosition = position - numHeaders;
+    if (getEmptyCount() > 0 && position == numHeaders){
+      return VIEW_TYPE_EMPTY;
+    }
+
+    int adjPosition = position - numHeaders - getEmptyCount();
     int adapterCount = 0;
-    if (position >= numHeaders){
+    if (position >= numHeaders+getEmptyCount()){
       adapterCount = mDatas.size();
       if (adjPosition < adapterCount){
         return super.getItemViewType(adjPosition);
@@ -101,7 +99,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
 
   @Override
   public int getItemCount() {
-    return mDatas.size() + getHeadersCount() + getFootersCount();
+    return mDatas.size() + getHeadersCount() + getFootersCount() + getEmptyCount();
   }
 
   @Override
@@ -112,6 +110,10 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
   @Override
   public int getFootersCount(){
     return mFooterViews.size();
+  }
+
+  public int getEmptyCount(){
+    return mEmptyViews.size();
   }
 
   /**
@@ -136,7 +138,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
    * 添加空白页面
    * @param empty
    */
-  @Override public void setEmptyView(View empty) {
+  @Override public void setEmpty(View empty) {
     this.empty = empty;
   }
 
@@ -144,7 +146,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
    * 设置空白页区域
    * @param flag
    */
-  public void setEmptyStyle(int flag) {
+  public void setEmpty(@Empty int flag) {
     this.emptyFlag |= flag;
   }
 
@@ -152,29 +154,30 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
    * 显示空白页面
    */
   protected void enableEmpty() {
-    //UI没有数据时显示时才显示空白页面
-    if (mDatas.size() >= 0 && empty != null && !mHeaderViews.contains(empty)){
+    //设置过empty并且当前没有显示时才会显示空白页面
+    if (empty != null && getEmptyCount() == 0){
       //清除已有数据
       mDatas.clear();
-      if ((emptyFlag & WITH_HEADER) > 0){
+      if ((emptyFlag & Empty.HEADER_COVER) > 0){
         headerCache.addAll(mHeaderViews);
         mHeaderViews.clear();
       }
 
-      if ((emptyFlag & WITH_FOOTER) > 0){
+      if ((emptyFlag & Empty.FOOTER_COVER) > 0){
         footerCache.addAll(mFooterViews);
         mFooterViews.clear();
       }
-      mHeaderViews.add(empty);
+      mEmptyViews.add(empty);
       notifyDataSetChanged();
     }
-    notifyDataSetChanged();
   }
 
   /**
    * 隐藏空白页面
    */
   protected void disableEmpty(){
+
+    if (empty == null) return;
     if (headerCache.size() > 0){
       mHeaderViews.addAll(headerCache);
       headerCache.clear();
@@ -183,9 +186,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
       mFooterViews.addAll(footerCache);
       footerCache.clear();
     }
-    if (empty != null){
-      mHeaderViews.remove(empty);
-    }
+    mEmptyViews.remove(empty);
   }
 
   /**

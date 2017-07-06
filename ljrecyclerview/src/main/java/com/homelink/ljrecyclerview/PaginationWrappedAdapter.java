@@ -107,7 +107,6 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
       if (mLoadType == PULLREFRESH){
         if (data == null || data.size() == 0){
           mPaginationManager.onLoadFinished(false, false);
-          //TODO 空白页面
           enableEmpty();
         }else{
           mPaginationManager.onLoadFinished(false, true);

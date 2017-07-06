@@ -23,6 +23,11 @@ public interface HeaderWrapper {
   int VIEW_TYPE_FOOTER = 0x20000000;
 
   /**
+   * empty
+   */
+  int VIEW_TYPE_EMPTY = 0x40000000;
+
+  /**
    * 添加header
    * @param headers
    */
@@ -46,5 +51,8 @@ public interface HeaderWrapper {
    */
   int getFootersCount();
 
-  void setEmptyView(View empty);
+  /**设置空白页
+   * @param empty
+   */
+  void setEmpty(View empty);
 }
