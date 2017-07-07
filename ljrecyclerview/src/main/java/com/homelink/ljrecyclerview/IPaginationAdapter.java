@@ -6,7 +6,7 @@ package com.homelink.ljrecyclerview;
  * 描述：
  */
 
-public interface PaginationWrapper {
+public interface IPaginationAdapter {
 
   /**
    * “加载更多”的viewtype

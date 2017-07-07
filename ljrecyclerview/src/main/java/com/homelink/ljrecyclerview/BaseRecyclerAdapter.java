@@ -13,7 +13,8 @@ import java.util.List;
  *      处理了点击事件的绑定以及item更新
  */
 
-public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements ItemUpdateWrapper, HeaderWrapper, PaginationWrapper{
+public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements IUpdateAdapter,
+    IHeaderAdapter, IPaginationAdapter {
 
   protected List<D> mDatas = new ArrayList<>();
 

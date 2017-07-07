@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * 描述：Header、Footer
  */
 
-public interface HeaderWrapper {
+public interface IHeaderAdapter {
 
   /**
    * header

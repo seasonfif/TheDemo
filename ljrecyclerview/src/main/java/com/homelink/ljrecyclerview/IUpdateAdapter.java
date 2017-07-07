@@ -6,7 +6,7 @@ package com.homelink.ljrecyclerview;
  * 描述：
  */
 
-public interface ItemUpdateWrapper {
+public interface IUpdateAdapter {
 
   void updateItem(int position, Object obj);
 
