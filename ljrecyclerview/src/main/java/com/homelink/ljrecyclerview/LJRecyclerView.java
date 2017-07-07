@@ -54,7 +54,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   private boolean mDisablePullRefresh = false;
 
-  private BaseRecyclerAdapter mOriginalAdapter;
+  private RecyclerView.Adapter mOriginalAdapter;
   private View mEmpty;
 
   public LJRecyclerView(Context context) {
@@ -123,6 +123,10 @@ public class LJRecyclerView extends SwipeRefreshLayout{
     mRecyclerView.setAdapter(adapter);
   }
 
+  private void setAdapter(){
+
+  }
+
   private ArrayList<View> mHeaderViews = new ArrayList<>();
 
   private ArrayList<View> mFooterViews = new ArrayList<>();
@@ -171,7 +175,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 获得adapter
    * @return
    */
-  public BaseRecyclerAdapter getAdapter(){
+  public RecyclerView.Adapter getAdapter(){
     return mOriginalAdapter;
   }
 

@@ -9,11 +9,6 @@ package com.homelink.ljrecyclerview;
 public interface IPaginationAdapter {
 
   /**
-   * “加载更多”的viewtype
-   */
-  int VIEW_TYPE_LOADMORE = 0x30000000;
-
-  /**
    * 下拉刷新
    */
   void refresh();
@@ -23,5 +18,9 @@ public interface IPaginationAdapter {
    */
   void loadMore();
 
+  /**
+   * 是否满足下拉刷新的条件
+   * @return
+   */
   boolean shouldLoadMore();
 }

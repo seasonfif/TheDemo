@@ -17,7 +17,7 @@ import java.util.List;
  *      扩展了Header与Footer
  */
 
-public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
+public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> implements IHeaderAdapter {
 
   protected ArrayList<View> mHeaderViews = new ArrayList<>();
 
@@ -283,17 +283,6 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> {
     public EmptyViewHolder(View view) {
       super(view);
     }
-  }
-
-  @Override public void refresh() {
-  }
-
-  @Override public void loadMore() {
-  }
-
-  @Override
-  public boolean shouldLoadMore() {
-    return false;
   }
 
 }

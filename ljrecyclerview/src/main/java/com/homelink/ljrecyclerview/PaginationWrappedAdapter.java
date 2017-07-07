@@ -12,7 +12,7 @@ import java.util.List;
  *        扩展分页功能
  */
 
-public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D>{
+public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D> implements IPaginationAdapter{
 
   /**
    * 下拉刷新
