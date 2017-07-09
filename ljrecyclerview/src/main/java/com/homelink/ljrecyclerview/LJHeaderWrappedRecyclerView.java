@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * 作者：zhangqiang <br>
  * 描述：封装LJRecyclerView
  */
-public class LJHeaderWrappedRecyclerView extends LJRecyclerView{
+public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
 
   private static final String TAG = "LJHeaderWrappedRecyclerView";
 

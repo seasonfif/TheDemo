@@ -14,7 +14,7 @@ import com.demo.activity.BaseActivity;
 import com.demo.util.DataUtil;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
-import com.homelink.ljrecyclerview.LJRecyclerView;
+import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 
 public class HouseTemplateActivity extends BaseActivity{
 
-  private LJRecyclerView lJRecyclerView;
+  private LJSimpleRecyclerView lJRecyclerView;
   private Object result;
   private List<UiModel> datas;
   private HouseAdapter adapter;
@@ -39,7 +39,7 @@ public class HouseTemplateActivity extends BaseActivity{
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    lJRecyclerView = (LJRecyclerView) findViewById(R.id.recycler);
+    lJRecyclerView = (LJSimpleRecyclerView) findViewById(R.id.recycler);
     //lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_HORIZONTAL);
     //lJRecyclerView.addItemDecoration(new DividerItemDecoration(60, Color.RED));
     lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));

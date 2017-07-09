@@ -13,13 +13,13 @@ import java.util.List;
  *      处理了点击事件的绑定以及item更新
  */
 
-public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implements IUpdateAdapter {
+public abstract class SimpleRecyclerAdapter<D> extends RecyclerView.Adapter implements IUpdateAdapter {
 
   protected List<D> mDatas = new ArrayList<>();
 
-  protected LJRecyclerView.OnItemClickListener mOnItemClickListener;
+  protected LJSimpleRecyclerView.OnItemClickListener mOnItemClickListener;
 
-  protected LJRecyclerView.OnItemLongClickListener mOnItemLongClickListener;
+  protected LJSimpleRecyclerView.OnItemLongClickListener mOnItemLongClickListener;
 
   public void setDatas(@Nullable List<D> data){
     this.mDatas = data;
@@ -90,11 +90,11 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
     return d;
   }
 
-  public void setOnItemClickListener(LJRecyclerView.OnItemClickListener onItemClickListener) {
+  protected void setOnItemClickListener(LJSimpleRecyclerView.OnItemClickListener onItemClickListener) {
     this.mOnItemClickListener = onItemClickListener;
   }
 
-  public void setOnItemLongClickListener(LJRecyclerView.OnItemLongClickListener onItemLongClickListener) {
+  protected void setOnItemLongClickListener(LJSimpleRecyclerView.OnItemLongClickListener onItemLongClickListener) {
     this.mOnItemLongClickListener = onItemLongClickListener;
   }
 }

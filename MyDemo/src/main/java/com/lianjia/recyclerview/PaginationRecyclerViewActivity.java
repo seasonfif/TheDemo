@@ -20,7 +20,7 @@ import com.demo.R;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.Empty;
 import com.homelink.ljrecyclerview.LJPaginationWrappedRecyclerView;
-import com.homelink.ljrecyclerview.LJRecyclerView;
+import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
 import com.homelink.ljrecyclerview.PaginationWrappedAdapter;
 import com.homelink.ljrecyclerview.RecyclerType;
@@ -62,14 +62,14 @@ public class PaginationRecyclerViewActivity extends Activity{
         paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
         adapter = new SAdapter(paginationTotalStyleManager);
 
-        lJRecyclerView.setOnItemClickListener(new LJRecyclerView.OnItemClickListener() {
+        lJRecyclerView.setOnItemClickListener(new LJSimpleRecyclerView.OnItemClickListener() {
             @Override public void onItemClick(View view, int position) {
                 Toast.makeText(PaginationRecyclerViewActivity.this, "itemClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
                 lJRecyclerView.getAdapter().updateItem(position, "str" + (position+1));
             }
         });
 
-        lJRecyclerView.setOnItemLongClickListener(new LJRecyclerView.OnItemLongClickListener() {
+        lJRecyclerView.setOnItemLongClickListener(new LJSimpleRecyclerView.OnItemLongClickListener() {
             @Override public void onItemLongClick(View view, int position) {
                 Toast.makeText(PaginationRecyclerViewActivity.this, "itemLongClick" + adapter.getItem(position), Toast.LENGTH_SHORT).show();
                 lJRecyclerView.getAdapter().removeItem(position);
@@ -77,7 +77,7 @@ public class PaginationRecyclerViewActivity extends Activity{
         });
         initHeader();
 
-        lJRecyclerView.setOnLoadRefreshListener(new LJRecyclerView.OnLoadRefreshListener() {
+        lJRecyclerView.setOnLoadRefreshListener(new LJSimpleRecyclerView.OnLoadRefreshListener() {
             @Override
             public void onLoadRefresh() {
                 lJRecyclerView.setEnabled(false);
@@ -99,7 +99,7 @@ public class PaginationRecyclerViewActivity extends Activity{
             }
         });
 
-        lJRecyclerView.setOnLoadMoreListener(new LJRecyclerView.OnLoadMoreListener() {
+        lJRecyclerView.setOnLoadMoreListener(new LJPaginationWrappedRecyclerView.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 lJRecyclerView.postDelayed(new Runnable() {

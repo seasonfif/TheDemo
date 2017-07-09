@@ -16,7 +16,7 @@ import android.view.View;
  * 作者：zhangqiang <br>
  * 描述：封装LJRecyclerView
  */
-public class LJRecyclerView extends SwipeRefreshLayout{
+public class LJSimpleRecyclerView extends SwipeRefreshLayout{
 
   private static final String TAG = "LJRecyclerView";
 
@@ -53,13 +53,13 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    */
   protected boolean mDisablePullRefresh = false;
 
-  private BaseRecyclerAdapter mOriginalAdapter;
+  private SimpleRecyclerAdapter mOriginalAdapter;
 
-  public LJRecyclerView(Context context) {
+  public LJSimpleRecyclerView(Context context) {
     this(context, null);
   }
 
-  public LJRecyclerView(Context context, AttributeSet attrs) {
+  public LJSimpleRecyclerView(Context context, AttributeSet attrs) {
     super(context, attrs);
     mRecyclerView = new RecyclerView(context, attrs);
     addView(mRecyclerView);
@@ -97,7 +97,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 设置adapter
    * @param adapter
    */
-  public void setAdapter(BaseRecyclerAdapter adapter){
+  public void setAdapter(SimpleRecyclerAdapter adapter){
     this.mOriginalAdapter = adapter;
     if (mDisablePullRefresh){
       this.setEnabled(false);
@@ -106,7 +106,10 @@ public class LJRecyclerView extends SwipeRefreshLayout{
         @Override
         public void onRefresh() {
           if (mOnLoadRefreshListener != null){
-            mOnLoadRefreshListener.onLoadRefresh();
+            setEnabled(false);
+            ProxyLoadRefresh refreshProxy = new ProxyLoadRefresh(mOnLoadRefreshListener);
+            refreshProxy.onLoadRefresh();
+            setEnabled(true);
           }
         }
       });
@@ -140,7 +143,7 @@ public class LJRecyclerView extends SwipeRefreshLayout{
    * 获得adapter
    * @return
    */
-  public BaseRecyclerAdapter getAdapter(){
+  public SimpleRecyclerAdapter getAdapter(){
     return mOriginalAdapter;
   }
 
@@ -198,19 +201,6 @@ public class LJRecyclerView extends SwipeRefreshLayout{
   }
 
   /**
-   * 监听“加载更多”
-   */
-  public interface OnLoadMoreListener{
-    void onLoadMore();
-  }
-
-  protected OnLoadMoreListener mOnLoadMoreListener;
-
-  public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
-    this.mOnLoadMoreListener = onLoadMoreListener;
-  }
-
-  /**
    * item短按事件监听
    */
   public interface OnItemClickListener {
@@ -230,11 +220,11 @@ public class LJRecyclerView extends SwipeRefreshLayout{
 
   protected OnItemLongClickListener mOnItemLongClickListener;
 
-  public void setOnItemClickListener(LJRecyclerView.OnItemClickListener onItemClickListener) {
+  public void setOnItemClickListener(LJSimpleRecyclerView.OnItemClickListener onItemClickListener) {
     this.mOnItemClickListener = onItemClickListener;
   }
 
-  public void setOnItemLongClickListener(LJRecyclerView.OnItemLongClickListener onItemLongClickListener) {
+  public void setOnItemLongClickListener(LJSimpleRecyclerView.OnItemLongClickListener onItemLongClickListener) {
     this.mOnItemLongClickListener = onItemLongClickListener;
   }
 

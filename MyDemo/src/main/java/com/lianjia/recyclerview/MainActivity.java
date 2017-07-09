@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.recyclerview1:
-                intent.setClass(MainActivity.this, BaseRecyclerViewActivity.class);
+                intent.setClass(MainActivity.this, SimpleRecyclerViewActivity.class);
                 break;
             case R.id.recyclerview2:
                 intent.setClass(MainActivity.this, HeaderRecyclerViewActivity.class);

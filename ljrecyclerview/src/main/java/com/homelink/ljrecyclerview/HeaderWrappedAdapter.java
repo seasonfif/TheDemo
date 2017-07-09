@@ -17,7 +17,7 @@ import java.util.List;
  *      扩展了Header、Footer与空白页的展示
  */
 
-public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> implements IHeaderAdapter {
+public abstract class HeaderWrappedAdapter<D> extends SimpleRecyclerAdapter<D> implements IHeaderAdapter {
 
   /**
    * header列表

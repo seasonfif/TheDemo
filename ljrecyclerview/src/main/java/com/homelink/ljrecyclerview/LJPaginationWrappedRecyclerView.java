@@ -72,6 +72,19 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
     }
   }
 
+  /**
+   * 监听“加载更多”
+   */
+  public interface OnLoadMoreListener{
+    void onLoadMore();
+  }
+
+  protected OnLoadMoreListener mOnLoadMoreListener;
+
+  public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+    this.mOnLoadMoreListener = onLoadMoreListener;
+  }
+
   private class RecyclerScrollListener extends RecyclerView.OnScrollListener {
 
     private int lastVisibleItemPosition;
