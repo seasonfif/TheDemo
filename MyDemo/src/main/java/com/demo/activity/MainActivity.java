@@ -10,6 +10,7 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
 import com.demo.FirstEvent;
 import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
@@ -22,14 +23,15 @@ import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
 import com.demo.service.NotifyService;
 import com.demo.template.HouseTemplateActivity;
-import com.demo.template.RhinoJSActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2016/7/9.
@@ -185,7 +187,7 @@ public class MainActivity extends BaseActivity{
                 goToOthers(HouseTemplateActivity.class);
                 break;
             case R.id.recyclerview:
-                goToOthers(RecyclerViewActivity.class);
+                goToOthers(com.lianjia.recyclerview.MainActivity.class);
                 break;
 
         }

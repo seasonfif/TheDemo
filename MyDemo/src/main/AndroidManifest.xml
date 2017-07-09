@@ -54,7 +54,10 @@
     <activity android:name=".activity.TestEventBusActivity"></activity>
     <activity android:name=".template.RhinoJSActivity"></activity>
     <activity android:name=".template.HouseTemplateActivity"></activity>
-    <activity android:name=".activity.RecyclerViewActivity"></activity>
+    <activity android:name="com.lianjia.recyclerview.MainActivity"></activity>
+    <activity android:name="com.lianjia.recyclerview.BaseRecyclerViewActivity"></activity>
+    <activity android:name="com.lianjia.recyclerview.HeaderRecyclerViewActivity"></activity>
+    <activity android:name="com.lianjia.recyclerview.PaginationRecyclerViewActivity"></activity>
 
     <service
       android:name=".service.NotifyService"

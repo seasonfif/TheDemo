@@ -203,7 +203,7 @@ public final class Service<S> {
    *         been returned.  This set will be updated to contain the names
    *         that will be yielded from the returned <tt>Iterator</tt>.
    *
-   * @return A (possibly empty) <tt>Iterator</tt> that will yield the
+   * @return A (possibly mEmpty) <tt>Iterator</tt> that will yield the
    *         provider-class names in the given configuration file that are
    *         not yet members of the returned set
    *

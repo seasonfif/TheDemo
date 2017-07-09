@@ -12,9 +12,9 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"/>
   </android.support.v4.widget.SwipeRefreshLayout>-->
-  <com.homelink.ljrecyclerview.LJRecyclerView
+  <com.homelink.ljrecyclerview.LJPaginationWrappedRecyclerView
       android:id="@+id/lJRecyclerView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-  </com.homelink.ljrecyclerview.LJRecyclerView>
+  </com.homelink.ljrecyclerview.LJPaginationWrappedRecyclerView>
 </LinearLayout>

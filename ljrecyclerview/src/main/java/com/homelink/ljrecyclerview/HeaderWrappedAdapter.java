@@ -14,24 +14,46 @@ import java.util.List;
  * 创建时间：2017年07月03日20:51 <br>
  * 作者：zhangqiang <br>
  * 描述：继承自BaseRecyclerAdapter
- *      扩展了Header与Footer
+ *      扩展了Header、Footer与空白页的展示
  */
 
 public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> implements IHeaderAdapter {
 
+  /**
+   * header列表
+   */
   protected ArrayList<View> mHeaderViews = new ArrayList<>();
 
+  /**
+   * footer列表
+   */
   protected ArrayList<View> mFooterViews = new ArrayList<>();
 
-  protected ArrayList<View> mEmptyViews = new ArrayList<>();
+  /**
+   * 空白页
+   * 为了使用与header、footer相同逻辑处理空白页，这里用数量为1的列表保存empty
+   */
+  protected ArrayList<View> mEmptyViews = new ArrayList<>(1);
 
+  /**
+   * header缓存
+   */
   private ArrayList<View> headerCache = new ArrayList<>();
 
+  /**
+   * footer缓存
+   */
   private ArrayList<View> footerCache = new ArrayList<>();
 
-  protected View empty;
+  /**
+   * 空白页
+   */
+  protected View mEmpty;
 
-  private int emptyFlag;
+  /**
+   * 空白页展示的位置标记
+   */
+  private int mEmptyFlag;
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER){
@@ -41,7 +63,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> imp
       int footerIndex = getIndexByViewType(viewType);
       return new HeaderFooterHolder(mFooterViews.get(footerIndex));
     }else if(viewType == VIEW_TYPE_EMPTY){
-      return new EmptyViewHolder(empty);
+      return new EmptyViewHolder(mEmpty);
     }
     return onLJCreateViewHolder(parent, viewType);
   }
@@ -102,6 +124,41 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> imp
     return mDatas.size() + getHeadersCount() + getFootersCount() + getEmptyCount();
   }
 
+  @Override public void updateItem(int position, Object obj) {
+    mDatas.set(position, (D)obj);
+    notifyItemChanged(position + getHeadersCount());
+  }
+
+  @Override public void insertItem(int position, Object obj) {
+    int count = getDataCount();
+    if (position > count){
+      position = count;
+    }
+    mDatas.add(position, (D)obj);
+    notifyItemInserted(position + getHeadersCount());
+    if (getHeadersCount() > 0 || getFootersCount() > 0){
+      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
+      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+      notifyDataSetChanged();
+    }else{
+      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+    }
+  }
+
+  @Override
+  public D removeItem(int position){
+    D d = mDatas.remove(position);
+    notifyItemRemoved(position + getHeadersCount());
+    if (getHeadersCount() > 0 || getFootersCount() > 0){
+      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
+      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+      notifyDataSetChanged();
+    }else{
+      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
+    }
+    return d;
+  }
+
   @Override
   public int getHeadersCount(){
     return mHeaderViews.size();
@@ -139,15 +196,15 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> imp
    * @param empty
    */
   @Override public void setEmpty(View empty) {
-    this.empty = empty;
+    this.mEmpty = empty;
   }
 
   /**
    * 设置空白页区域
    * @param flag
    */
-  public void setEmpty(@Empty int flag) {
-    this.emptyFlag |= flag;
+  public void setEmptyArea(@Empty int flag) {
+    this.mEmptyFlag |= flag;
   }
 
   /**
@@ -155,29 +212,41 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> imp
    */
   protected void enableEmpty() {
     //设置过empty并且当前没有显示时才会显示空白页面
-    if (empty != null && getEmptyCount() == 0){
+    if (mEmpty != null && getEmptyCount() == 0){
       //清除已有数据
       mDatas.clear();
-      if ((emptyFlag & Empty.HEADER_COVER) > 0){
+      //空白页如果覆盖header，则将header缓存后clear
+      if (doseCoverHeader()){
         headerCache.addAll(mHeaderViews);
         mHeaderViews.clear();
       }
 
-      if ((emptyFlag & Empty.FOOTER_COVER) > 0){
+      //空白页如果覆盖footer，则将footer缓存后clear
+      if (doseCoverFooter()){
         footerCache.addAll(mFooterViews);
         mFooterViews.clear();
       }
-      mEmptyViews.add(empty);
+      mEmptyViews.add(mEmpty);
       notifyDataSetChanged();
     }
   }
 
+  private boolean doseCoverHeader(){
+    return (mEmptyFlag & Empty.HEADER_COVER) > 0;
+  }
+
+  private boolean doseCoverFooter(){
+    return (mEmptyFlag & Empty.FOOTER_COVER) > 0;
+  }
+
   /**
-   * 隐藏空白页面
+   * 删掉空白页面
    */
   protected void disableEmpty(){
 
-    if (empty == null) return;
+    if (mEmpty == null) return;
+
+    //删掉空白页同时显示原来缓存的header与footer
     if (headerCache.size() > 0){
       mHeaderViews.addAll(headerCache);
       headerCache.clear();
@@ -186,7 +255,7 @@ public abstract class HeaderWrappedAdapter<D> extends BaseRecyclerAdapter<D> imp
       mFooterViews.addAll(footerCache);
       footerCache.clear();
     }
-    mEmptyViews.remove(empty);
+    mEmptyViews.remove(mEmpty);
   }
 
   /**

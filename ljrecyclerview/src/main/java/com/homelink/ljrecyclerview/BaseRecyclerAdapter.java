@@ -63,13 +63,13 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
     return mDatas;
   }
 
-  private int getDataCount(){
+  protected int getDataCount(){
     return isEmpty() ? 0 : mDatas.size();
   }
 
   @Override public void updateItem(int position, Object obj) {
     mDatas.set(position, (D)obj);
-    notifyItemChanged(position + getHeadersCount());
+    notifyItemChanged(position);
   }
 
   @Override public void insertItem(int position, Object obj) {
@@ -78,27 +78,15 @@ public abstract class BaseRecyclerAdapter<D> extends RecyclerView.Adapter implem
       position = count;
     }
     mDatas.add(position, (D)obj);
-    notifyItemInserted(position + getHeadersCount());
-    if (getHeadersCount() > 0 || getFootersCount() > 0){
-      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
-      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-      notifyDataSetChanged();
-    }else{
-      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-    }
+    notifyItemInserted(position);
+    notifyItemRangeChanged(position, getItemCount());
   }
 
   @Override
   public D removeItem(int position){
     D d = mDatas.remove(position);
-    notifyItemRemoved(position + getHeadersCount());
-    if (getHeadersCount() > 0 || getFootersCount() > 0){
-      //fixme Java.lang.IllegalArgumentException: Called attach on a child which is not detached
-      //notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-      notifyDataSetChanged();
-    }else{
-      notifyItemRangeChanged(position + getHeadersCount(), getItemCount());
-    }
+    notifyItemRemoved(position);
+    notifyItemRangeChanged(position, getItemCount());
     return d;
   }
 

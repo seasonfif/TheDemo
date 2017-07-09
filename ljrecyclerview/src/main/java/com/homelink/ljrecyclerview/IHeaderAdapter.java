@@ -28,7 +28,7 @@ public interface IHeaderAdapter {
   int VIEW_TYPE_LOADMORE = 0x30000000;
 
   /**
-   * empty
+   * mEmpty
    */
   int VIEW_TYPE_EMPTY = 0x40000000;
 
