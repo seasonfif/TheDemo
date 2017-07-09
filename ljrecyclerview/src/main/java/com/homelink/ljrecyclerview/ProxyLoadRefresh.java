@@ -1,5 +1,7 @@
 package com.homelink.ljrecyclerview;
 
+import android.util.Log;
+
 /**
  * 创建时间：2017年07月09日16:45 <br>
  * 作者：zhangqiang <br>
@@ -17,6 +19,8 @@ public class ProxyLoadRefresh implements LJSimpleRecyclerView.OnLoadRefreshListe
 
     @Override
     public void onLoadRefresh() {
+        Log.e("onLoadRefresh", "start");
         mListener.onLoadRefresh();
+        Log.e("onLoadRefresh", "finished");
     }
 }

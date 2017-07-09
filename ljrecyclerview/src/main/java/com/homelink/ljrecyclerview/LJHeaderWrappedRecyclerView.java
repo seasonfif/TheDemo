@@ -23,6 +23,8 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
 
   protected View mEmpty;
 
+  protected int mEmptyFlag;
+
   public LJHeaderWrappedRecyclerView(Context context) {
     this(context, null);
   }
@@ -54,6 +56,7 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
     mOriginalAdapter.setHeaderViews(mHeaderViews);
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
+    mOriginalAdapter.setEmptyArea(mEmptyFlag);
     mRecyclerView.setAdapter(mOriginalAdapter);
   }
 
@@ -73,8 +76,20 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
     mFooterViews.add(footer);
   }
 
+  /**
+   * 设置空白页
+   * @param empty
+   */
   public void setEmptyView(View empty){
     this.mEmpty = empty;
+  }
+
+  /**
+   * 设置空白页位置
+   * @param flag
+   */
+  public void setEmptyArea(@Empty int flag){
+    this.mEmptyFlag = flag;
   }
 
 

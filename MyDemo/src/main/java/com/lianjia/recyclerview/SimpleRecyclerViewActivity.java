@@ -11,10 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.R;
-import com.homelink.ljrecyclerview.SimpleRecyclerAdapter;
 import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 import com.homelink.ljrecyclerview.RecyclerType;
+import com.homelink.ljrecyclerview.SimpleRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
 
     private List initData() {
         List data = new ArrayList();
-        for (int i = 0; i <= 50; i++){
+        for (int i = 0; i <= 20; i++){
             data.add(i+"");
         }
         return data;
@@ -56,13 +56,13 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
     @Override
     public void onItemClick(View view, int position) {
         simpleRecyclerAdapter.updateItem(position, "update " + simpleRecyclerAdapter.getItem(position));
-        Toast.makeText(SimpleRecyclerViewActivity.this, simpleRecyclerAdapter.getItem(position) + " has been removed!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SimpleRecyclerViewActivity.this, simpleRecyclerAdapter.getItem(position) + " has been updated!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onItemLongClick(View view, int position) {
-        simpleRecyclerAdapter.removeItem(position);
         Toast.makeText(SimpleRecyclerViewActivity.this, simpleRecyclerAdapter.getItem(position) + " has been removed!", Toast.LENGTH_SHORT).show();
+        simpleRecyclerAdapter.removeItem(position);
     }
 
     @Override
@@ -70,6 +70,7 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                ljSimpleRecyclerView.setRefreshing(false);
                 simpleRecyclerAdapter.insertItem(2, "insert data");
                 Toast.makeText(SimpleRecyclerViewActivity.this, " insert successed!", Toast.LENGTH_SHORT).show();
             }

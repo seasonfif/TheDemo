@@ -83,7 +83,7 @@ public abstract class HeaderWrappedAdapter<D> extends SimpleRecyclerAdapter<D> i
 
   protected abstract RecyclerView.ViewHolder onLJCreateViewHolder(ViewGroup parent, int viewType);
 
-  protected abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int adjPosition);
+  protected abstract void onLJBindViewHolder(RecyclerView.ViewHolder holder, int position);
 
   @Override public void setDatas(@Nullable List<D> data) {
     if (data == null || data.size() == 0){
@@ -203,7 +203,7 @@ public abstract class HeaderWrappedAdapter<D> extends SimpleRecyclerAdapter<D> i
    * 设置空白页区域
    * @param flag
    */
-  public void setEmptyArea(@Empty int flag) {
+  protected void setEmptyArea(@Empty int flag) {
     this.mEmptyFlag |= flag;
   }
 

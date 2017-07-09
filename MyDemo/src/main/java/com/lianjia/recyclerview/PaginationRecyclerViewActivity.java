@@ -1,10 +1,7 @@
 package com.lianjia.recyclerview;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -76,6 +73,7 @@ public class PaginationRecyclerViewActivity extends Activity{
             }
         });
         initHeader();
+        lJRecyclerView.setEmptyArea(Empty.FOOTER_COVER);
 
         lJRecyclerView.setOnLoadRefreshListener(new LJSimpleRecyclerView.OnLoadRefreshListener() {
             @Override
@@ -117,7 +115,6 @@ public class PaginationRecyclerViewActivity extends Activity{
             //设置分页参数
             paginationTotalStyleManager.setTotal(TOTAL);
         }
-        adapter.setEmptyArea(Empty.FOOTER_COVER);
         adapter.setDatas(datas);
     }
 
@@ -193,37 +190,12 @@ public class PaginationRecyclerViewActivity extends Activity{
             end = TOTAL;
         }
 
-        if (isConnected(PaginationRecyclerViewActivity.this)){
+        if (Utils.isConnected(PaginationRecyclerViewActivity.this)){
             for (int i = start; i < end; i++){
                 list.add("" + i);
             }
         }
         return list;
-    }
-
-    /**
-     * 网络是否已经连接
-     */
-    private boolean isConnected(Context context) {
-        if (context != null) {
-            ConnectivityManager cm = null;
-            try {
-                cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            } catch (Exception e) {
-                // ignore
-            }
-            if (cm != null) {
-                NetworkInfo[] infos = cm.getAllNetworkInfo();
-                if (infos != null) {
-                    for (NetworkInfo ni : infos) {
-                        if (ni.isConnected()) {
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        return false;
     }
 
     private class SAdapter extends PaginationWrappedAdapter<String> {
