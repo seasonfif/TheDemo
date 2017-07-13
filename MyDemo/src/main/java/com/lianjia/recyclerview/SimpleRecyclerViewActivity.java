@@ -70,6 +70,7 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                ljSimpleRecyclerView.setEnabled(true);
                 ljSimpleRecyclerView.setRefreshing(false);
                 simpleRecyclerAdapter.insertItem(2, "insert data");
                 Toast.makeText(SimpleRecyclerViewActivity.this, " insert successed!", Toast.LENGTH_SHORT).show();

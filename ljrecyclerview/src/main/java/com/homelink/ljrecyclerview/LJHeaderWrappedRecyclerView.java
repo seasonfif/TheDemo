@@ -9,7 +9,8 @@ import java.util.ArrayList;
 /**
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
- * 描述：封装LJRecyclerView
+ * 描述：继承自基础LJRecyclerView
+ *        扩展header、footer、空白页
  */
 public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
 
@@ -39,18 +40,7 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
    */
   public void setAdapter(HeaderWrappedAdapter adapter){
     this.mOriginalAdapter = adapter;
-    if (mDisablePullRefresh){
-      this.setEnabled(false);
-    }else{
-      this.setOnRefreshListener(new OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-          if (mOnLoadRefreshListener != null){
-            mOnLoadRefreshListener.onLoadRefresh();
-          }
-        }
-      });
-    }
+    initRefreshConfig();
     initLayoutManager();
     initListener();
     mOriginalAdapter.setHeaderViews(mHeaderViews);

@@ -14,7 +14,7 @@ import android.view.View;
 /**
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
- * 描述：封装LJRecyclerView
+ * 描述：封装基础LJRecyclerView
  */
 public class LJSimpleRecyclerView extends SwipeRefreshLayout{
 
@@ -99,21 +99,7 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
    */
   public void setAdapter(SimpleRecyclerAdapter adapter){
     this.mOriginalAdapter = adapter;
-    if (mDisablePullRefresh){
-      this.setEnabled(false);
-    }else{
-      this.setOnRefreshListener(new OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-          if (mOnLoadRefreshListener != null){
-            setEnabled(false);
-            ProxyLoadRefresh refreshProxy = new ProxyLoadRefresh(mOnLoadRefreshListener);
-            refreshProxy.onLoadRefresh();
-            setEnabled(true);
-          }
-        }
-      });
-    }
+    initRefreshConfig();
     initLayoutManager();
     initListener();
     mRecyclerView.setAdapter(mOriginalAdapter);
@@ -177,6 +163,27 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
     }
     mRecyclerView.setLayoutManager(mLayoutManager);
   }
+
+  protected void initRefreshConfig(){
+    final ProxyLoadRefresh refreshProxy = new ProxyLoadRefresh();
+    if (mDisablePullRefresh){
+      this.setEnabled(false);
+    }else{
+      this.setOnRefreshListener(new OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+          if (mOnLoadRefreshListener != null){
+            beforeRefresh();
+            setEnabled(false);
+            refreshProxy.setListener(mOnLoadRefreshListener);
+            refreshProxy.onLoadRefresh();
+          }
+        }
+      });
+    }
+  }
+
+  protected void beforeRefresh() {}
 
   /**
    * 设置是否禁止下拉刷新

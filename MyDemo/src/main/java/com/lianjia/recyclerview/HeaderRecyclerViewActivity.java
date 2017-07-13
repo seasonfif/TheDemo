@@ -45,7 +45,7 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         ljHeaderWrappedRecyclerView.setOnItemClickListener(this);
         ljHeaderWrappedRecyclerView.setOnItemLongClickListener(this);
         initHeader();
-        ljHeaderWrappedRecyclerView.setEmptyArea(Empty.HEADER_COVER);
+        initEmptyView();
 
         headerWrappedAdapter = new MyAdapter();
         ljHeaderWrappedRecyclerView.setAdapter(headerWrappedAdapter);
@@ -80,6 +80,7 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                ljHeaderWrappedRecyclerView.setEnabled(true);
                 ljHeaderWrappedRecyclerView.setRefreshing(false);
                 headerWrappedAdapter.setDatas(initData());
                 Toast.makeText(HeaderRecyclerViewActivity.this, " refresh successed!", Toast.LENGTH_SHORT).show();
@@ -153,8 +154,6 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         f2.setGravity(Gravity.CENTER);
         f2.setLayoutParams(new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_50)));
         ljHeaderWrappedRecyclerView.addFooterView(f2);
-
-        initEmptyView();
     }
 
     private void initEmptyView() {
@@ -172,5 +171,6 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         lp.rightMargin = 100;*/
         empty.setLayoutParams(lp);
         ljHeaderWrappedRecyclerView.setEmptyView(empty);
+        ljHeaderWrappedRecyclerView.setEmptyArea(Empty.HEADER_COVER);
     }
 }

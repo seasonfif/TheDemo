@@ -10,7 +10,8 @@ import android.util.AttributeSet;
 /**
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
- * 描述：封装LJRecyclerView
+ * 描述：继承自LJHeaderWrappedRecyclerView
+ *        扩展上拉加载
  */
 public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView{
 
@@ -32,25 +33,14 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
    */
   public void setAdapter(PaginationWrappedAdapter adapter){
     this.mOriginalAdapter = adapter;
-    if (mDisablePullRefresh){
-      this.setEnabled(false);
-    }else{
-      this.setOnRefreshListener(new OnRefreshListener() {
-        @Override
-        public void onRefresh() {
-          if (mOnLoadRefreshListener != null){
-            mOriginalAdapter.refresh();
-            mOnLoadRefreshListener.onLoadRefresh();
-          }
-        }
-      });
-    }
+    initRefreshConfig();
     initLayoutManager();
     initListener();
     mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
     mOriginalAdapter.setHeaderViews(mHeaderViews);
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
+    mOriginalAdapter.setEmptyArea(mEmptyFlag);
     mRecyclerView.setAdapter(mOriginalAdapter);
   }
 
@@ -60,6 +50,10 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
    */
   public PaginationWrappedAdapter getAdapter(){
     return mOriginalAdapter;
+  }
+
+  @Override protected void beforeRefresh() {
+    mOriginalAdapter.refresh();
   }
 
   private void initListener() {
@@ -89,6 +83,7 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
 
     private int lastVisibleItemPosition;
     private RecyclerView.LayoutManager layoutManager = mRecyclerView.getLayoutManager();
+    private ProxyLoadMore loadMoreProxy = new ProxyLoadMore();
 
     @Override public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
       super.onScrollStateChanged(recyclerView, newState);
@@ -108,7 +103,8 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
       if (lastVisibleItemPosition + 1 == mOriginalAdapter.getItemCount()) {
         mOriginalAdapter.loadMore();
         if (mOnLoadMoreListener != null){
-          mOnLoadMoreListener.onLoadMore();
+          loadMoreProxy.setListener(mOnLoadMoreListener);
+          loadMoreProxy.onLoadMore();
         }
       }
     }
