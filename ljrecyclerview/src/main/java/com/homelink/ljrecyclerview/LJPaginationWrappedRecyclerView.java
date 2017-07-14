@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.AttributeSet;
+import android.view.View;
 
 /**
  * 创建时间：2017年06月24日17:08 <br>
@@ -18,6 +19,8 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
   private static final String TAG = "LJHeaderWrappedRecyclerView";
 
   private PaginationWrappedAdapter mOriginalAdapter;
+
+  private ILoadMoreView mLoadMoreView;
 
   public LJPaginationWrappedRecyclerView(Context context) {
     this(context, null);
@@ -37,11 +40,27 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
     initLayoutManager();
     initListener();
     mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
+    if (mLoadMoreView == null){
+      mLoadMoreView = new LoadMoreView(getContext());
+    }
+    mOriginalAdapter.setLoadMoreView(mLoadMoreView);
     mOriginalAdapter.setHeaderViews(mHeaderViews);
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
     mOriginalAdapter.setEmptyArea(mEmptyFlag);
     mRecyclerView.setAdapter(mOriginalAdapter);
+  }
+
+  /**
+   * 自定义LoadMoreView
+   * @param loadMoreView
+   */
+  public void setLoadMoreView(ILoadMoreView loadMoreView) {
+    if (loadMoreView instanceof View){
+      this.mLoadMoreView = loadMoreView;
+    } else {
+      throw new IllegalArgumentException("must extends View or ViewGroup");
+    }
   }
 
   /**

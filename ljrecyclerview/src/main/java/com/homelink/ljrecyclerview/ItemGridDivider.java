@@ -17,19 +17,19 @@ import android.view.View;
  * 描述：
  */
 
-public class DividerGridItemDecoration extends RecyclerView.ItemDecoration{
+public class ItemGridDivider extends RecyclerView.ItemDecoration{
 
   private static final int[] ATTRS = new int[] { android.R.attr.listDivider };
   private Drawable mDivider;
 
-  public DividerGridItemDecoration(Context context)
+  public ItemGridDivider(Context context)
   {
     final TypedArray a = context.obtainStyledAttributes(ATTRS);
     mDivider = a.getDrawable(0);
     a.recycle();
   }
 
-  public DividerGridItemDecoration(Drawable drawable)
+  public ItemGridDivider(Drawable drawable)
   {
     mDivider = drawable;
   }

@@ -9,13 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.demo.R;
-import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 import com.homelink.ljrecyclerview.RecyclerType;
 import com.homelink.ljrecyclerview.SimpleRecyclerAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +21,7 @@ import java.util.List;
  * Created by seasonfif on 2017/7/9.
  */
 public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecyclerView.OnItemClickListener,
-        LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnLoadRefreshListener{
+        LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnPullRefreshListener {
 
     private LJSimpleRecyclerView ljSimpleRecyclerView;
     private SimpleRecyclerAdapter simpleRecyclerAdapter;
@@ -34,11 +32,13 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
         setContentView(R.layout.activity_lj_baserv);
         ljSimpleRecyclerView = (LJSimpleRecyclerView) findViewById(R.id.recycler);
         ljSimpleRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
-        ljSimpleRecyclerView.addItemDecoration(new DividerItemDecoration(20, Color.GRAY));
-        ljSimpleRecyclerView.setDisablePullRefresh(false);
-        ljSimpleRecyclerView.setOnLoadRefreshListener(this);
+        ljSimpleRecyclerView.addItemDecoration(new ItemDivider(20, Color.GRAY));
+        ljSimpleRecyclerView.setOnPullRefreshListener(this);
         ljSimpleRecyclerView.setOnItemClickListener(this);
         ljSimpleRecyclerView.setOnItemLongClickListener(this);
+
+        //TODO 禁止下拉刷新
+        //ljSimpleRecyclerView.setDisablePullRefresh(true);
 
         simpleRecyclerAdapter = new MyAdapter();
         simpleRecyclerAdapter.setDatas(initData());
@@ -66,7 +66,7 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
     }
 
     @Override
-    public void onLoadRefresh() {
+    public void onPullRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

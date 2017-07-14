@@ -5,6 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -15,7 +18,7 @@ import android.widget.TextView;
  * 作者：zhangqiang <br>
  * 描述：有状态（正在加载、已经最后一条）的view
  */
-public class LoadMoreView extends LinearLayout {
+public class LoadMoreView extends LinearLayout implements ILoadMoreView{
 
   public static final int TYPE_HIDE = 0x0001;
   public static final int TYPE_LOADING = 0x0002;
@@ -29,15 +32,7 @@ public class LoadMoreView extends LinearLayout {
   private int currentType;
 
   public LoadMoreView(Context context) {
-    this(context, null);
-  }
-
-  public LoadMoreView(Context context, AttributeSet attrs) {
-    this(context, attrs, 0);
-  }
-
-  public LoadMoreView(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
+    super(context);
     initView();
   }
 
@@ -117,5 +112,18 @@ public class LoadMoreView extends LinearLayout {
       }
     }
     return false;
+  }
+
+  @Override public void onBindView() {
+    setEndText("加载更多");
+    setType(LoadMoreView.TYPE_REACH_END);
+  }
+
+  @Override public void onLoading() {
+    setType(LoadMoreView.TYPE_LOADING);
+  }
+
+  @Override public void onError() {
+    setType(LoadMoreView.TYPE_ERROR);
   }
 }

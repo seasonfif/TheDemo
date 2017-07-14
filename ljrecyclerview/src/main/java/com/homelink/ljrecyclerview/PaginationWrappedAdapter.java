@@ -2,7 +2,9 @@ package com.homelink.ljrecyclerview;
 
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import java.util.List;
 
 /**
@@ -31,7 +33,7 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
    */
   private int mLoadType = PULLREFRESH;
 
-  private LoadMoreView mLoadMoreView;
+  private ILoadMoreView mLoadMoreView;
 
   private Paginable mPaginationManager;
 
@@ -45,8 +47,9 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
 
   @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     if (viewType == VIEW_TYPE_LOADMORE){
-      mLoadMoreView = new LoadMoreView(parent.getContext());
-      LoadMoreViewHolder vh = new LoadMoreViewHolder(mLoadMoreView);
+      View view = (View) mLoadMoreView;
+      view.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+      LoadMoreViewHolder vh = new LoadMoreViewHolder(view);
       return vh;
     }else{
       return super.onCreateViewHolder(parent, viewType);
@@ -55,10 +58,8 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
 
   @Override public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
     if (getItemViewType(position) == VIEW_TYPE_LOADMORE){
-      //LoadMoreViewHolder viewHolder = (LoadMoreViewHolder) holder;
       if (mLoadMoreView != null){
-        mLoadMoreView.setEndText("加载更多");
-        mLoadMoreView.setType(LoadMoreView.TYPE_REACH_END);
+        mLoadMoreView.onBindView();
       }
     }else{
       super.onBindViewHolder(holder, position);
@@ -98,7 +99,19 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
 
   public void loadMore() {
     mLoadType = LOADMORE;
-    mLoadMoreView.setType(LoadMoreView.TYPE_LOADING);
+    mLoadMoreView.onLoading();
+  }
+
+  /**
+   * 自定义LoadMoreView
+   * @param loadMoreView
+   */
+  protected void setLoadMoreView(ILoadMoreView loadMoreView) {
+    if (loadMoreView instanceof View){
+      this.mLoadMoreView = loadMoreView;
+    } else {
+      throw new IllegalArgumentException("must extends View or ViewGroup");
+    }
   }
 
   @Override
@@ -120,7 +133,7 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
       }else if(mLoadType == LOADMORE){
         if (data == null || data.size() == 0){
           mPaginationManager.onLoadFinished(true, false);
-          mLoadMoreView.setType(LoadMoreView.TYPE_ERROR);
+          mLoadMoreView.onError();
         }else{
           mPaginationManager.onLoadFinished(true, true);
           mDatas.addAll(data);
@@ -133,7 +146,7 @@ public abstract class PaginationWrappedAdapter<D> extends HeaderWrappedAdapter<D
   }
 
   private class LoadMoreViewHolder extends RecyclerView.ViewHolder{
-    public LoadMoreViewHolder(LoadMoreView loadMoreView) {
+    public LoadMoreViewHolder(View loadMoreView) {
       super(loadMoreView);
     }
   }

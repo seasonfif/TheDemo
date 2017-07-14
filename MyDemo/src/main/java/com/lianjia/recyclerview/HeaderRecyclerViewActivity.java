@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.R;
-import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.Empty;
 import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
 import com.homelink.ljrecyclerview.LJHeaderWrappedRecyclerView;
@@ -27,7 +27,7 @@ import java.util.List;
  * Created by seasonfif on 2017/7/9.
  */
 public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecyclerView.OnItemClickListener,
-        LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnLoadRefreshListener{
+        LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnPullRefreshListener {
 
     private LJHeaderWrappedRecyclerView ljHeaderWrappedRecyclerView;
     private HeaderWrappedAdapter headerWrappedAdapter;
@@ -39,17 +39,21 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
 
         ljHeaderWrappedRecyclerView = (LJHeaderWrappedRecyclerView) findViewById(R.id.recycler);
         ljHeaderWrappedRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
-        ljHeaderWrappedRecyclerView.addItemDecoration(new DividerItemDecoration(20, Color.GRAY));
+        ljHeaderWrappedRecyclerView.addItemDecoration(new ItemDivider(20, Color.GRAY));
         ljHeaderWrappedRecyclerView.setDisablePullRefresh(false);
-        ljHeaderWrappedRecyclerView.setOnLoadRefreshListener(this);
+        ljHeaderWrappedRecyclerView.setOnPullRefreshListener(this);
         ljHeaderWrappedRecyclerView.setOnItemClickListener(this);
         ljHeaderWrappedRecyclerView.setOnItemLongClickListener(this);
+
+        //TODO 添加header、footer必须在setAdapter之前
         initHeader();
+        //TODO 空白页添加必须在setAdapter之前
         initEmptyView();
 
         headerWrappedAdapter = new MyAdapter();
         ljHeaderWrappedRecyclerView.setAdapter(headerWrappedAdapter);
 
+        //TODO 如果添加了header、footer、空白页，那么setDatas必须在setAdapter之后
         headerWrappedAdapter.setDatas(initData());
     }
 
@@ -76,7 +80,7 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
     }
 
     @Override
-    public void onLoadRefresh() {
+    public void onPullRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

@@ -12,10 +12,10 @@ import android.view.View;
 /**
  * 创建时间：2017年06月24日15:22 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：线性布局的RecyclerView item分割线
  */
 
-public class DividerItemDecoration extends RecyclerView.ItemDecoration{
+public class ItemDivider extends RecyclerView.ItemDecoration{
 
   public static final int HORIZONTAL_LIST = LinearLayoutManager.HORIZONTAL;
 
@@ -28,13 +28,22 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration{
   private Paint mPaint;
   private int mSpace;
 
-  public DividerItemDecoration(Drawable drawable) {
+  /**
+   * 支持drawable的构造方法
+   * @param drawable
+   */
+  public ItemDivider(Drawable drawable) {
     if (drawable == null) return;
     mDivider = drawable;
     mSpace = mDivider.getIntrinsicHeight();
   }
 
-  public DividerItemDecoration(int space, int color) {
+  /**
+   * 支持高度以及颜色设置的构造方法
+   * @param space
+   * @param color
+   */
+  public ItemDivider(int space, int color) {
     this.mSpace = space;
     mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     mPaint.setColor(color);

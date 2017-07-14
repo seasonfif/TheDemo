@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.demo.R;
 import com.demo.activity.BaseActivity;
 import com.demo.util.DataUtil;
-import com.homelink.ljrecyclerview.DividerItemDecoration;
+import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
 import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 
@@ -41,8 +41,8 @@ public class HouseTemplateActivity extends BaseActivity{
 
     lJRecyclerView = (LJSimpleRecyclerView) findViewById(R.id.recycler);
     //lJRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_HORIZONTAL);
-    //lJRecyclerView.addItemDecoration(new DividerItemDecoration(60, Color.RED));
-    lJRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
+    //lJRecyclerView.addItemDecoration(new ItemDivider(60, Color.RED));
+    lJRecyclerView.addItemDecoration(new ItemDivider(getResources().getDrawable(R.drawable.div)));
     datas = getData();
     adapter = new HouseAdapter(datas);
     lJRecyclerView.setAdapter(adapter);

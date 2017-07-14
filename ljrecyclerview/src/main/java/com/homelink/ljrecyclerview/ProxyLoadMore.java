@@ -18,8 +18,6 @@ public class ProxyLoadMore implements LJPaginationWrappedRecyclerView.OnLoadMore
 
     @Override
     public void onLoadMore() {
-        Log.e("onLoadMore", "start");
         mListener.onLoadMore();
-        Log.e("onLoadMore", "finished");
     }
 }

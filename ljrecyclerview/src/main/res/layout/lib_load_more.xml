@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
+  android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:paddingBottom="12dp"
+  android:paddingBottom="15dp"
   android:paddingLeft="24dp"
   android:paddingRight="24dp"
-  android:paddingTop="12dp"
-  android:orientation="horizontal"
-  android:gravity="center">
+  android:paddingTop="15dp"
+  android:gravity="center"
+  android:orientation="horizontal">
 
   <RelativeLayout
     android:id="@+id/loading_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="visible">
+    android:gravity="center">
     <ProgressBar
       android:id="@+id/pb_loading"
       style="?android:style/Widget.ProgressBar"

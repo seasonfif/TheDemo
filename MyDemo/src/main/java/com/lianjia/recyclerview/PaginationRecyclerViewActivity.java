@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.demo.R;
-import com.homelink.ljrecyclerview.DividerItemDecoration;
 import com.homelink.ljrecyclerview.Empty;
+import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.LJPaginationWrappedRecyclerView;
 import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
+import com.homelink.ljrecyclerview.LoadMoreView;
 import com.homelink.ljrecyclerview.PaginationTotalStyleManager;
 import com.homelink.ljrecyclerview.PaginationWrappedAdapter;
 import com.homelink.ljrecyclerview.RecyclerType;
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public class PaginationRecyclerViewActivity extends Activity implements
     LJSimpleRecyclerView.OnItemClickListener, LJSimpleRecyclerView.OnItemLongClickListener,
-    LJSimpleRecyclerView.OnLoadRefreshListener, LJPaginationWrappedRecyclerView.OnLoadMoreListener{
+    LJSimpleRecyclerView.OnPullRefreshListener, LJPaginationWrappedRecyclerView.OnLoadMoreListener{
 
     private LJPaginationWrappedRecyclerView ljPaginationWrappedRecyclerView;
     private List<String> datas;
@@ -49,19 +50,28 @@ public class PaginationRecyclerViewActivity extends Activity implements
         ljPaginationWrappedRecyclerView = (LJPaginationWrappedRecyclerView) findViewById(R.id.lJRecyclerView);
         ljPaginationWrappedRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
         ljPaginationWrappedRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        ljPaginationWrappedRecyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.div)));
+        ljPaginationWrappedRecyclerView.addItemDecoration(new ItemDivider(getResources().getDrawable(R.drawable.div)));
         ljPaginationWrappedRecyclerView.setOnItemClickListener(this);
         ljPaginationWrappedRecyclerView.setOnItemLongClickListener(this);
-        ljPaginationWrappedRecyclerView.setOnLoadRefreshListener(this);
+        ljPaginationWrappedRecyclerView.setOnPullRefreshListener(this);
         ljPaginationWrappedRecyclerView.setOnLoadMoreListener(this);
 
+        //TODO 自定义的LoadMoreView必须在setAdapter之前设置
+        ljPaginationWrappedRecyclerView.setLoadMoreView(new LoadMoreView(this));
+
+        //TODO 添加header、footer必须在setAdapter之前
         initHeader();
+        //TODO 空白页添加必须在setAdapter之前
         initEmptyView();
 
         paginationTotalStyleManager = new PaginationTotalStyleManager(PER_PAGE);
+        //TODO 这样构造adapter没有分页功能
+        //paginationWrappedAdapter = new MyAdapter();
+        //TODO 这样构造adapter有分页功能
         paginationWrappedAdapter = new MyAdapter(paginationTotalStyleManager);
         ljPaginationWrappedRecyclerView.setAdapter(paginationWrappedAdapter);
 
+        //TODO setDatas必须在setAdapter之后
         datas = initData(1);
         if (datas.size() > 0){
             //设置分页参数
@@ -160,7 +170,7 @@ public class PaginationRecyclerViewActivity extends Activity implements
         paginationWrappedAdapter.removeItem(position);
     }
 
-    @Override public void onLoadRefresh() {
+    @Override public void onPullRefresh() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

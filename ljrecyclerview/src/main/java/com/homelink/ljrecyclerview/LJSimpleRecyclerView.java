@@ -165,18 +165,18 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
   }
 
   protected void initRefreshConfig(){
-    final ProxyLoadRefresh refreshProxy = new ProxyLoadRefresh();
+    final ProxyPullRefresh refreshProxy = new ProxyPullRefresh();
     if (mDisablePullRefresh){
       this.setEnabled(false);
     }else{
       this.setOnRefreshListener(new OnRefreshListener() {
         @Override
         public void onRefresh() {
-          if (mOnLoadRefreshListener != null){
+          if (mOnPullRefreshListener != null){
             beforeRefresh();
             setEnabled(false);
-            refreshProxy.setListener(mOnLoadRefreshListener);
-            refreshProxy.onLoadRefresh();
+            refreshProxy.setListener(mOnPullRefreshListener);
+            refreshProxy.onPullRefresh();
           }
         }
       });
@@ -197,14 +197,14 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
   /**
    * 监听“下拉刷新”
    */
-  public interface OnLoadRefreshListener{
-    void onLoadRefresh();
+  public interface OnPullRefreshListener {
+    void onPullRefresh();
   }
 
-  protected OnLoadRefreshListener mOnLoadRefreshListener;
+  protected OnPullRefreshListener mOnPullRefreshListener;
 
-  public void setOnLoadRefreshListener(OnLoadRefreshListener onLoadRefreshListener) {
-    this.mOnLoadRefreshListener = onLoadRefreshListener;
+  public void setOnPullRefreshListener(OnPullRefreshListener onPullRefreshListener) {
+    this.mOnPullRefreshListener = onPullRefreshListener;
   }
 
   /**
