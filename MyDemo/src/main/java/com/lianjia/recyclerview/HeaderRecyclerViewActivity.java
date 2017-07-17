@@ -1,6 +1,7 @@
 package com.lianjia.recyclerview;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,15 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.demo.R;
-import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.Empty;
 import com.homelink.ljrecyclerview.HeaderWrappedAdapter;
+import com.homelink.ljrecyclerview.ItemDivider;
 import com.homelink.ljrecyclerview.LJHeaderWrappedRecyclerView;
 import com.homelink.ljrecyclerview.LJSimpleRecyclerView;
 import com.homelink.ljrecyclerview.RecyclerType;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +32,17 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
 
     private LJHeaderWrappedRecyclerView ljHeaderWrappedRecyclerView;
     private HeaderWrappedAdapter headerWrappedAdapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lj_headerrv);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setIndeterminate(true);
 
         ljHeaderWrappedRecyclerView = (LJHeaderWrappedRecyclerView) findViewById(R.id.recycler);
         ljHeaderWrappedRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
@@ -86,6 +91,9 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                if (progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
                 ljHeaderWrappedRecyclerView.setEnabled(true);
                 ljHeaderWrappedRecyclerView.setRefreshing(false);
                 headerWrappedAdapter.setDatas(initData());
@@ -169,8 +177,10 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         empty.setText("Empty");
         empty.setGravity(Gravity.CENTER);
         //mEmpty.setPadding(100,100,100,100);
+        //TODO 空白页高度设置为MATCH_PARENT并不会达到预想的效果，会被RecyclerView转为WRAP_CONTENT
+        int height = Utils.getScreenSize(this)[1] * 3 / 4;
         LinearLayoutCompat.LayoutParams lp =
-                new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_250));
+                new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
         /*lp.topMargin = 100;
         lp.bottomMargin = 100;
         lp.leftMargin = 100;
@@ -178,5 +188,20 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         empty.setLayoutParams(lp);
         ljHeaderWrappedRecyclerView.setEmptyView(empty);
         ljHeaderWrappedRecyclerView.setEmptyArea(Empty.HEADER_COVER);
+        empty.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                //TODO 此处可以显示progressdialog，但记得在onPullRefresh刷新完成时dismiss，原因在下面。
+                progressDialog.show();
+                //TODO 如果空白页的点击事件是刷新数据，那么请调用doRefresh()，该方法最后调用的是onPullRefresh()
+                ljHeaderWrappedRecyclerView.doRefresh();
+            }
+        });
+    }
+
+    @Override protected void onDestroy() {
+        if (progressDialog.isShowing()){
+            progressDialog.dismiss();
+        }
+        super.onDestroy();
     }
 }

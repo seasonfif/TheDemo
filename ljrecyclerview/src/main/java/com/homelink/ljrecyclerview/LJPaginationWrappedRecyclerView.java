@@ -49,7 +49,6 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
     mOriginalAdapter.setEmptyArea(mEmptyFlag);
-    initEmptyListener();
     mRecyclerView.setAdapter(mOriginalAdapter);
   }
 

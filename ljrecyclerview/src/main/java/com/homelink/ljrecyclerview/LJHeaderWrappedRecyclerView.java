@@ -48,21 +48,7 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
     mOriginalAdapter.setEmptyArea(mEmptyFlag);
-    initEmptyListener();
     mRecyclerView.setAdapter(mOriginalAdapter);
-  }
-
-  /**
-   * 为空白页设置点击事件-刷新
-   */
-  protected void initEmptyListener(){
-    if (mEmpty != null){
-      mEmpty.setOnClickListener(new OnClickListener() {
-        @Override public void onClick(View v) {
-          doRefresh();
-        }
-      });
-    }
   }
 
   /**

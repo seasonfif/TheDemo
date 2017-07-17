@@ -185,10 +185,9 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
   protected void beforeRefresh() {}
 
   /**
-   * 下拉刷新事件执行
-   * 2个位置调用：下拉刷新与空白页点击。
+   * 刷新事件执行
    */
-  protected void doRefresh() {
+  public void doRefresh() {
     if (mOnPullRefreshListener != null){
       beforeRefresh();
       setEnabled(false);
