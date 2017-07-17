@@ -24,7 +24,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by seasonfif on 2017/7/9.
+ * 创建时间：2017年06月24日10:51 <br>
+ * 作者：zhangqiang <br>
+ * 描述：
  */
 public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecyclerView.OnItemClickListener,
         LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnPullRefreshListener {

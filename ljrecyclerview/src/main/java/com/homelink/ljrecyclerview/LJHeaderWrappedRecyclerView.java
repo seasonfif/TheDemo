@@ -9,8 +9,9 @@ import java.util.ArrayList;
 /**
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
- * 描述：继承自基础LJRecyclerView
- *        扩展header、footer、空白页
+ * 描述：继承自基础LJSimpleRecyclerView
+ *       扩展功能： 1、支持header、footer
+ *                  2、支持空白页
  */
 public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
 
@@ -47,7 +48,21 @@ public class LJHeaderWrappedRecyclerView extends LJSimpleRecyclerView {
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
     mOriginalAdapter.setEmptyArea(mEmptyFlag);
+    initEmptyListener();
     mRecyclerView.setAdapter(mOriginalAdapter);
+  }
+
+  /**
+   * 为空白页设置点击事件-刷新
+   */
+  protected void initEmptyListener(){
+    if (mEmpty != null){
+      mEmpty.setOnClickListener(new OnClickListener() {
+        @Override public void onClick(View v) {
+          doRefresh();
+        }
+      });
+    }
   }
 
   /**

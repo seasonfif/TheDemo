@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by seasonfif on 2017/7/9.
+ * 创建时间：2017年06月24日10:51 <br>
+ * 作者：zhangqiang <br>
+ * 描述：
  */
 public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecyclerView.OnItemClickListener,
         LJSimpleRecyclerView.OnItemLongClickListener, LJSimpleRecyclerView.OnPullRefreshListener {
@@ -31,8 +33,17 @@ public class SimpleRecyclerViewActivity extends Activity implements LJSimpleRecy
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lj_baserv);
         ljSimpleRecyclerView = (LJSimpleRecyclerView) findViewById(R.id.recycler);
+        //TODO 通过setRecyclerType设置初始化的RecyclerView的布局，共有6种：纵向ListView、横向ListView、纵向GrideView等。详见RecyclerType。
+        //eg：初始化纵向ListView
         ljSimpleRecyclerView.setRecyclerType(RecyclerType.LINEARLAYOUT_VERTICAL);
+
+        //eg：初始化纵向GridView
+        //ljSimpleRecyclerView.setRecyclerType(RecyclerType.GRIDLAYOUT_VERTICAL);
+        //设置GridView的列数
+        //ljSimpleRecyclerView.setSpanCount(4);
+
         ljSimpleRecyclerView.addItemDecoration(new ItemDivider(20, Color.GRAY));
+        ljSimpleRecyclerView.addItemDecoration(new ItemDivider(getResources().getDrawable(R.drawable.div)));
         ljSimpleRecyclerView.setOnPullRefreshListener(this);
         ljSimpleRecyclerView.setOnItemClickListener(this);
         ljSimpleRecyclerView.setOnItemLongClickListener(this);

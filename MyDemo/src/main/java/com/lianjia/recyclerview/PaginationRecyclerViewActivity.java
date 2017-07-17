@@ -133,15 +133,16 @@ public class PaginationRecyclerViewActivity extends Activity implements
         empty.setText("Empty");
         empty.setGravity(Gravity.CENTER);
         //mEmpty.setPadding(100,100,100,100);
+        int height = Utils.getScreenSize(this)[1] * 3 / 4;
         LinearLayoutCompat.LayoutParams lp =
-                new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, getResources().getDimensionPixelOffset(R.dimen.dimen_250));
+                new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);
         /*lp.topMargin = 100;
         lp.bottomMargin = 100;
         lp.leftMargin = 100;
         lp.rightMargin = 100;*/
         empty.setLayoutParams(lp);
         ljPaginationWrappedRecyclerView.setEmptyView(empty);
-        ljPaginationWrappedRecyclerView.setEmptyArea(Empty.FOOTER_COVER);
+        ljPaginationWrappedRecyclerView.setEmptyArea(Empty.HEADER_COVER);
     }
 
     private ArrayList initData(int start) {

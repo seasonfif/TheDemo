@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * 创建时间：2017年07月03日21:07 <br>
  * 作者：zhangqiang <br>
- * 描述：Header、Footer
+ * 描述：Header、Footer、空白页扩展接口
  */
 
 public interface IHeaderAdapter {

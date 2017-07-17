@@ -1,13 +1,30 @@
 package com.lianjia.recyclerview;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
 
 /**
- * Created by seasonfif on 2017/7/9.
+ * 创建时间：2017年06月24日10:51 <br>
+ * 作者：zhangqiang <br>
+ * 描述：
  */
 public class Utils {
+
+    /**
+     * 获取屏幕宽高
+     * @param context
+     * @return
+     */
+    public static int[] getScreenSize(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(outMetrics);
+        return new int[]{outMetrics.widthPixels, outMetrics.heightPixels};
+    }
 
     /**
      * 网络是否已经连接

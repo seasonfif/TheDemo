@@ -3,7 +3,7 @@ package com.homelink.ljrecyclerview;
 /**
  * 创建时间：2017年07月03日21:13 <br>
  * 作者：zhangqiang <br>
- * 描述：
+ * 描述：item更新扩展接口
  */
 
 public interface IUpdateAdapter {

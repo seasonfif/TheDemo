@@ -14,11 +14,14 @@ import android.view.View;
 /**
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
- * 描述：封装基础LJRecyclerView
+ * 描述：封装基础LJSimpleRecyclerView
+ *       1、下拉刷新；
+ *       2、点击、长按事件监听；
+ *       3、item更新
  */
 public class LJSimpleRecyclerView extends SwipeRefreshLayout{
 
-  private static final String TAG = "LJRecyclerView";
+  private static final String TAG = "LJSimpleRecyclerView";
 
   protected RecyclerView mRecyclerView;
 
@@ -54,6 +57,7 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
   protected boolean mDisablePullRefresh = false;
 
   private SimpleRecyclerAdapter mOriginalAdapter;
+  private ProxyPullRefresh refreshProxy;
 
   public LJSimpleRecyclerView(Context context) {
     this(context, null);
@@ -165,25 +169,33 @@ public class LJSimpleRecyclerView extends SwipeRefreshLayout{
   }
 
   protected void initRefreshConfig(){
-    final ProxyPullRefresh refreshProxy = new ProxyPullRefresh();
+    refreshProxy = new ProxyPullRefresh();
     if (mDisablePullRefresh){
       this.setEnabled(false);
     }else{
       this.setOnRefreshListener(new OnRefreshListener() {
         @Override
         public void onRefresh() {
-          if (mOnPullRefreshListener != null){
-            beforeRefresh();
-            setEnabled(false);
-            refreshProxy.setListener(mOnPullRefreshListener);
-            refreshProxy.onPullRefresh();
-          }
+          doRefresh();
         }
       });
     }
   }
 
   protected void beforeRefresh() {}
+
+  /**
+   * 下拉刷新事件执行
+   * 2个位置调用：下拉刷新与空白页点击。
+   */
+  protected void doRefresh() {
+    if (mOnPullRefreshListener != null){
+      beforeRefresh();
+      setEnabled(false);
+      refreshProxy.setListener(mOnPullRefreshListener);
+      refreshProxy.onPullRefresh();
+    }
+  }
 
   /**
    * 设置是否禁止下拉刷新

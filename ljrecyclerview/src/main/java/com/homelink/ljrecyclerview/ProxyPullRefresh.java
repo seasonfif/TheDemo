@@ -1,7 +1,5 @@
 package com.homelink.ljrecyclerview;
 
-import android.util.Log;
-
 /**
  * 创建时间：2017年07月09日16:45 <br>
  * 作者：zhangqiang <br>

@@ -12,11 +12,12 @@ import android.view.View;
  * 创建时间：2017年06月24日17:08 <br>
  * 作者：zhangqiang <br>
  * 描述：继承自LJHeaderWrappedRecyclerView
- *        扩展上拉加载
+ *       扩展功能：1、上拉加载
+ *                 2、loadmoreview自定义
  */
 public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView{
 
-  private static final String TAG = "LJHeaderWrappedRecyclerView";
+  private static final String TAG = "LJPaginationWrappedRecyclerView";
 
   private PaginationWrappedAdapter mOriginalAdapter;
 
@@ -48,6 +49,7 @@ public class LJPaginationWrappedRecyclerView extends LJHeaderWrappedRecyclerView
     mOriginalAdapter.setFooterViews(mFooterViews);
     mOriginalAdapter.setEmpty(mEmpty);
     mOriginalAdapter.setEmptyArea(mEmptyFlag);
+    initEmptyListener();
     mRecyclerView.setAdapter(mOriginalAdapter);
   }
 
