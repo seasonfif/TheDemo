@@ -176,8 +176,7 @@ public class HeaderRecyclerViewActivity extends Activity implements LJSimpleRecy
         empty.setTextColor(Color.WHITE);
         empty.setText("Empty");
         empty.setGravity(Gravity.CENTER);
-        //mEmpty.setPadding(100,100,100,100);
-        //TODO 空白页高度设置为MATCH_PARENT并不会达到预想的效果，会被RecyclerView转为WRAP_CONTENT
+        //TODO 空白页高度设置为MATCH_PARENT并不会达到预期效果，会被RecyclerView转为WRAP_CONTENT
         int height = Utils.getScreenSize(this)[1] * 3 / 4;
         LinearLayoutCompat.LayoutParams lp =
                 new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height);

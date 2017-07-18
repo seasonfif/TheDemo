@@ -259,7 +259,8 @@ public abstract class HeaderWrappedAdapter<D> extends SimpleRecyclerAdapter<D> i
   }
 
   /**
-   * GridLayoutManager设置header与footer的布局
+   * GridLayoutManager设置
+   * header、footer、空白页、loadmoreview的布局
    * @param recyclerView
    */
   @Override public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -271,7 +272,7 @@ public abstract class HeaderWrappedAdapter<D> extends SimpleRecyclerAdapter<D> i
         @Override public int getSpanSize(int position) {
           int viewType = getItemViewType(position);
           if (getHeaderFooterByViewType(viewType) == VIEW_TYPE_HEADER || getHeaderFooterByViewType(viewType) == VIEW_TYPE_FOOTER
-              || viewType == VIEW_TYPE_LOADMORE){
+              || viewType == VIEW_TYPE_EMPTY || viewType == VIEW_TYPE_LOADMORE){
             return gridLayoutManager.getSpanCount();
           }
           if (spanSizeLookup != null){
