@@ -5,7 +5,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import com.demo.R;
@@ -48,6 +52,7 @@ public class SimpleNotificationActivity extends BaseActivity{
 
   @Override
   public void onClick(View v) {
+    super.onClick(v);
     switch (v.getId()) {
       case R.id.btn_remove_all_notification:
         //移除当前 Context 下所有 Notification,包括 FLAG_NO_CLEAR 和 FLAG_ONGOING_EVENT
@@ -91,6 +96,9 @@ public class SimpleNotificationActivity extends BaseActivity{
     }
   }
 
+  private boolean mCanVibrate = true;
+  private Handler mHandler;
+
   /**
    * 发送最简单的通知,该通知的ID = 1
    */
@@ -101,6 +109,25 @@ public class SimpleNotificationActivity extends BaseActivity{
         .setSmallIcon(R.mipmap.ic_launcher)
         .setContentTitle("Send Notification")
         .setContentText("Hi,My id is 1");
+
+    if (mCanVibrate){
+      //某些机型并没有声音
+        builder.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification_alert))
+          //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+        .setDefaults(Notification.DEFAULT_VIBRATE);
+    }
+
+    //0.5秒内的消息不重复提示
+    if (mHandler == null) {
+      mHandler = new Handler() {
+        @Override public void handleMessage(Message msg) {
+          mCanVibrate = true;
+        }
+      };
+    }
+    int what = 1; //随便给一个值
+    mHandler.removeMessages(what);
+    mHandler.sendEmptyMessageDelayed(what, 500);
     mNotificationManager.notify(DEFAULT_NOTIFICATION_ID, builder.build());
   }
 
@@ -112,7 +139,8 @@ public class SimpleNotificationActivity extends BaseActivity{
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
         .setSmallIcon(R.mipmap.ic_launcher)
         .setContentTitle("Send Notification With Tag")
-        .setContentText("Hi,My id is 1,tag is " + NOTIFICATION_TAG);
+        .setContentText("Hi,My id is 1,tag is " + NOTIFICATION_TAG)
+        .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND);
     mNotificationManager.notify(NOTIFICATION_TAG, DEFAULT_NOTIFICATION_ID, builder.build());
   }
 
@@ -120,7 +148,7 @@ public class SimpleNotificationActivity extends BaseActivity{
    * 循环发送十个通知
    */
   private void sendTenNotifications() {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
       NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
           .setSmallIcon(R.mipmap.ic_launcher)
           .setContentTitle("Send Notification Batch")

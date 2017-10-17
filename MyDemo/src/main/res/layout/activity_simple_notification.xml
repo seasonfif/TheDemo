@@ -42,7 +42,7 @@
             android:id="@+id/btn_send_ten_notification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="我要一口气发十个通知" />
+            android:text="发3个通知" />
 
         <Button
             android:id="@+id/btn_send_flag_no_clear_notification"

@@ -22,6 +22,22 @@
     app:tl_underline_color="#ff785c"
     app:tl_underline_height="1dp" />
 
+  <com.flyco.tablayout.CommonTabLayout
+    android:id="@+id/tab_layout2"
+    android:layout_width="120dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="20dp"
+    android:background="#2e313c"
+    android:layout_centerInParent="true"
+    android:layout_gravity="center_horizontal"
+    app:tl_iconVisible="false"
+    app:tl_indicator_style="TRIANGLE"
+    app:tl_indicator_color="#ffffff"
+    app:tl_indicator_height="4dp"
+    app:tl_textSelectColor="#ffffffff"
+    app:tl_textUnselectColor="#66ffffff"
+    app:tl_textsize="19dp" />
+
   <TextView
     android:id="@+id/tv"
     android:layout_width="match_parent"
