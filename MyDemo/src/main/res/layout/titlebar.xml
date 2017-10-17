@@ -14,6 +14,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:text="返回"
+        android:drawableLeft="@mipmap/btn_back"
+        android:drawablePadding="5dp"
         android:textColor="@android:color/white"
         android:textSize="18sp"/>
 

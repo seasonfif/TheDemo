@@ -57,10 +57,11 @@
     <activity android:name=".activity.TestEventBusActivity"></activity>
     <activity android:name=".template.RhinoJSActivity"></activity>
     <activity android:name=".template.HouseTemplateActivity"></activity>
-    <activity android:name="com.lianjia.recyclerview.MainActivity"></activity>
+    <activity android:name="com.lianjia.recyclerview.ChoiceActivity"></activity>
     <activity android:name="com.lianjia.recyclerview.SimpleRecyclerViewActivity"></activity>
     <activity android:name="com.lianjia.recyclerview.HeaderRecyclerViewActivity"></activity>
     <activity android:name="com.lianjia.recyclerview.PaginationRecyclerViewActivity"></activity>
+    <activity android:name=".webview.TestWebViewActivity"></activity>
 
     <service
       android:name=".service.NotifyService"

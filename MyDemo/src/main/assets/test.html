@@ -1,3 +1,50 @@
-<HTML>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="theme-color" content="#2932e1">
 
-</HTML>
+    <title>JSBridge</title>
+    <style type="text/css">
+
+#telElem {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    cursor: pointer;
+    text-decoration: none;
+}
+#mobileElem {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+</style>
+</head>
+
+<body>
+<a id="telElem" href="tel:10086" title="拨号10086">10086</a>
+<a id="mobileElem" href="javascript:;" onclick="mobile()">调用java方法</a>
+<input type="text" id="show"/>
+</body>
+<script>
+    // 获取电话号码
+    function getTel() {
+        return document.getElementById('telElem').innerHTML;
+    };
+    // 调用java方法
+    function mobile() {
+        var tel = document.getElementById('telElem').innerHTML;
+        // 调用android本地方法
+        window.bridge.toast(tel);
+    };
+    //java调用js
+    function showInfoFromJava(msg){
+        document.getElementById("show").value=msg;
+        alert(msg);
+    };
+</script>
+</html>

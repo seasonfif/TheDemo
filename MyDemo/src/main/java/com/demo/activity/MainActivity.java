@@ -10,7 +10,6 @@ import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-
 import com.demo.FirstEvent;
 import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
@@ -23,15 +22,15 @@ import com.demo.service.CoreService;
 import com.demo.service.CoreUIService;
 import com.demo.service.NotifyService;
 import com.demo.template.HouseTemplateActivity;
+import com.demo.webview.TestWebViewActivity;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-
-import org.greenrobot.eventbus.EventBus;
-
+import com.lianjia.recyclerview.ChoiceActivity;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2016/7/9.
@@ -41,6 +40,11 @@ public class MainActivity extends BaseActivity{
     Core core;
     AdView mAdView;
     InterstitialAd mInterstitialAd;
+
+    @Override
+    public void setView() {
+        setContentView(R.layout.activity_main);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.poststicky).setOnClickListener(this);
         findViewById(R.id.rhino).setOnClickListener(this);
         findViewById(R.id.recyclerview).setOnClickListener(this);
+        findViewById(R.id.btn_webview).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -95,11 +100,6 @@ public class MainActivity extends BaseActivity{
         mInterstitialAd.loadAd(adRequest);
     }
 
-    @Override
-    public void setView() {
-        setContentView(R.layout.activity_main);
-    }
-
     private long getLast(){
         Calendar calendar = Calendar.getInstance();
         int month = calendar.get(Calendar.MONTH);
@@ -114,6 +114,7 @@ public class MainActivity extends BaseActivity{
      */
     @Override
     public void onClick(View v) {
+        super.onClick(v);
         switch (v.getId()){
             case R.id.views:
                 goOther();
@@ -187,7 +188,10 @@ public class MainActivity extends BaseActivity{
                 goToOthers(HouseTemplateActivity.class);
                 break;
             case R.id.recyclerview:
-                goToOthers(com.lianjia.recyclerview.MainActivity.class);
+                goToOthers(ChoiceActivity.class);
+                break;
+            case R.id.btn_webview:
+                goToOthers(TestWebViewActivity.class);
                 break;
 
         }
