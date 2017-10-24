@@ -9,6 +9,7 @@ def isBuild
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
+    getLocall("hello ", "world")
     //自动计算versionCode
     def versionFile = file("version.properties")
     def int verCode

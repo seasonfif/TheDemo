@@ -26,3 +26,8 @@ task hello << {
 def runHello(){
     hello.execute();
 }
+
+//导出方法，给别的gradle文件调用
+ext.getLocall = { s1, s2 ->
+  println s1+s2+" successful"
+}
