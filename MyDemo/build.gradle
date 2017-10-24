@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 //apply from: file(rootProject.rootDir.getParentFile().parent+"\\lianjia\\\\newlink\\\\im\\\\build.gradle").absolutePath
-apply from: 'test.gradle'
+//apply from: 'test.gradle'
 
 def apkName = "demo.apk"
 def apkFilePath
@@ -9,7 +9,7 @@ def isBuild
 android {
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-    getLocall("hello ", "world")
+//    getLocall("hello ", "world")
     //自动计算versionCode
     def versionFile = file("version.properties")
     def int verCode
