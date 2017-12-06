@@ -6,8 +6,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.util.SparseArray;
+import android.view.MotionEvent;
 import android.view.View;
 import com.demo.R;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 创建时间：2017年03月15日10:59 <br>
@@ -36,6 +40,14 @@ public class RecordStepView extends View {
   public String[] lables;
 
   private int lableCount;
+
+  private SparseArray<LableArea> lableAreas = new SparseArray<>();
+
+  private OnStepClickListener onStepClickListener;
+
+  public interface OnStepClickListener{
+    void onStepClick(int index);
+  }
 
   public RecordStepView(Context context) {
     this(context, null);
@@ -68,6 +80,14 @@ public class RecordStepView extends View {
     invalidate();
   }
 
+  public int getIndex() {
+    return index;
+  }
+
+  public void setOnStepClickListener(OnStepClickListener onStepClickListener) {
+    this.onStepClickListener = onStepClickListener;
+  }
+
   private void init() {
     index = 0;
     doColor = Color.parseColor("#41bc6a");
@@ -86,6 +106,7 @@ public class RecordStepView extends View {
 
     textPaint = new Paint();
     textPaint.setTextSize(textSize);
+    //文字居中绘制
     textPaint.setTextAlign(Paint.Align.CENTER);
     textPaint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 
@@ -107,6 +128,38 @@ public class RecordStepView extends View {
     setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), height);
   }
 
+  @Override public boolean onTouchEvent(MotionEvent event) {
+
+    if (onStepClickListener != null){
+      switch (event.getAction()){
+        case MotionEvent.ACTION_MOVE:
+        case MotionEvent.ACTION_DOWN:
+          float x = event.getX();
+          int step = pointStep(x);
+          if (step > -1){
+            index = step;
+            return true;
+          }
+          break;
+        case MotionEvent.ACTION_UP:
+          invalidate();
+          onStepClickListener.onStepClick(index);
+          return true;
+      }
+    }
+    return super.onTouchEvent(event);
+  }
+
+  private int pointStep(float x) {
+    for (int i=0; i < lableCount; i++){
+      LableArea lableArea = lableAreas.valueAt(i);
+      if (x >= lableArea.minX && x <= lableArea.maxX){
+        return lableArea.index;
+      }
+    }
+    return -1;
+  }
+
   @Override public void draw(Canvas canvas) {
     super.draw(canvas);
     if (lables == null) return;
@@ -125,12 +178,12 @@ public class RecordStepView extends View {
       }
 
       float shift = textPaint.measureText(lables[i])/2;
-      float shift_next = 0;
+      float shift_pre = 0;
 
       if (i == 0){
         centerX += shift;
       }else{
-        shift_next = textPaint.measureText(lables[i-1])/2;
+        shift_pre = textPaint.measureText(lables[i-1])/2;
         centerX += textPaint.measureText(lables[i-1])/2 + distance + shift;
       }
 
@@ -142,8 +195,43 @@ public class RecordStepView extends View {
 
       if (i > 0){
         //绘制间隔线
-        canvas.drawLine(centerX - shift - shift_next -distance + radius + spaceH, radius, centerX - radius - spaceH, radius, linePaint);
+        canvas.drawLine(centerX - shift - shift_pre -distance + radius + spaceH, radius, centerX - radius - spaceH, radius, linePaint);
       }
+
+      //缓存位置信息
+      LableArea lableArea = lableAreas.get(i);
+      if (lableArea == null){
+        lableArea = new LableArea();
+      }
+      lableArea.index = i;
+      lableArea.lable = lables[i];
+      lableArea.minX = centerX - shift;
+      lableArea.maxX = centerX + shift;
+      lableAreas.put(i, lableArea);
     }
+  }
+
+  private class LableArea {
+
+    /**
+     * 文案
+     */
+    public String lable;
+
+    /**
+     * 索引
+     */
+    public int index;
+
+    /**
+     * x轴左边界
+     */
+    public float minX = 0;
+
+    /**
+     * x轴右边界
+     */
+    public float maxX = 0;
+
   }
 }

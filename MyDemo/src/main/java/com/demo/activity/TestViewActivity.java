@@ -119,6 +119,11 @@ public class TestViewActivity extends BaseActivity {
 
         recordStepView = (RecordStepView) findViewById(R.id.record_step_view);
         recordStepView.setLables(new String[]{"选项目", "带看信息", "反馈", "带看信息", "反馈", "带看信息"});
+        recordStepView.setOnStepClickListener(new RecordStepView.OnStepClickListener() {
+            @Override public void onStepClick(int index) {
+                Toast.makeText(TestViewActivity.this, ""+index, Toast.LENGTH_SHORT).show();
+            }
+        });
         previous.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 recordStepView.previous();
