@@ -19,21 +19,42 @@
       android:background="#ffffff"
       android:layout_marginBottom="@dimen/dimen_5"/>
 
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp">
+        <Button
+          android:id="@+id/previous"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="previous"/>
+        <Button
+          android:id="@+id/next"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="next"/>
+    </LinearLayout>
+
     <com.demo.customview.view.LikeGoogleProgressView
         android:id="@+id/google_progress"
         android:layout_width="match_parent"
-        android:layout_height="10dp"/>
+        android:layout_height="10dp"
+        android:visibility="visible"/>
 
     <com.demo.customview.view.LikeQQHealthView
         android:id="@+id/qq_health"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:visibility="visible"/>
 
     <com.demo.customview.view.CustomerArcView
         android:id="@+id/arc"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        android:visibility="visible"/>
 </LinearLayout>

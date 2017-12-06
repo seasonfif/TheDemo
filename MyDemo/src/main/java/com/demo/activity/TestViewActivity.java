@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import android.widget.TextView;
@@ -25,11 +26,14 @@ public class TestViewActivity extends BaseActivity {
     private boolean arcViewChanged = false;
 
     private RecordStepView recordStepView;
-    private boolean firstStep = true;
+
+    private Button previous, next;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        previous = (Button) findViewById(R.id.previous);
+        next = (Button) findViewById(R.id.next);
         Toast.makeText(this, getIntent().getStringExtra(Intent.EXTRA_TEXT), Toast.LENGTH_SHORT).show();
 
         /*final MarqueeView mv = (MarqueeView) findViewById(R.id.marqueeView100);
@@ -114,14 +118,16 @@ public class TestViewActivity extends BaseActivity {
         }.start();
 
         recordStepView = (RecordStepView) findViewById(R.id.record_step_view);
-        recordStepView.setOnClickListener(new View.OnClickListener() {
+        recordStepView.setLables(new String[]{"选项目", "带看信息", "反馈", "带看信息", "反馈", "带看信息"});
+        previous.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
-                if (firstStep){
-                    recordStepView.setFirstStep(false);
-                } else{
-                    recordStepView.setFirstStep(true);
-                }
-                firstStep = !firstStep;
+                recordStepView.previous();
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                recordStepView.next();
             }
         });
     }
