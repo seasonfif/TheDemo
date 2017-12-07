@@ -1,20 +1,17 @@
 package com.demo.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import android.widget.TextView;
 import android.widget.Toast;
 import com.demo.R;
 import com.demo.customview.view.CustomerArcView;
 import com.demo.customview.view.LikeQQHealthView;
 
-import com.demo.customview.view.MarqueeView;
-import com.demo.customview.view.RecordStepView;
+import com.demo.customview.view.LableStepView;
 import java.util.Random;
 
 public class TestViewActivity extends BaseActivity {
@@ -25,7 +22,7 @@ public class TestViewActivity extends BaseActivity {
     private CustomerArcView arcView;
     private boolean arcViewChanged = false;
 
-    private RecordStepView recordStepView;
+    private LableStepView recordStepView;
 
     private Button previous, next;
     @Override
@@ -117,9 +114,9 @@ public class TestViewActivity extends BaseActivity {
             }
         }.start();
 
-        recordStepView = (RecordStepView) findViewById(R.id.record_step_view);
-        recordStepView.setLables(new String[]{"选项目", "带看信息", "反馈", "带看信息", "反馈", "带看信息"});
-        recordStepView.setOnStepClickListener(new RecordStepView.OnStepClickListener() {
+        recordStepView = (LableStepView) findViewById(R.id.record_step_view);
+        //recordStepView.setLables(new String[]{"选项目", "带看信息", "反馈", "带看信息", "反馈", "带看信息"});
+        recordStepView.setOnStepClickListener(new LableStepView.OnStepClickListener() {
             @Override public void onStepClick(int index) {
                 Toast.makeText(TestViewActivity.this, ""+index, Toast.LENGTH_SHORT).show();
             }

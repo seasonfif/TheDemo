@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string-array name="lables">
+    <item>1人</item>
+    <item>2人</item>
+    <item>3人</item>
+    <item>4人</item>
+    <item>5人</item>
+  </string-array>
+</resources>

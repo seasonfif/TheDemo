@@ -7,4 +7,15 @@
         <attr name="autoStart" format="boolean"/>
     </declare-styleable>
 
+    <declare-styleable name="LableStepView">
+        <attr name="lables" format="reference"/>
+        <attr name="radius" format="dimension"/>
+        <attr name="line_height" format="dimension"/>
+        <attr name="text_size" format="dimension"/>
+        <attr name="space_vertical" format="dimension"/>
+        <attr name="space_horizontal" format="dimension"/>
+        <attr name="do_color" format="color|reference"/>
+        <attr name="undo_color" format="color|reference"/>
+    </declare-styleable>
+
 </resources>
