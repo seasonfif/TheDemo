@@ -38,29 +38,15 @@
     app:tl_textUnselectColor="#66ffffff"
     app:tl_textsize="19dp" />
 
-  <TextView
-    android:id="@+id/tv"
+  <Button
+    android:id="@+id/scroller_ll"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
-    android:gravity="center"
-    tools:text="6"/>
+    android:text="Scroller"/>
 
-  <!--<com.flyco.tablayout.CommonTabLayout
-    android:id="@+id/tab_layout"
+  <Button
+    android:id="@+id/cover_flow"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:layout_marginTop="15dp"
-    android:background="#ffffff"
-    app:tl_iconVisible="false"
-    app:tl_indicator_bounce_enable="false"
-    app:tl_indicator_color="#00beb3"
-    app:tl_indicator_gravity="BOTTOM"
-    app:tl_indicator_height="2dp"
-    app:tl_indicator_width="90dp"
-    app:tl_textSelectColor="#00beb3"
-    app:tl_textUnselectColor="#666666"
-    app:tl_textsize="14dp"
-    app:tl_underline_color="#e5e5e5"
-    app:tl_underline_height="0.6dp" />-->
+    android:layout_height="wrap_content"
+    android:text="CoverFlow"/>
 </LinearLayout>

@@ -88,7 +88,7 @@ public class LableStepView extends View {
     lineHeight = ta.getDimension(R.styleable.LableStepView_line_height, getResources().getDimension(R.dimen.dimen_1));
     textSize = ta.getDimension(R.styleable.LableStepView_text_size, getResources().getDimension(R.dimen.dimen_12));
     lables = ta.getTextArray(R.styleable.LableStepView_lables);
-    lableCount = lables.length;
+    if (lables != null) lableCount = lables.length;
     ta.recycle();
     init();
   }

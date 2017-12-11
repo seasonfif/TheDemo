@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical" android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <com.demo.customview.viewgroup.ScrollerLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:background="@android:color/holo_blue_dark"/>
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:background="@android:color/holo_red_dark"/>
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="200dp"
+      android:background="@android:color/darker_gray"/>
+  </com.demo.customview.viewgroup.ScrollerLayout>
+
+  <LinearLayout
+    android:id="@+id/scroll_ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <Button
+      android:id="@+id/scroll_to"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="scrollTo"/>
+    <Button
+      android:id="@+id/scroll_by"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="scrollBy"/>
+  </LinearLayout>
+</LinearLayout>
