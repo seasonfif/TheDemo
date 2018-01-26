@@ -27,6 +27,7 @@ public class ShareAcivity extends BaseActivity {
 
     findViewById(R.id.share_only_text).setOnClickListener(this);
     findViewById(R.id.share_text_image).setOnClickListener(this);
+    findViewById(R.id.goto_github_code).setOnClickListener(this);
   }
 
   @Override public void onClick(View v) {
@@ -45,7 +46,27 @@ public class ShareAcivity extends BaseActivity {
         Uri imageUri = Uri.fromFile(new File(imgPath));
         shareImg(strDlgTitle, strSubject, strContent, imageUri);
         break;
+      case R.id.goto_github_code:
+        gotoGithubCode();
+        break;
     }
+  }
+
+  private void gotoGithubCode() {
+    Intent it = new Intent();
+    /*
+    //使用类名启动需要该组件的android:exported="true"
+    it.setClassName("com.seasonfif.github", "com.seasonfif.github.ui.activity.UserProfileActivity");
+    it.putExtra("name", "seasonfif");*/
+    /*
+    //使用action启动组件
+    it.setAction("com.seasonfif.github.userprofile");
+    it.putExtra("name", "seasonfif");*/
+
+    it.setAction("com.seasonfif.github.repo.detail");
+    it.putExtra("owner", "seasonfif");
+    it.putExtra("repoName", "python");
+    startActivity(it);
   }
 
   /**

@@ -13,7 +13,7 @@ public class CoverFlowActivity extends BaseActivity {
         setContentView(R.layout.activity_cover_flow);
         CoverflowView coverflowView = (CoverflowView) findViewById(R.id.coverflowview);
         coverflowView.setAdapter(new MyAdapter());
-                coverflowView.setSelection(2);
+        coverflowView.setSelection(2);
     }
 
     private class MyAdapter extends BaseAdapter {

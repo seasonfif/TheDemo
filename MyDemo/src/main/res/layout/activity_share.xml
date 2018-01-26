@@ -17,4 +17,11 @@
     android:layout_marginTop="7dp"
     android:text="文字+图片"/>
 
+  <Button
+    android:id="@+id/goto_github_code"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="7dp"
+    android:text="打开github code页面"/>
+
 </LinearLayout>
