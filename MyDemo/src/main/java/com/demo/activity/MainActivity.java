@@ -4,11 +4,17 @@ import android.app.Service;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 import com.demo.FirstEvent;
 import com.demo.LogicOperation.TestLogicActivity;
@@ -117,6 +123,7 @@ public class MainActivity extends BaseActivity{
         super.onClick(v);
         switch (v.getId()){
             case R.id.views:
+                showCustomWindow();
                 goOther();
                 //goToOthers(TestMarqueeActivity.class);
                 break;
@@ -195,6 +202,29 @@ public class MainActivity extends BaseActivity{
                 break;
 
         }
+    }
+
+    /**
+     * 显示一个系统级别的window
+     */
+    private void showCustomWindow() {
+        final Button floatingButton = new Button(this);
+        floatingButton.setText("button");
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,0, 0,
+            PixelFormat.TRANSPARENT);
+        lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        lp.format = PixelFormat.TRANSPARENT;
+        lp.gravity = Gravity.CENTER;
+        lp.flags = WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+        final WindowManager wm = getWindowManager();
+        floatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                wm.removeView(floatingButton);
+            }
+        });
+        wm.addView(floatingButton, lp);
     }
 
     /** Called when leaving the activity */
