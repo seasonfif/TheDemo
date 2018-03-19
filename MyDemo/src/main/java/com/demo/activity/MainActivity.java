@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
@@ -21,6 +20,7 @@ import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
+import com.demo.lifecycle.EasyLifecycle;
 import com.demo.matrix.MatrixDemo;
 import com.demo.provider.TestProviderActivity;
 import com.demo.service.Core;
@@ -55,6 +55,8 @@ public class MainActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        EasyLifecycle.with().init(this);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yy.MM.dd");
         ((TextView)findViewById(R.id.vername)).setText(sdf.format(getLast()));
