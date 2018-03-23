@@ -1,6 +1,7 @@
 package com.demo.lifecycle;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Looper;
@@ -44,10 +45,14 @@ public class EasyLifecycle {
       host = getFragment(((Activity) ctx).getFragmentManager());
     } else if (ctx instanceof FragmentActivity){
       host = getV4Fragment(((FragmentActivity) ctx).getSupportFragmentManager());
-    } else {
-
     }
     bindLifecycle(host, ctx.getClass().getSimpleName());
+  }
+
+  public void init(Fragment fragment){
+    LifcycleHost host = null;
+    host = getFragment(fragment.getChildFragmentManager());
+    bindLifecycle(host, fragment.getClass().getSimpleName());
   }
 
   private BlankFragment4Lifecycle getFragment(android.app.FragmentManager fm) {

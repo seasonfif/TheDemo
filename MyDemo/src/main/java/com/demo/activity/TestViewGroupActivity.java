@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.demo.R;
+import com.demo.fragment.BaseFragment;
 import com.demo.lifecycle.EasyLifecycle;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -28,6 +29,8 @@ public class TestViewGroupActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
 
         EasyLifecycle.with().init(this);
+
+        getFragmentManager().beginTransaction().add(R.id.fragment_container, new BaseFragment()).commit();
     }
 
     @Override
