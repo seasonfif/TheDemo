@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.rhino).setOnClickListener(this);
         findViewById(R.id.recyclerview).setOnClickListener(this);
         findViewById(R.id.btn_webview).setOnClickListener(this);
+        findViewById(R.id.designpattern).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -201,6 +202,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.btn_webview:
                 goToOthers(TestWebViewActivity.class);
+                break;
+            case R.id.designpattern:
+                goToOthers(TestDesignPatternActivity.class);
                 break;
 
         }
