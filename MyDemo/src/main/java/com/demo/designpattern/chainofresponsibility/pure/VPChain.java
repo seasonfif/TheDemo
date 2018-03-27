@@ -1,4 +1,4 @@
-package com.demo.designpattern.chainofresponsibility;
+package com.demo.designpattern.chainofresponsibility.pure;
 
 import android.util.Log;
 

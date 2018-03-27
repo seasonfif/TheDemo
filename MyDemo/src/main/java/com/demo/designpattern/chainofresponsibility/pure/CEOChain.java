@@ -1,4 +1,4 @@
-package com.demo.designpattern.chainofresponsibility;
+package com.demo.designpattern.chainofresponsibility.pure;
 
 import android.util.Log;
 
@@ -6,9 +6,10 @@ import android.util.Log;
  * Created by zhangqiang on 2018/3/26.
  */
 
-public class MemberChain implements ChainHandler{
+public class CEOChain implements ChainHandler {
 
-  private static final String TAG = "MemberChain";
+  private static final String TAG = "CEOChain";
+
   private ChainHandler handler;
 
   @Override public void setChainHandler(ChainHandler handler) {
@@ -20,10 +21,6 @@ public class MemberChain implements ChainHandler{
   }
 
   @Override public void handle(int money) {
-    if (getChain() != null){
-      getChain().handle(money);
-    }else{
-      Log.e(TAG, "上级不在无法处理");
-    }
+    Log.e(TAG, "已到最高层处理" + money);
   }
 }

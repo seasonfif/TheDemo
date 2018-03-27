@@ -19,7 +19,13 @@
       android:layout_width="0dp"
       android:layout_height="50dp"
       android:layout_weight="2"
-      android:text="测试"/>
+      android:text="纯责任链"/>
   </LinearLayout>
+
+  <Button
+    android:id="@+id/btn_non"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:text="不纯责任链"/>
 
 </LinearLayout>

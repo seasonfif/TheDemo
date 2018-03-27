@@ -1,6 +1,8 @@
-package com.demo.designpattern.chainofresponsibility;
+package com.demo.designpattern.chainofresponsibility.pure;
 
 /**
+ * 纯责任链模式
+ *
  * Created by zhangqiang on 2018/3/26.
  */
 
