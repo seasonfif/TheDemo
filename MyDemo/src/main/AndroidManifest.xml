@@ -66,6 +66,7 @@
     <activity android:name="com.lianjia.recyclerview.PaginationRecyclerViewActivity"></activity>
     <activity android:name=".webview.TestWebViewActivity"></activity>
     <activity android:name=".activity.TestDesignPatternActivity"></activity>
+    <activity android:name=".activity.TestDNSActivity"></activity>
 
     <service
       android:name=".service.NotifyService"
