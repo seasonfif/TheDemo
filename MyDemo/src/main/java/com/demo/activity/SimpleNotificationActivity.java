@@ -5,14 +5,19 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.RemoteViews;
+
 import com.demo.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 创建时间：2017年05月16日15:43 <br>
@@ -46,6 +51,8 @@ public class SimpleNotificationActivity extends BaseActivity{
     findViewById(R.id.btn_send_flag_no_clear_notification).setOnClickListener(this);
     findViewById(R.id.btn_send_flag_ongoing_event_notification).setOnClickListener(this);
     findViewById(R.id.btn_send_flag_auto_cancecl_notification).setOnClickListener(this);
+    findViewById(R.id.btn_custom1).setOnClickListener(this);
+    findViewById(R.id.btn_custom2).setOnClickListener(this);
 
     mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
   }
@@ -88,10 +95,19 @@ public class SimpleNotificationActivity extends BaseActivity{
         sendFlagNoClearNotification();
         break;
       case R.id.btn_send_flag_auto_cancecl_notification:
-        sendFlagOngoingEventNotification();
+        sendFlagAutoCancelNotification();
         break;
       case R.id.btn_send_flag_ongoing_event_notification:
-        sendFlagAutoCancelNotification();
+        sendFlagOngoingEventNotification();
+        break;
+      case R.id.btn_custom1:
+        sendCustomNotification(22);
+        break;
+      case R.id.btn_custom2:
+        sendCustomNotification(33);
+        sendCustomNotification(34);
+        sendCustomNotification(35);
+        sendCustomNotification(36);
         break;
     }
   }
@@ -185,7 +201,7 @@ public class SimpleNotificationActivity extends BaseActivity{
     PendingIntent resultPendingIntent = PendingIntent.getActivity(
         this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
     NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-        .setSmallIcon(R.mipmap.ic_launcher)
+        .setSmallIcon(R.mipmap.ic_launcher_browser)
         .setContentTitle("Send Notification Use FLAG_AUTO_CLEAR")
         .setContentText("Hi,My id is 1,i can be clear.")
         .setContentIntent(resultPendingIntent);
@@ -212,5 +228,35 @@ public class SimpleNotificationActivity extends BaseActivity{
     //等价于 builder.setOngoing(true);
     notification.flags |= Notification.FLAG_ONGOING_EVENT;
     mNotificationManager.notify(DEFAULT_NOTIFICATION_ID, notification);
+  }
+
+  private void sendCustomNotification(int id) {
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+
+    builder.setSmallIcon(R.mipmap.ic_launcher_browser);//使用RemoteViews时，设置的是状态栏中的小图标，必须要设置
+    builder.setColor(Color.RED);
+    builder.setAutoCancel(true);//设置是否点击通知后会自动消失
+    Notification notification = builder.build();
+    //通过xml创建RemoteViews，并且动态改变布局中的内容
+    RemoteViews views = new RemoteViews(getPackageName(), R.layout.remote_notification);
+    views.setImageViewResource(R.id.iv_icon, R.mipmap.ic_launcher_browser);
+    views.setTextViewText(R.id.tv_title, "通知标题");
+    views.setTextViewText(R.id.tv_content, "通知的内容");
+    Date date = new Date();
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+    String time = sdf.format(date);
+    views.setTextViewText(R.id.tv_time, time);
+    //这里需要注意，如果不设置 notification.bigContentView ，则由于通知的高度是固定的，如果remoteview的布局超过了其通知的高度，
+    //就会有一部分显示不出来了
+    notification.bigContentView = views;
+    notification.contentView = views;
+    //给整个通知设置一个拉起今日头条首页的PendingIntent
+    Intent intentNotification = new Intent();
+    intentNotification.setData(Uri.parse("snssdk143://home/news?growth_from=click_schema_aguya7"));
+    intentNotification.setPackage("com.ss.android.article.news");
+    intentNotification.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    PendingIntent pi = PendingIntent.getActivity(this, 123, intentNotification, PendingIntent.FLAG_CANCEL_CURRENT);
+    notification.contentIntent = pi;
+    mNotificationManager.notify(id, notification);
   }
 }

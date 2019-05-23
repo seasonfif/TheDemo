@@ -62,6 +62,18 @@
             android:layout_height="wrap_content"
             android:text="发送一个 FLAG_AUTO_CANCEL 的通知,能移除" />
 
+        <Button
+            android:id="@+id/btn_custom1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="发送一个自定义的通知1" />
+
+        <Button
+            android:id="@+id/btn_custom2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="发送一个自定义的通知2" />
+
     </LinearLayout>
 
 </ScrollView>

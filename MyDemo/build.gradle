@@ -64,13 +64,6 @@ android {
             minifyEnabled false
         }
 
-        preview {
-            manifestPlaceholders = [label: "Preview"]
-            signingConfig signingConfigs.preview
-            debuggable true
-            minifyEnabled false
-        }
-
         release {
             signingConfig signingConfigs.release
             minifyEnabled true //是否启动混淆
@@ -78,50 +71,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    //渠道打包信息
-    productFlavors {
-        googleplay {
-            applicationId "com.thedemo.googleplay"
-            //            versionName verCode+"_"+name
-        }
-        baidu {
-            //            applicationId "com.thedemo.baidu"
-            applicationId "com.thedemo.demo"
-            //            versionName verCode+"_"+name
-        }
-    }
+
     //批量处理渠道versionName
     productFlavors.all { flavor -> //            print(properties.values())
         flavor.versionName = verCode + "_" + buildType + "_" + name
     }
     // rename the apk with the version name
     // add output file sub folder by build type
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            /*output.outputFile = new File(
-                    output.outputFile.parent + "/${variant.buildType.name}",
-                    "demos-${variant.buildType.name}-${variant.versionName}-${releaseTime()}.apk".toLowerCase())*/
-            output.outputFile = new File(output.outputFile.parent, apkName);
-            //            D:\lianjia\TheDemo\MyDemo\build\outputs\apk
-            //            println output.outputFile.parent
-
-            //            D:\lianjia\TheDemo\build
-            //            println rootProject.buildDir.absolutePath
-
-            //            D:\lianjia\TheDemo\build.gradle
-            //              println rootProject.buildFile.absolutePath
-
-            //            D:\lianjia\TheDemo
-            //            println rootProject.projectDir.absolutePath
-            //            D:\lianjia\TheDemo\MyDemo
-            //            println project.projectDir.absolutePath
-            //            :MyDemo
-            //            println project.path
-
-            apkFilePath = output.outputFile.parent + "\\" + apkName
-            //            println apkFilePath
-        }
-    }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
