@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.demo">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.demo">
 
   <uses-permission android:name="android.permission.INTERNET"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -15,7 +16,8 @@
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:supportsRtl="true"
-    android:theme="@style/MyTheme">
+    android:theme="@style/MyTheme"
+      tools:ignore="GoogleAppIndexingWarning">
 
     <meta-data
       android:name="com.google.android.gms.version"
@@ -40,8 +42,8 @@
         <data android:mimeType="text/plain" />
       </intent-filter>
     </activity>
-    <activity android:name=".activity.ShareAcivity"></activity>
-    <activity android:name=".LogicOperation.TestLogicActivity" />
+    <activity android:name=".activity.ShareAcivity"/>
+    <activity android:name=".logic.TestLogicActivity" />
     <activity android:name=".activity.TestMarqueeActivity" />
     <activity android:name=".activity.TestViewGroupActivity" />
     <activity android:name=".activity.ScrollerLayoutActivity" />
@@ -54,31 +56,33 @@
       android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
     <!-- android:windowSoftInputMode="adjustResize|stateAlwaysHidden" -->
     <activity android:name=".dynamicload.ClassLoaderTest" />
-    <activity android:name=".provider.TestProviderActivity"></activity>
-    <activity android:name=".activity.SimpleNotificationActivity"></activity>
-    <activity android:name=".matrix.MatrixDemo"></activity>
-    <activity android:name=".activity.TestEventBusActivity"></activity>
-    <activity android:name=".template.RhinoJSActivity"></activity>
-    <activity android:name=".template.HouseTemplateActivity"></activity>
-    <activity android:name="com.lianjia.recyclerview.ChoiceActivity"></activity>
-    <activity android:name="com.lianjia.recyclerview.SimpleRecyclerViewActivity"></activity>
-    <activity android:name="com.lianjia.recyclerview.HeaderRecyclerViewActivity"></activity>
-    <activity android:name="com.lianjia.recyclerview.PaginationRecyclerViewActivity"></activity>
-    <activity android:name=".webview.TestWebViewActivity"></activity>
-    <activity android:name=".activity.TestDesignPatternActivity"></activity>
-    <activity android:name=".activity.TestDNSActivity"></activity>
+    <activity android:name=".provider.TestProviderActivity"/>
+    <activity android:name=".activity.SimpleNotificationActivity"/>
+    <activity android:name=".matrix.MatrixDemo"/>
+    <activity android:name=".activity.TestEventBusActivity"/>
+    <activity android:name=".template.RhinoJSActivity"/>
+    <activity android:name=".template.HouseTemplateActivity"/>
+    <activity android:name="com.lianjia.recyclerview.ChoiceActivity"/>
+    <activity android:name="com.lianjia.recyclerview.SimpleRecyclerViewActivity"/>
+    <activity android:name="com.lianjia.recyclerview.HeaderRecyclerViewActivity"/>
+    <activity android:name="com.lianjia.recyclerview.PaginationRecyclerViewActivity"/>
+    <activity android:name=".webview.TestWebViewActivity"/>
+    <activity android:name=".activity.TestDesignPatternActivity"/>
+    <activity android:name=".activity.TestDNSActivity"/>
+    <activity android:name=".activity.TestCronetActivity"/>
+    <activity android:name=".activity.TestQueueActivity"/>
 
     <service
       android:name=".service.NotifyService"
       android:label="NotifyService"
-      android:process=":remote1"></service>
+      android:process=":remote1"/>
     <service
       android:name=".service.CoreService"
       android:label="CoreService"
-      android:process=":remote2"></service>
+      android:process=":remote2"/>
     <service
       android:name=".service.CoreUIService"
-      android:label="CoreUIService"></service>
+      android:label="CoreUIService"/>
 
     <provider
       android:authorities="com.thedemo.demo.ServiceProvider"

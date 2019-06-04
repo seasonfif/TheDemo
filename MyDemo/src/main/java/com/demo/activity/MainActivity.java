@@ -15,12 +15,13 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+
 import com.demo.FirstEvent;
-import com.demo.LogicOperation.TestLogicActivity;
 import com.demo.R;
 import com.demo.dynamicload.ClassLoaderTest;
 import com.demo.leakcanary.LeakAsyncTaskAndHandlerActivity;
 import com.demo.lifecycle.EasyLifecycle;
+import com.demo.logic.TestLogicActivity;
 import com.demo.matrix.MatrixDemo;
 import com.demo.provider.TestProviderActivity;
 import com.demo.service.Core;
@@ -34,9 +35,11 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.lianjia.recyclerview.ChoiceActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by Administrator on 2016/7/9.
@@ -77,6 +80,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.designpattern).setOnClickListener(this);
         findViewById(R.id.btn_dns).setOnClickListener(this);
         findViewById(R.id.btn_cronet).setOnClickListener(this);
+        findViewById(R.id.btn_queue).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -213,6 +217,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.btn_cronet:
                 goToOthers(TestCronetActivity.class);
+                break;
+            case R.id.btn_queue:
+                goToOthers(TestQueueActivity.class);
                 break;
 
         }

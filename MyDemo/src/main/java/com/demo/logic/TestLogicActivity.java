@@ -1,6 +1,5 @@
-package com.demo.LogicOperation;
+package com.demo.logic;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -10,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import com.demo.R;
 import com.demo.activity.BaseActivity;
+
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.regex.Matcher;
