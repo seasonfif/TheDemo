@@ -1,12 +1,16 @@
 package com.demo.activity;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,6 +59,20 @@ public class SimpleNotificationActivity extends BaseActivity{
     findViewById(R.id.btn_custom2).setOnClickListener(this);
 
     mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
+
+    NotificationChannel mChannel = null;
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+      String id = "channel_1";
+      String description = "123";
+      int importance = NotificationManager.IMPORTANCE_HIGH;
+      mChannel = new NotificationChannel(id, "123", importance);
+      mChannel.setDescription(description);
+      mChannel.enableLights(true);
+      mChannel.setLightColor(Color.RED);
+      mChannel.enableVibration(true);
+      mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+      mNotificationManager.createNotificationChannel(mChannel);
+    }
   }
 
   @Override
@@ -119,32 +137,44 @@ public class SimpleNotificationActivity extends BaseActivity{
    * 发送最简单的通知,该通知的ID = 1
    */
   private void sendNotification() {
-    //这里使用 NotificationCompat 而不是 Notification ,因为 Notification 需要 API 16 才能使用
-    //NotificationCompat 存在于 V4 Support Library
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-        .setSmallIcon(R.mipmap.ic_launcher)
-        .setContentTitle("Send Notification")
-        .setContentText("Hi,My id is 1");
 
-    if (mCanVibrate){
-      //某些机型并没有声音
-        builder.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification_alert))
-          //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
-        .setDefaults(Notification.DEFAULT_VIBRATE);
-    }
 
-    //0.5秒内的消息不重复提示
-    if (mHandler == null) {
-      mHandler = new Handler() {
-        @Override public void handleMessage(Message msg) {
-          mCanVibrate = true;
-        }
-      };
+    Notification notification;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      Notification.Builder builder = new Notification.Builder(this, "channel_1")
+              .setSmallIcon(Icon.createWithBitmap(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_call)))
+              .setContentTitle("Send Notification")
+              .setContentText("Hi,My id is 1");
+      notification = builder.build();
+    }else{
+      //这里使用 NotificationCompat 而不是 Notification ,因为 Notification 需要 API 16 才能使用
+      //NotificationCompat 存在于 V4 Support Library
+      NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+              .setSmallIcon(R.mipmap.ic_launcher)
+              .setContentTitle("Send Notification")
+              .setContentText("Hi,My id is 1");
+      if (mCanVibrate){
+        //某些机型并没有声音
+          builder.setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notification_alert))
+            //.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM))
+          .setDefaults(Notification.DEFAULT_VIBRATE);
+      }
+
+      //0.5秒内的消息不重复提示
+      if (mHandler == null) {
+        mHandler = new Handler() {
+          @Override public void handleMessage(Message msg) {
+            mCanVibrate = true;
+          }
+        };
+      }
+      int what = 1; //随便给一个值
+      mHandler.removeMessages(what);
+      mHandler.sendEmptyMessageDelayed(what, 500);
+
+      notification = builder.build();
     }
-    int what = 1; //随便给一个值
-    mHandler.removeMessages(what);
-    mHandler.sendEmptyMessageDelayed(what, 500);
-    mNotificationManager.notify(DEFAULT_NOTIFICATION_ID, builder.build());
+    mNotificationManager.notify(DEFAULT_NOTIFICATION_ID, notification);
   }
 
   /**
@@ -231,11 +261,17 @@ public class SimpleNotificationActivity extends BaseActivity{
   }
 
   private void sendCustomNotification(int id) {
-    NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+    Notification.Builder builder = null;
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+      builder = new Notification.Builder(this, "channel_1");
+    }
 
-    builder.setSmallIcon(R.mipmap.ic_launcher_browser);//使用RemoteViews时，设置的是状态栏中的小图标，必须要设置
-    builder.setColor(Color.RED);
     builder.setAutoCancel(true);//设置是否点击通知后会自动消失
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      builder.setSmallIcon(Icon.createWithBitmap(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_call)));
+    }else{
+      builder.setSmallIcon(R.mipmap.ic_launcher_browser);//使用RemoteViews时，设置的是状态栏中的小图标，必须要设置
+    }
     Notification notification = builder.build();
     //通过xml创建RemoteViews，并且动态改变布局中的内容
     RemoteViews views = new RemoteViews(getPackageName(), R.layout.remote_notification);
@@ -258,5 +294,16 @@ public class SimpleNotificationActivity extends BaseActivity{
     PendingIntent pi = PendingIntent.getActivity(this, 123, intentNotification, PendingIntent.FLAG_CANCEL_CURRENT);
     notification.contentIntent = pi;
     mNotificationManager.notify(id, notification);
+  }
+
+
+  private void sendMyNotification(){
+
+    Notification.Builder builder = new Notification.Builder(this);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      builder.setSmallIcon(Icon.createWithBitmap(null));
+    }
+
+    mNotificationManager.notify(999, builder.build());
   }
 }

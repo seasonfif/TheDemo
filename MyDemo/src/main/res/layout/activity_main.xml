@@ -107,6 +107,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DNS劫持"/>
+
+            <Button
+                android:id="@+id/btn_cronet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cronet"/>
         </LinearLayout>
 
     </ScrollView>

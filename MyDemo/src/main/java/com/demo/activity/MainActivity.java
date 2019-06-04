@@ -76,6 +76,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.btn_webview).setOnClickListener(this);
         findViewById(R.id.designpattern).setOnClickListener(this);
         findViewById(R.id.btn_dns).setOnClickListener(this);
+        findViewById(R.id.btn_cronet).setOnClickListener(this);
 
         mAdView = (AdView) findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
@@ -209,6 +210,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.btn_dns:
                 goToOthers(TestDNSActivity.class);
+                break;
+            case R.id.btn_cronet:
+                goToOthers(TestCronetActivity.class);
                 break;
 
         }
