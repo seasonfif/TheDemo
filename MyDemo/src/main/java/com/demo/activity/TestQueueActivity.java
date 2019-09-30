@@ -49,7 +49,7 @@ public class TestQueueActivity extends BaseActivity{
                 break;
 
             case R.id.btn_records:
-                new Thread(new Runnable() {
+                /*new Thread(new Runnable() {
                     @Override
                     public void run() {
                         for (int i=0; i<=9999; i++){
@@ -62,7 +62,16 @@ public class TestQueueActivity extends BaseActivity{
                             }
                         }
                     }
-                }).start();
+                }).start();*/
+
+                for (int j = 0; j < 10; j++) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecordManager2.record("" + i++);
+                        }
+                    }, "thread "+j).start();
+                }
                 break;
             case R.id.btn_start:
                 RecordManager.flag = true;
