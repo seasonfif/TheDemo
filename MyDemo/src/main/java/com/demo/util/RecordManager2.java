@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
-import android.util.LogPrinter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,11 +40,8 @@ public class RecordManager2 {
                                 List<String> temp = new ArrayList<>(caches);
                                 caches.removeAll(temp);
                                 handleTask("normal", temp);
-                                handler.dump(new LogPrinter(Log.ERROR, "handler dump"), "dump");
+//                                handler.dump(new LogPrinter(Log.ERROR, "handler dump"), "dump");
                             }
-
-                            /*String s = (String) msg.obj;
-                            caches.add(s);*/
                             break;
 
                         case TIMEOUT_MSG:
@@ -68,14 +64,12 @@ public class RecordManager2 {
     public static void record(String r){
 
         Log.e(Thread.currentThread().getName()+"-接收任务", r);
-        Message msg = Message.obtain();
-        msg.what = SENDTASK_MSG;
-//        msg.obj = r;
-        if(!handler.hasMessages(SENDTASK_MSG)){
-            handler.sendMessage(msg);
-        }
 
         caches.add(r);
+
+        handler.sendMessage(handler.obtainMessage(SENDTASK_MSG));
+
+
         if(!handler.hasMessages(TIMEOUT_MSG)){
             Log.e(Thread.currentThread().getName()+"-发送超时任务", r);
             handler.sendMessageDelayed(handler.obtainMessage(TIMEOUT_MSG), 2000);
@@ -92,11 +86,11 @@ public class RecordManager2 {
         for (String s : list) {
             sb.append(s).append(",");
         }
-        try {
+        /*try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
         Log.e(Thread.currentThread().getName()+"处理任务::"+msg, sb.toString());
         list.clear();
         list = null;
