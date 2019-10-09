@@ -4,8 +4,10 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
+import android.util.LogPrinter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class RecordManager2 {
@@ -18,7 +20,7 @@ public class RecordManager2 {
 
     private static long last;
 
-    private static List<String> caches = new ArrayList<>();
+    private static List<String> caches = Collections.synchronizedList(new ArrayList<String>());
 
     public static void init(){
 
@@ -34,15 +36,16 @@ public class RecordManager2 {
 
                         case SENDTASK_MSG:
                             long time = System.currentTimeMillis();
-                            if (System.currentTimeMillis() - last > 1000){
+                            if (System.currentTimeMillis() - last > 500){
                                 last = time;
                                 List<String> temp = new ArrayList<>(caches);
                                 caches.removeAll(temp);
                                 handleTask("normal", temp);
+                                handler.dump(new LogPrinter(Log.ERROR, "handler dump"), "dump");
                             }
 
-                            String s = (String) msg.obj;
-                            caches.add(s);
+                            /*String s = (String) msg.obj;
+                            caches.add(s);*/
                             break;
 
                         case TIMEOUT_MSG:
@@ -52,7 +55,6 @@ public class RecordManager2 {
                                 List<String> temp = new ArrayList<>(caches);
                                 caches.removeAll(temp);
                                 handleTask("timeout", temp);
-//                                handler.removeMessages(TIMEOUT_MSG);
                             }
                             break;
 
@@ -68,10 +70,16 @@ public class RecordManager2 {
         Log.e(Thread.currentThread().getName()+"-接收任务", r);
         Message msg = Message.obtain();
         msg.what = SENDTASK_MSG;
-        msg.obj = r;
-        handler.sendMessage(msg);
+//        msg.obj = r;
+        if(!handler.hasMessages(SENDTASK_MSG)){
+            handler.sendMessage(msg);
+        }
 
-        handler.sendMessageDelayed(handler.obtainMessage(TIMEOUT_MSG), 3000);
+        caches.add(r);
+        if(!handler.hasMessages(TIMEOUT_MSG)){
+            Log.e(Thread.currentThread().getName()+"-发送超时任务", r);
+            handler.sendMessageDelayed(handler.obtainMessage(TIMEOUT_MSG), 2000);
+        }
     }
 
     private static void handleTask(String msg, List<String> list){
