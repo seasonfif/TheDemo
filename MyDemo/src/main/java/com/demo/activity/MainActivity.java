@@ -66,6 +66,7 @@ public class MainActivity extends BaseActivity{
         findViewById(R.id.views).setOnClickListener(this);
         findViewById(R.id.viewgroup).setOnClickListener(this);
         findViewById(R.id.leakcanary).setOnClickListener(this);
+        findViewById(R.id.ramusage).setOnClickListener(this);
         findViewById(R.id.logic).setOnClickListener(this);
         findViewById(R.id.share).setOnClickListener(this);
         findViewById(R.id.dynamic).setOnClickListener(this);
@@ -141,6 +142,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.leakcanary:
                 goToOthers(LeakAsyncTaskAndHandlerActivity.class);
+                break;
+            case R.id.ramusage:
+                goToOthers(TestRamUsageActivity.class);
                 break;
             case R.id.logic:
                 goToOthers(TestLogicActivity.class);

@@ -36,6 +36,11 @@
                 android:layout_height="wrap_content"
                 android:text="监测内存泄露"/>
             <Button
+                android:id="@+id/ramusage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="对象内存计算"/>
+            <Button
               android:id="@+id/logic"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"

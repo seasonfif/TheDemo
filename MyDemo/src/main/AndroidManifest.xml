@@ -71,8 +71,9 @@
     <activity android:name=".activity.TestDNSActivity"/>
     <activity android:name=".activity.TestCronetActivity"/>
     <activity android:name=".activity.TestQueueActivity"/>
+      <activity android:name=".activity.TestRamUsageActivity" />
 
-    <service
+      <service
       android:name=".service.NotifyService"
       android:label="NotifyService"
       android:process=":remote1"/>
