@@ -124,6 +124,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="队列操作"/>
+
+            <Button
+                android:id="@+id/btn_mac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="获取mac地址"/>
         </LinearLayout>
 
     </ScrollView>
