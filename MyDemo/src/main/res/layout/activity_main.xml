@@ -25,11 +25,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="自定义View"/>
+
             <Button
                 android:id="@+id/viewgroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="自定义ViewGroup"/>
+
+            <Button
+                android:id="@+id/surface_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SurfaceView"/>
+
             <Button
                 android:id="@+id/leakcanary"
                 android:layout_width="match_parent"

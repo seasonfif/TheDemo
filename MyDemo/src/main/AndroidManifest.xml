@@ -47,6 +47,7 @@
     <activity android:name=".logic.TestLogicActivity" />
     <activity android:name=".activity.TestMarqueeActivity" />
     <activity android:name=".activity.TestViewGroupActivity" />
+    <activity android:name=".activity.TestSurfaceViewActivity" />
     <activity android:name=".activity.ScrollerLayoutActivity" />
     <activity android:name=".activity.CoverFlowActivity" />
     <activity android:name=".leakcanary.LeakAsyncTaskAndHandlerActivity" />

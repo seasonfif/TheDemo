@@ -65,6 +65,7 @@ public class MainActivity extends BaseActivity{
         ((TextView)findViewById(R.id.vername)).setText(sdf.format(getLast()));
         findViewById(R.id.views).setOnClickListener(this);
         findViewById(R.id.viewgroup).setOnClickListener(this);
+        findViewById(R.id.surface_view).setOnClickListener(this);
         findViewById(R.id.leakcanary).setOnClickListener(this);
         findViewById(R.id.ramusage).setOnClickListener(this);
         findViewById(R.id.logic).setOnClickListener(this);
@@ -140,6 +141,9 @@ public class MainActivity extends BaseActivity{
                 break;
             case R.id.viewgroup:
                 goToOthers(TestViewGroupActivity.class);
+                break;
+            case R.id.surface_view:
+                goToOthers(TestSurfaceViewActivity.class);
                 break;
             case R.id.leakcanary:
                 goToOthers(LeakAsyncTaskAndHandlerActivity.class);
